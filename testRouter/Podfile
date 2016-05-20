@@ -1,0 +1,5 @@
+source 'git@git.elenet.me:arch.mobile/iOS_specs.git'
+platform :ios, '7.0'
+target 'testRouter' do
+pod 'Excalibur', '~> 0.1.1'
+end

@@ -1,0 +1,619 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0DAC6F111CEF140E00523E86 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAC6F101CEF140E00523E86 /* main.m */; };
+		0DAC6F141CEF140E00523E86 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAC6F131CEF140E00523E86 /* AppDelegate.m */; };
+		0DAC6F171CEF140E00523E86 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAC6F161CEF140E00523E86 /* ViewController.m */; };
+		0DAC6F1A1CEF140E00523E86 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0DAC6F181CEF140E00523E86 /* Main.storyboard */; };
+		0DAC6F1C1CEF140E00523E86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DAC6F1B1CEF140E00523E86 /* Assets.xcassets */; };
+		0DAC6F1F1CEF140E00523E86 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0DAC6F1D1CEF140E00523E86 /* LaunchScreen.storyboard */; };
+		0DAC6F2A1CEF140E00523E86 /* testRouterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAC6F291CEF140E00523E86 /* testRouterTests.m */; };
+		0DAC6F351CEF140E00523E86 /* testRouterUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAC6F341CEF140E00523E86 /* testRouterUITests.m */; };
+		0DAC6F441CEF159100523E86 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAC6F431CEF159100523E86 /* SecondViewController.m */; };
+		0DAC6F471CEF3E2700523E86 /* Student.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAC6F461CEF3E2700523E86 /* Student.m */; };
+		0DAC6F4A1CEF3EC200523E86 /* Favourite.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAC6F491CEF3EC200523E86 /* Favourite.m */; };
+		405E298D9A71DE67465B172B /* libPods-testRouter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C805BAF06F9A8C712A11B3E /* libPods-testRouter.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0DAC6F261CEF140E00523E86 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0DAC6F041CEF140E00523E86 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0DAC6F0B1CEF140E00523E86;
+			remoteInfo = testRouter;
+		};
+		0DAC6F311CEF140E00523E86 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0DAC6F041CEF140E00523E86 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0DAC6F0B1CEF140E00523E86;
+			remoteInfo = testRouter;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0DAC6F0C1CEF140E00523E86 /* testRouter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testRouter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0DAC6F101CEF140E00523E86 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		0DAC6F121CEF140E00523E86 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		0DAC6F131CEF140E00523E86 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		0DAC6F151CEF140E00523E86 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		0DAC6F161CEF140E00523E86 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		0DAC6F191CEF140E00523E86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		0DAC6F1B1CEF140E00523E86 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0DAC6F1E1CEF140E00523E86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		0DAC6F201CEF140E00523E86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0DAC6F251CEF140E00523E86 /* testRouterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = testRouterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0DAC6F291CEF140E00523E86 /* testRouterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = testRouterTests.m; sourceTree = "<group>"; };
+		0DAC6F2B1CEF140E00523E86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0DAC6F301CEF140E00523E86 /* testRouterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = testRouterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0DAC6F341CEF140E00523E86 /* testRouterUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = testRouterUITests.m; sourceTree = "<group>"; };
+		0DAC6F361CEF140E00523E86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0DAC6F421CEF159100523E86 /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
+		0DAC6F431CEF159100523E86 /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		0DAC6F451CEF3E2700523E86 /* Student.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Student.h; sourceTree = "<group>"; };
+		0DAC6F461CEF3E2700523E86 /* Student.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Student.m; sourceTree = "<group>"; };
+		0DAC6F481CEF3EC200523E86 /* Favourite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Favourite.h; sourceTree = "<group>"; };
+		0DAC6F491CEF3EC200523E86 /* Favourite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Favourite.m; sourceTree = "<group>"; };
+		2C805BAF06F9A8C712A11B3E /* libPods-testRouter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-testRouter.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		67D1C553DAC8D96FC0248203 /* Pods-testRouter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-testRouter.release.xcconfig"; path = "Pods/Target Support Files/Pods-testRouter/Pods-testRouter.release.xcconfig"; sourceTree = "<group>"; };
+		B6780E3B0C06E4D7F518519B /* Pods-testRouter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-testRouter.debug.xcconfig"; path = "Pods/Target Support Files/Pods-testRouter/Pods-testRouter.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0DAC6F091CEF140E00523E86 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				405E298D9A71DE67465B172B /* libPods-testRouter.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0DAC6F221CEF140E00523E86 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0DAC6F2D1CEF140E00523E86 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0DAC6F031CEF140E00523E86 = {
+			isa = PBXGroup;
+			children = (
+				0DAC6F0E1CEF140E00523E86 /* testRouter */,
+				0DAC6F281CEF140E00523E86 /* testRouterTests */,
+				0DAC6F331CEF140E00523E86 /* testRouterUITests */,
+				0DAC6F0D1CEF140E00523E86 /* Products */,
+				AA80EE4DEF727154215CA30F /* Pods */,
+				2A3DF5E3123B7A1CD30037F3 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		0DAC6F0D1CEF140E00523E86 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0DAC6F0C1CEF140E00523E86 /* testRouter.app */,
+				0DAC6F251CEF140E00523E86 /* testRouterTests.xctest */,
+				0DAC6F301CEF140E00523E86 /* testRouterUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0DAC6F0E1CEF140E00523E86 /* testRouter */ = {
+			isa = PBXGroup;
+			children = (
+				0DAC6F121CEF140E00523E86 /* AppDelegate.h */,
+				0DAC6F131CEF140E00523E86 /* AppDelegate.m */,
+				0DAC6F151CEF140E00523E86 /* ViewController.h */,
+				0DAC6F161CEF140E00523E86 /* ViewController.m */,
+				0DAC6F181CEF140E00523E86 /* Main.storyboard */,
+				0DAC6F1B1CEF140E00523E86 /* Assets.xcassets */,
+				0DAC6F1D1CEF140E00523E86 /* LaunchScreen.storyboard */,
+				0DAC6F201CEF140E00523E86 /* Info.plist */,
+				0DAC6F0F1CEF140E00523E86 /* Supporting Files */,
+				0DAC6F421CEF159100523E86 /* SecondViewController.h */,
+				0DAC6F431CEF159100523E86 /* SecondViewController.m */,
+				0DAC6F451CEF3E2700523E86 /* Student.h */,
+				0DAC6F461CEF3E2700523E86 /* Student.m */,
+				0DAC6F481CEF3EC200523E86 /* Favourite.h */,
+				0DAC6F491CEF3EC200523E86 /* Favourite.m */,
+			);
+			path = testRouter;
+			sourceTree = "<group>";
+		};
+		0DAC6F0F1CEF140E00523E86 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0DAC6F101CEF140E00523E86 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0DAC6F281CEF140E00523E86 /* testRouterTests */ = {
+			isa = PBXGroup;
+			children = (
+				0DAC6F291CEF140E00523E86 /* testRouterTests.m */,
+				0DAC6F2B1CEF140E00523E86 /* Info.plist */,
+			);
+			path = testRouterTests;
+			sourceTree = "<group>";
+		};
+		0DAC6F331CEF140E00523E86 /* testRouterUITests */ = {
+			isa = PBXGroup;
+			children = (
+				0DAC6F341CEF140E00523E86 /* testRouterUITests.m */,
+				0DAC6F361CEF140E00523E86 /* Info.plist */,
+			);
+			path = testRouterUITests;
+			sourceTree = "<group>";
+		};
+		2A3DF5E3123B7A1CD30037F3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2C805BAF06F9A8C712A11B3E /* libPods-testRouter.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AA80EE4DEF727154215CA30F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B6780E3B0C06E4D7F518519B /* Pods-testRouter.debug.xcconfig */,
+				67D1C553DAC8D96FC0248203 /* Pods-testRouter.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0DAC6F0B1CEF140E00523E86 /* testRouter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0DAC6F391CEF140E00523E86 /* Build configuration list for PBXNativeTarget "testRouter" */;
+			buildPhases = (
+				C0830D30DCC36928D5D69243 /* 📦 Check Pods Manifest.lock */,
+				0DAC6F081CEF140E00523E86 /* Sources */,
+				0DAC6F091CEF140E00523E86 /* Frameworks */,
+				0DAC6F0A1CEF140E00523E86 /* Resources */,
+				6A8E0E50ECCA2F4FAE770F7F /* 📦 Embed Pods Frameworks */,
+				C730F78B3369BB900E0ECE95 /* 📦 Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = testRouter;
+			productName = testRouter;
+			productReference = 0DAC6F0C1CEF140E00523E86 /* testRouter.app */;
+			productType = "com.apple.product-type.application";
+		};
+		0DAC6F241CEF140E00523E86 /* testRouterTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0DAC6F3C1CEF140E00523E86 /* Build configuration list for PBXNativeTarget "testRouterTests" */;
+			buildPhases = (
+				0DAC6F211CEF140E00523E86 /* Sources */,
+				0DAC6F221CEF140E00523E86 /* Frameworks */,
+				0DAC6F231CEF140E00523E86 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0DAC6F271CEF140E00523E86 /* PBXTargetDependency */,
+			);
+			name = testRouterTests;
+			productName = testRouterTests;
+			productReference = 0DAC6F251CEF140E00523E86 /* testRouterTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		0DAC6F2F1CEF140E00523E86 /* testRouterUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0DAC6F3F1CEF140E00523E86 /* Build configuration list for PBXNativeTarget "testRouterUITests" */;
+			buildPhases = (
+				0DAC6F2C1CEF140E00523E86 /* Sources */,
+				0DAC6F2D1CEF140E00523E86 /* Frameworks */,
+				0DAC6F2E1CEF140E00523E86 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0DAC6F321CEF140E00523E86 /* PBXTargetDependency */,
+			);
+			name = testRouterUITests;
+			productName = testRouterUITests;
+			productReference = 0DAC6F301CEF140E00523E86 /* testRouterUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0DAC6F041CEF140E00523E86 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = iKingsly;
+				TargetAttributes = {
+					0DAC6F0B1CEF140E00523E86 = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+					0DAC6F241CEF140E00523E86 = {
+						CreatedOnToolsVersion = 7.2.1;
+						TestTargetID = 0DAC6F0B1CEF140E00523E86;
+					};
+					0DAC6F2F1CEF140E00523E86 = {
+						CreatedOnToolsVersion = 7.2.1;
+						TestTargetID = 0DAC6F0B1CEF140E00523E86;
+					};
+				};
+			};
+			buildConfigurationList = 0DAC6F071CEF140E00523E86 /* Build configuration list for PBXProject "testRouter" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 0DAC6F031CEF140E00523E86;
+			productRefGroup = 0DAC6F0D1CEF140E00523E86 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0DAC6F0B1CEF140E00523E86 /* testRouter */,
+				0DAC6F241CEF140E00523E86 /* testRouterTests */,
+				0DAC6F2F1CEF140E00523E86 /* testRouterUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0DAC6F0A1CEF140E00523E86 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0DAC6F1F1CEF140E00523E86 /* LaunchScreen.storyboard in Resources */,
+				0DAC6F1C1CEF140E00523E86 /* Assets.xcassets in Resources */,
+				0DAC6F1A1CEF140E00523E86 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0DAC6F231CEF140E00523E86 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0DAC6F2E1CEF140E00523E86 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6A8E0E50ECCA2F4FAE770F7F /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-testRouter/Pods-testRouter-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C0830D30DCC36928D5D69243 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C730F78B3369BB900E0ECE95 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-testRouter/Pods-testRouter-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0DAC6F081CEF140E00523E86 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0DAC6F441CEF159100523E86 /* SecondViewController.m in Sources */,
+				0DAC6F4A1CEF3EC200523E86 /* Favourite.m in Sources */,
+				0DAC6F171CEF140E00523E86 /* ViewController.m in Sources */,
+				0DAC6F471CEF3E2700523E86 /* Student.m in Sources */,
+				0DAC6F141CEF140E00523E86 /* AppDelegate.m in Sources */,
+				0DAC6F111CEF140E00523E86 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0DAC6F211CEF140E00523E86 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0DAC6F2A1CEF140E00523E86 /* testRouterTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0DAC6F2C1CEF140E00523E86 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0DAC6F351CEF140E00523E86 /* testRouterUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0DAC6F271CEF140E00523E86 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0DAC6F0B1CEF140E00523E86 /* testRouter */;
+			targetProxy = 0DAC6F261CEF140E00523E86 /* PBXContainerItemProxy */;
+		};
+		0DAC6F321CEF140E00523E86 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0DAC6F0B1CEF140E00523E86 /* testRouter */;
+			targetProxy = 0DAC6F311CEF140E00523E86 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		0DAC6F181CEF140E00523E86 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0DAC6F191CEF140E00523E86 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		0DAC6F1D1CEF140E00523E86 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0DAC6F1E1CEF140E00523E86 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0DAC6F371CEF140E00523E86 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0DAC6F381CEF140E00523E86 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0DAC6F3A1CEF140E00523E86 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B6780E3B0C06E4D7F518519B /* Pods-testRouter.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = testRouter/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikingsly.testRouter;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		0DAC6F3B1CEF140E00523E86 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 67D1C553DAC8D96FC0248203 /* Pods-testRouter.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = testRouter/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikingsly.testRouter;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		0DAC6F3D1CEF140E00523E86 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = testRouterTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikingsly.testRouterTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/testRouter.app/testRouter";
+			};
+			name = Debug;
+		};
+		0DAC6F3E1CEF140E00523E86 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = testRouterTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikingsly.testRouterTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/testRouter.app/testRouter";
+			};
+			name = Release;
+		};
+		0DAC6F401CEF140E00523E86 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = testRouterUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikingsly.testRouterUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = testRouter;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		0DAC6F411CEF140E00523E86 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = testRouterUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikingsly.testRouterUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = testRouter;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0DAC6F071CEF140E00523E86 /* Build configuration list for PBXProject "testRouter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0DAC6F371CEF140E00523E86 /* Debug */,
+				0DAC6F381CEF140E00523E86 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0DAC6F391CEF140E00523E86 /* Build configuration list for PBXNativeTarget "testRouter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0DAC6F3A1CEF140E00523E86 /* Debug */,
+				0DAC6F3B1CEF140E00523E86 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0DAC6F3C1CEF140E00523E86 /* Build configuration list for PBXNativeTarget "testRouterTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0DAC6F3D1CEF140E00523E86 /* Debug */,
+				0DAC6F3E1CEF140E00523E86 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0DAC6F3F1CEF140E00523E86 /* Build configuration list for PBXNativeTarget "testRouterUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0DAC6F401CEF140E00523E86 /* Debug */,
+				0DAC6F411CEF140E00523E86 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0DAC6F041CEF140E00523E86 /* Project object */;
+}
