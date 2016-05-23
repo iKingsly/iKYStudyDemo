@@ -1,0 +1,4 @@
+platform :ios, '7.0'
+target 'studyRAC' do
+pod 'ReactiveCocoa', '2.4.7'
+end
