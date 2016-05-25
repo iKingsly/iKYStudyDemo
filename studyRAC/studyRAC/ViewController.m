@@ -252,25 +252,120 @@
 //    }];
 //
     
-    RACSubject *letters = [RACSubject subject];
-    RACSubject *numbers = [RACSubject subject];
-    RACSignal *signalOfSignal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        [subscriber sendNext:letters];
-        [subscriber sendNext:numbers];
+//    RACSubject *letters = [RACSubject subject];
+//    RACSubject *numbers = [RACSubject subject];
+//    RACSignal *signalOfSignal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+//        [subscriber sendNext:letters];
+//        [subscriber sendNext:numbers];
+//        [subscriber sendCompleted];
+//        return nil;
+//    }];
+//
+//    RACSignal *flattend = [signalOfSignal flatten];
+//
+//    [signalOfSignal subscribeNext:^(NSString *x) {
+//        NSLog(@"%@",x);
+//    }];
+//    [letters sendNext:@"A"];
+//    [numbers sendNext:@"1"];
+//    [letters sendNext:@"B"];
+//    [letters sendNext:@"C"];
+//    [numbers sendNext:@"2"];
+    // 冷信号转化为热信号
+    RACSignal *coldSignal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        NSLog(@"Cold Signal be subscibed");
+        [[RACScheduler mainThreadScheduler] afterDelay:1.5 schedule:^{
+            [subscriber sendNext:@"A"];
+        }];
+        
+        [[RACScheduler mainThreadScheduler] afterDelay:3 schedule:^{
+            [subscriber sendNext:@"B"];
+        }];
+        
+        [[RACScheduler mainThreadScheduler] afterDelay:5 schedule:^{
+            [subscriber sendCompleted];
+        }];
+        
+        return nil;
+    }];
+    
+    // 1
+//    RACSubject *subject = [RACSubject subject];
+//    NSLog(@"Subject Created");
+//    [[RACScheduler mainThreadScheduler] afterDelay:2 schedule:^{
+//        [coldSignal subscribe:subject];
+//    }];
+//    
+//    [subject subscribeNext:^(id x) {
+//        NSLog(@"subscribe 1 Receiver value : %@.",x);
+//    }];
+//    
+//    [[RACScheduler mainThreadScheduler] afterDelay:4 schedule:^{
+//       [subject subscribeNext:^(id x) {
+//           NSLog(@"subscribe 2 Receiver value : %@",x);
+//       }];
+//    }];
+    
+    // 2
+    RACSubject *subject = [RACSubject subject];
+    NSLog(@"subject create");
+    
+    RACMulticastConnection *multicastConnection = [coldSignal multicast:subject];
+    RACSignal *hotSignal = multicastConnection.autoconnect;
+    
+    [[RACScheduler mainThreadScheduler] afterDelay:2 schedule:^{
+       [hotSignal subscribeNext:^(id x) {
+           NSLog(@"subscribe 1 Receiver value : %@.",x);
+       }];
+    }];
+   
+    [[RACScheduler mainThreadScheduler] afterDelay:4 schedule:^{
+       [subject subscribeNext:^(id x) {
+           NSLog(@"subscribe 2 Receiver value : %@",x);
+       }];
+    }];
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"Alert" delegate:nil cancelButtonTitle:@"YES" otherButtonTitles:@"NO", nil];
+    [[alertView rac_buttonClickedSignal] subscribeNext:^(NSNumber *indexNumber) {
+        if ([indexNumber intValue] == 1) {
+            NSLog(@"You touch no button");
+        }else{
+            NSLog(@"You touch Yes button");
+        }
+        
+    }];
+//    [alertView show];
+    NSArray *array = @[@(1)];
+    [[array rac_willDeallocSignal] subscribeCompleted:^{
+        NSLog(@"oops, i will be gone");
+    }];
+    array = nil;
+    
+    [self test];
+}
+
+- (void)test{
+    RACSignal *signalA = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        double delayInSeconds = 2.0;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [subscriber sendNext:@"A"];
+            [subscriber sendNext:@"B"];
+        });
+        return nil;
+    }];
+    
+    RACSignal *signalB = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        [subscriber sendNext:@"B"];
+        [subscriber sendNext:@"other B"];
         [subscriber sendCompleted];
         return nil;
     }];
+    
+    [self rac_liftSelector:@selector(doA:withB:) withSignals:signalA,signalB, nil];
+}
 
-    RACSignal *flattend = [signalOfSignal flatten];
-
-    [signalOfSignal subscribeNext:^(NSString *x) {
-        NSLog(@"%@",x);
-    }];
-    [letters sendNext:@"A"];
-    [numbers sendNext:@"1"];
-    [letters sendNext:@"B"];
-    [letters sendNext:@"C"];
-    [numbers sendNext:@"2"];
+- (void)doA:(NSString *)A withB:(NSString *)B{
+    NSLog(@"A %@ B %@",A,B);
 }
 
 - (void)didReceiveMemoryWarning {
