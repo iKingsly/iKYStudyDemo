@@ -1,4 +1,6 @@
-platform :ios, '7.0'
-target 'studyRAC' do
-pod 'ReactiveCocoa', '2.4.7'
+platform :ios, '8.0'
+use_frameworks!
+
+target 'RWReactivePlayground' do
+  pod 'ReactiveCocoa’,’~> 4.0.2-alpha-1'
 end
