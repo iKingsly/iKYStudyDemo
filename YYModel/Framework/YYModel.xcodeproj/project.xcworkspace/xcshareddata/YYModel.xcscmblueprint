@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "C3339B365A7E5D6D5058E70B093D4E7EA5F9D6A9",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "E0628D3711170EF5959E005444297428A26FD7E8" : 0,
+    "C3339B365A7E5D6D5058E70B093D4E7EA5F9D6A9" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "90971711-32CD-45BB-AF6D-F292F0EB5FF5",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "E0628D3711170EF5959E005444297428A26FD7E8" : "..",
+    "C3339B365A7E5D6D5058E70B093D4E7EA5F9D6A9" : "YYModel\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "YYModel",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Framework\/YYModel.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:ibireme\/YYModel.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C3339B365A7E5D6D5058E70B093D4E7EA5F9D6A9"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:iKingsly\/iKYStudyDemo.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E0628D3711170EF5959E005444297428A26FD7E8"
+    }
+  ]
+}
