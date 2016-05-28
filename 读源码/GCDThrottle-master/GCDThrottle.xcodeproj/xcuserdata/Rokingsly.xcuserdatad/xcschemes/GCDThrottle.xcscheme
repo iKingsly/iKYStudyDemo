@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E4CC20721CF890590058C0A7"
-               BuildableName = "iKYModel"
-               BlueprintName = "iKYModel"
-               ReferencedContainer = "container:iKYModel.xcodeproj">
+               BlueprintIdentifier = "879FE3961CF3F51600F6DC4D"
+               BuildableName = "GCDThrottle.app"
+               BlueprintName = "GCDThrottle"
+               ReferencedContainer = "container:GCDThrottle.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E4CC20721CF890590058C0A7"
-            BuildableName = "iKYModel"
-            BlueprintName = "iKYModel"
-            ReferencedContainer = "container:iKYModel.xcodeproj">
+            BlueprintIdentifier = "879FE3961CF3F51600F6DC4D"
+            BuildableName = "GCDThrottle.app"
+            BlueprintName = "GCDThrottle"
+            ReferencedContainer = "container:GCDThrottle.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -55,10 +55,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E4CC20721CF890590058C0A7"
-            BuildableName = "iKYModel"
-            BlueprintName = "iKYModel"
-            ReferencedContainer = "container:iKYModel.xcodeproj">
+            BlueprintIdentifier = "879FE3961CF3F51600F6DC4D"
+            BuildableName = "GCDThrottle.app"
+            BlueprintName = "GCDThrottle"
+            ReferencedContainer = "container:GCDThrottle.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -74,10 +74,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E4CC20721CF890590058C0A7"
-            BuildableName = "iKYModel"
-            BlueprintName = "iKYModel"
-            ReferencedContainer = "container:iKYModel.xcodeproj">
+            BlueprintIdentifier = "879FE3961CF3F51600F6DC4D"
+            BuildableName = "GCDThrottle.app"
+            BlueprintName = "GCDThrottle"
+            ReferencedContainer = "container:GCDThrottle.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
