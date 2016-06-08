@@ -5,7 +5,8 @@
 
 #import "RWTSearchResultsTableViewCell.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
-
+#import "RWTFlickrPhoto.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 @interface RWTSearchResultsTableViewCell ()
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -18,5 +19,15 @@
 @end
 
 @implementation RWTSearchResultsTableViewCell
+- (void)bindViewModel:(id)viewModel{
+    RWTFlickrPhoto *photo = viewModel;
+    
+    self.titleLabel.text = photo.title;
+    self.imageThumbnailView.contentMode = UIViewContentModeScaleToFill;
+    [self.imageThumbnailView setImageWithURL:photo.url];
+}
 
+- (void)setParallax:(CGFloat)value{
+    self.imageThumbnailView.transform = CGAffineTransformMakeTranslation(0, value);
+}
 @end

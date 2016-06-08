@@ -8,6 +8,7 @@
 
 #import "RWTFlickrSearchViewModel.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
+#import "RWTSearchResultsViewModel.h"
 @interface RWTFlickrSearchViewModel()
 @property (nonatomic, weak) id<RWTViewModelServices> services;
 @end
@@ -37,7 +38,10 @@
 }
 
 - (RACSignal *)executeSearchSignal{
-    return [[[self.services getFlickrSearchService] flickrSeachSignal:self.searchText] logAll];
+    return [[[self.services getFlickrSearchService] flickrSeachSignal:self.searchText] doNext:^(id result) {
+        RWTSearchResultsViewModel *resultsViewModel = [[RWTSearchResultsViewModel alloc] initWithSearchResults:result servieces:self.services];
+        [self.services pushViewModel:resultsViewModel];
+    }];
 }
 
 - (instancetype)initWithServices:(id<RWTViewModelServices>)services{

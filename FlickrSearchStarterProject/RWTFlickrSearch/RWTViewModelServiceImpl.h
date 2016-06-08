@@ -10,5 +10,5 @@
 #import "RWTViewModelServices.h"
 
 @interface RWTViewModelServiceImpl : NSObject<RWTViewModelServices>
-
+- (instancetype)initWithNavigationController:(UINavigationController *)navigationController;
 @end

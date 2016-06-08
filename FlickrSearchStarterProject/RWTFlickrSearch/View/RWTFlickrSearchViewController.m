@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *searchHistoryTable;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
 @property (weak, nonatomic) RWTFlickrSearchViewModel *viewModel;
+
 @end
 
 @implementation RWTFlickrSearchViewController
@@ -46,5 +47,6 @@
     [self.viewModel.executeSearch.executionSignals subscribeNext:^(id x) {
         [self.searchTextField resignFirstResponder];
     }];
+    
 }
 @end
