@@ -26,7 +26,7 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     [self.searchResultsTable registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
-    self.searchResultsTable.dataSource = self;
+//    self.searchResultsTable.dataSource = self;
     self.bindingHelper.delegate = self;
     [self bindViewModel];
 }
