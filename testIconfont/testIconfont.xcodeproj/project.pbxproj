@@ -1,0 +1,591 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0D0E32D51D0D39840041FCEF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D0E32D41D0D39840041FCEF /* main.m */; };
+		0D0E32D81D0D39840041FCEF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D0E32D71D0D39840041FCEF /* AppDelegate.m */; };
+		0D0E32DB1D0D39840041FCEF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D0E32DA1D0D39840041FCEF /* ViewController.m */; };
+		0D0E32DE1D0D39840041FCEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D0E32DC1D0D39840041FCEF /* Main.storyboard */; };
+		0D0E32E01D0D39840041FCEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D0E32DF1D0D39840041FCEF /* Assets.xcassets */; };
+		0D0E32E31D0D39840041FCEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D0E32E11D0D39840041FCEF /* LaunchScreen.storyboard */; };
+		0D0E32EE1D0D39840041FCEF /* testIconfontTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D0E32ED1D0D39840041FCEF /* testIconfontTests.m */; };
+		0D0E32F91D0D39840041FCEF /* testIconfontUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D0E32F81D0D39840041FCEF /* testIconfontUITests.m */; };
+		0D0E33131D0D399E0041FCEF /* demo.css in Resources */ = {isa = PBXBuildFile; fileRef = 0D0E33081D0D399E0041FCEF /* demo.css */; };
+		0D0E33141D0D399E0041FCEF /* demo.js in Resources */ = {isa = PBXBuildFile; fileRef = 0D0E33091D0D399E0041FCEF /* demo.js */; };
+		0D0E33151D0D399E0041FCEF /* demo.html in Resources */ = {isa = PBXBuildFile; fileRef = 0D0E330A1D0D399E0041FCEF /* demo.html */; };
+		0D0E33161D0D399E0041FCEF /* icomoon.eot in Resources */ = {isa = PBXBuildFile; fileRef = 0D0E330C1D0D399E0041FCEF /* icomoon.eot */; };
+		0D0E33171D0D399E0041FCEF /* icomoon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 0D0E330D1D0D399E0041FCEF /* icomoon.svg */; };
+		0D0E33181D0D399E0041FCEF /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D0E330E1D0D399E0041FCEF /* icomoon.ttf */; };
+		0D0E33191D0D399E0041FCEF /* icomoon.woff in Resources */ = {isa = PBXBuildFile; fileRef = 0D0E330F1D0D399E0041FCEF /* icomoon.woff */; };
+		0D0E331A1D0D399E0041FCEF /* Read Me.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0D0E33101D0D399E0041FCEF /* Read Me.txt */; };
+		0D0E331B1D0D399E0041FCEF /* selection.json in Resources */ = {isa = PBXBuildFile; fileRef = 0D0E33111D0D399E0041FCEF /* selection.json */; };
+		0D0E331C1D0D399E0041FCEF /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 0D0E33121D0D399E0041FCEF /* style.css */; };
+		0D0E331F1D0D3DF60041FCEF /* UIImage+iconFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D0E331E1D0D3DF60041FCEF /* UIImage+iconFont.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0D0E32EA1D0D39840041FCEF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0D0E32C81D0D39840041FCEF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0D0E32CF1D0D39840041FCEF;
+			remoteInfo = testIconfont;
+		};
+		0D0E32F51D0D39840041FCEF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0D0E32C81D0D39840041FCEF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0D0E32CF1D0D39840041FCEF;
+			remoteInfo = testIconfont;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0D0E32D01D0D39840041FCEF /* testIconfont.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testIconfont.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D0E32D41D0D39840041FCEF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		0D0E32D61D0D39840041FCEF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		0D0E32D71D0D39840041FCEF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		0D0E32D91D0D39840041FCEF /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		0D0E32DA1D0D39840041FCEF /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		0D0E32DD1D0D39840041FCEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		0D0E32DF1D0D39840041FCEF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0D0E32E21D0D39840041FCEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		0D0E32E41D0D39840041FCEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0D0E32E91D0D39840041FCEF /* testIconfontTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = testIconfontTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D0E32ED1D0D39840041FCEF /* testIconfontTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = testIconfontTests.m; sourceTree = "<group>"; };
+		0D0E32EF1D0D39840041FCEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0D0E32F41D0D39840041FCEF /* testIconfontUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = testIconfontUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D0E32F81D0D39840041FCEF /* testIconfontUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = testIconfontUITests.m; sourceTree = "<group>"; };
+		0D0E32FA1D0D39840041FCEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0D0E33081D0D399E0041FCEF /* demo.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = demo.css; sourceTree = "<group>"; };
+		0D0E33091D0D399E0041FCEF /* demo.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = demo.js; sourceTree = "<group>"; };
+		0D0E330A1D0D399E0041FCEF /* demo.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = demo.html; sourceTree = "<group>"; };
+		0D0E330C1D0D399E0041FCEF /* icomoon.eot */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.eot; sourceTree = "<group>"; };
+		0D0E330D1D0D399E0041FCEF /* icomoon.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = icomoon.svg; sourceTree = "<group>"; };
+		0D0E330E1D0D399E0041FCEF /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.ttf; sourceTree = "<group>"; };
+		0D0E330F1D0D399E0041FCEF /* icomoon.woff */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.woff; sourceTree = "<group>"; };
+		0D0E33101D0D399E0041FCEF /* Read Me.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Read Me.txt"; sourceTree = "<group>"; };
+		0D0E33111D0D399E0041FCEF /* selection.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = selection.json; sourceTree = "<group>"; };
+		0D0E33121D0D399E0041FCEF /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
+		0D0E331D1D0D3DF60041FCEF /* UIImage+iconFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+iconFont.h"; sourceTree = "<group>"; };
+		0D0E331E1D0D3DF60041FCEF /* UIImage+iconFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+iconFont.m"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0D0E32CD1D0D39840041FCEF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D0E32E61D0D39840041FCEF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D0E32F11D0D39840041FCEF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0D0E32C71D0D39840041FCEF = {
+			isa = PBXGroup;
+			children = (
+				0D0E32D21D0D39840041FCEF /* testIconfont */,
+				0D0E32EC1D0D39840041FCEF /* testIconfontTests */,
+				0D0E32F71D0D39840041FCEF /* testIconfontUITests */,
+				0D0E32D11D0D39840041FCEF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0D0E32D11D0D39840041FCEF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0D0E32D01D0D39840041FCEF /* testIconfont.app */,
+				0D0E32E91D0D39840041FCEF /* testIconfontTests.xctest */,
+				0D0E32F41D0D39840041FCEF /* testIconfontUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0D0E32D21D0D39840041FCEF /* testIconfont */ = {
+			isa = PBXGroup;
+			children = (
+				0D0E331D1D0D3DF60041FCEF /* UIImage+iconFont.h */,
+				0D0E331E1D0D3DF60041FCEF /* UIImage+iconFont.m */,
+				0D0E33061D0D399E0041FCEF /* icomoon27030 */,
+				0D0E32D61D0D39840041FCEF /* AppDelegate.h */,
+				0D0E32D71D0D39840041FCEF /* AppDelegate.m */,
+				0D0E32D91D0D39840041FCEF /* ViewController.h */,
+				0D0E32DA1D0D39840041FCEF /* ViewController.m */,
+				0D0E32DC1D0D39840041FCEF /* Main.storyboard */,
+				0D0E32DF1D0D39840041FCEF /* Assets.xcassets */,
+				0D0E32E11D0D39840041FCEF /* LaunchScreen.storyboard */,
+				0D0E32E41D0D39840041FCEF /* Info.plist */,
+				0D0E32D31D0D39840041FCEF /* Supporting Files */,
+			);
+			path = testIconfont;
+			sourceTree = "<group>";
+		};
+		0D0E32D31D0D39840041FCEF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0D0E32D41D0D39840041FCEF /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0D0E32EC1D0D39840041FCEF /* testIconfontTests */ = {
+			isa = PBXGroup;
+			children = (
+				0D0E32ED1D0D39840041FCEF /* testIconfontTests.m */,
+				0D0E32EF1D0D39840041FCEF /* Info.plist */,
+			);
+			path = testIconfontTests;
+			sourceTree = "<group>";
+		};
+		0D0E32F71D0D39840041FCEF /* testIconfontUITests */ = {
+			isa = PBXGroup;
+			children = (
+				0D0E32F81D0D39840041FCEF /* testIconfontUITests.m */,
+				0D0E32FA1D0D39840041FCEF /* Info.plist */,
+			);
+			path = testIconfontUITests;
+			sourceTree = "<group>";
+		};
+		0D0E33061D0D399E0041FCEF /* icomoon27030 */ = {
+			isa = PBXGroup;
+			children = (
+				0D0E33071D0D399E0041FCEF /* demo-files */,
+				0D0E330A1D0D399E0041FCEF /* demo.html */,
+				0D0E330B1D0D399E0041FCEF /* fonts */,
+				0D0E33101D0D399E0041FCEF /* Read Me.txt */,
+				0D0E33111D0D399E0041FCEF /* selection.json */,
+				0D0E33121D0D399E0041FCEF /* style.css */,
+			);
+			path = icomoon27030;
+			sourceTree = "<group>";
+		};
+		0D0E33071D0D399E0041FCEF /* demo-files */ = {
+			isa = PBXGroup;
+			children = (
+				0D0E33081D0D399E0041FCEF /* demo.css */,
+				0D0E33091D0D399E0041FCEF /* demo.js */,
+			);
+			path = "demo-files";
+			sourceTree = "<group>";
+		};
+		0D0E330B1D0D399E0041FCEF /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				0D0E330C1D0D399E0041FCEF /* icomoon.eot */,
+				0D0E330D1D0D399E0041FCEF /* icomoon.svg */,
+				0D0E330E1D0D399E0041FCEF /* icomoon.ttf */,
+				0D0E330F1D0D399E0041FCEF /* icomoon.woff */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0D0E32CF1D0D39840041FCEF /* testIconfont */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D0E32FD1D0D39840041FCEF /* Build configuration list for PBXNativeTarget "testIconfont" */;
+			buildPhases = (
+				0D0E32CC1D0D39840041FCEF /* Sources */,
+				0D0E32CD1D0D39840041FCEF /* Frameworks */,
+				0D0E32CE1D0D39840041FCEF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = testIconfont;
+			productName = testIconfont;
+			productReference = 0D0E32D01D0D39840041FCEF /* testIconfont.app */;
+			productType = "com.apple.product-type.application";
+		};
+		0D0E32E81D0D39840041FCEF /* testIconfontTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D0E33001D0D39840041FCEF /* Build configuration list for PBXNativeTarget "testIconfontTests" */;
+			buildPhases = (
+				0D0E32E51D0D39840041FCEF /* Sources */,
+				0D0E32E61D0D39840041FCEF /* Frameworks */,
+				0D0E32E71D0D39840041FCEF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0D0E32EB1D0D39840041FCEF /* PBXTargetDependency */,
+			);
+			name = testIconfontTests;
+			productName = testIconfontTests;
+			productReference = 0D0E32E91D0D39840041FCEF /* testIconfontTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		0D0E32F31D0D39840041FCEF /* testIconfontUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D0E33031D0D39840041FCEF /* Build configuration list for PBXNativeTarget "testIconfontUITests" */;
+			buildPhases = (
+				0D0E32F01D0D39840041FCEF /* Sources */,
+				0D0E32F11D0D39840041FCEF /* Frameworks */,
+				0D0E32F21D0D39840041FCEF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0D0E32F61D0D39840041FCEF /* PBXTargetDependency */,
+			);
+			name = testIconfontUITests;
+			productName = testIconfontUITests;
+			productReference = 0D0E32F41D0D39840041FCEF /* testIconfontUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0D0E32C81D0D39840041FCEF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = iKingsly;
+				TargetAttributes = {
+					0D0E32CF1D0D39840041FCEF = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+					0D0E32E81D0D39840041FCEF = {
+						CreatedOnToolsVersion = 7.2.1;
+						TestTargetID = 0D0E32CF1D0D39840041FCEF;
+					};
+					0D0E32F31D0D39840041FCEF = {
+						CreatedOnToolsVersion = 7.2.1;
+						TestTargetID = 0D0E32CF1D0D39840041FCEF;
+					};
+				};
+			};
+			buildConfigurationList = 0D0E32CB1D0D39840041FCEF /* Build configuration list for PBXProject "testIconfont" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 0D0E32C71D0D39840041FCEF;
+			productRefGroup = 0D0E32D11D0D39840041FCEF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0D0E32CF1D0D39840041FCEF /* testIconfont */,
+				0D0E32E81D0D39840041FCEF /* testIconfontTests */,
+				0D0E32F31D0D39840041FCEF /* testIconfontUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0D0E32CE1D0D39840041FCEF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D0E331B1D0D399E0041FCEF /* selection.json in Resources */,
+				0D0E33141D0D399E0041FCEF /* demo.js in Resources */,
+				0D0E33151D0D399E0041FCEF /* demo.html in Resources */,
+				0D0E331A1D0D399E0041FCEF /* Read Me.txt in Resources */,
+				0D0E33131D0D399E0041FCEF /* demo.css in Resources */,
+				0D0E33181D0D399E0041FCEF /* icomoon.ttf in Resources */,
+				0D0E33191D0D399E0041FCEF /* icomoon.woff in Resources */,
+				0D0E33161D0D399E0041FCEF /* icomoon.eot in Resources */,
+				0D0E32E31D0D39840041FCEF /* LaunchScreen.storyboard in Resources */,
+				0D0E33171D0D399E0041FCEF /* icomoon.svg in Resources */,
+				0D0E331C1D0D399E0041FCEF /* style.css in Resources */,
+				0D0E32E01D0D39840041FCEF /* Assets.xcassets in Resources */,
+				0D0E32DE1D0D39840041FCEF /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D0E32E71D0D39840041FCEF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D0E32F21D0D39840041FCEF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0D0E32CC1D0D39840041FCEF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D0E32DB1D0D39840041FCEF /* ViewController.m in Sources */,
+				0D0E331F1D0D3DF60041FCEF /* UIImage+iconFont.m in Sources */,
+				0D0E32D81D0D39840041FCEF /* AppDelegate.m in Sources */,
+				0D0E32D51D0D39840041FCEF /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D0E32E51D0D39840041FCEF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D0E32EE1D0D39840041FCEF /* testIconfontTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D0E32F01D0D39840041FCEF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D0E32F91D0D39840041FCEF /* testIconfontUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0D0E32EB1D0D39840041FCEF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0D0E32CF1D0D39840041FCEF /* testIconfont */;
+			targetProxy = 0D0E32EA1D0D39840041FCEF /* PBXContainerItemProxy */;
+		};
+		0D0E32F61D0D39840041FCEF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0D0E32CF1D0D39840041FCEF /* testIconfont */;
+			targetProxy = 0D0E32F51D0D39840041FCEF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		0D0E32DC1D0D39840041FCEF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0D0E32DD1D0D39840041FCEF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		0D0E32E11D0D39840041FCEF /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0D0E32E21D0D39840041FCEF /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0D0E32FB1D0D39840041FCEF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0D0E32FC1D0D39840041FCEF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0D0E32FE1D0D39840041FCEF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = testIconfont/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikingsly.testIconfont;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		0D0E32FF1D0D39840041FCEF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = testIconfont/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikingsly.testIconfont;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		0D0E33011D0D39840041FCEF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = testIconfontTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikingsly.testIconfontTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/testIconfont.app/testIconfont";
+			};
+			name = Debug;
+		};
+		0D0E33021D0D39840041FCEF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = testIconfontTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikingsly.testIconfontTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/testIconfont.app/testIconfont";
+			};
+			name = Release;
+		};
+		0D0E33041D0D39840041FCEF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = testIconfontUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikingsly.testIconfontUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = testIconfont;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		0D0E33051D0D39840041FCEF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = testIconfontUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikingsly.testIconfontUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = testIconfont;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0D0E32CB1D0D39840041FCEF /* Build configuration list for PBXProject "testIconfont" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D0E32FB1D0D39840041FCEF /* Debug */,
+				0D0E32FC1D0D39840041FCEF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0D0E32FD1D0D39840041FCEF /* Build configuration list for PBXNativeTarget "testIconfont" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D0E32FE1D0D39840041FCEF /* Debug */,
+				0D0E32FF1D0D39840041FCEF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		0D0E33001D0D39840041FCEF /* Build configuration list for PBXNativeTarget "testIconfontTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D0E33011D0D39840041FCEF /* Debug */,
+				0D0E33021D0D39840041FCEF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		0D0E33031D0D39840041FCEF /* Build configuration list for PBXNativeTarget "testIconfontUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D0E33041D0D39840041FCEF /* Debug */,
+				0D0E33051D0D39840041FCEF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0D0E32C81D0D39840041FCEF /* Project object */;
+}
