@@ -435,23 +435,27 @@ static force_inline id YYValueForMultiKeys(__unsafe_unretained NSDictionary *dic
 @end
 
 
-/// YYModelMeta 元类存放一些额外信息
+/// YYModelMeta 对ClassInfo增加描述
 @interface _YYModelMeta : NSObject {
     @package
     YYClassInfo *_classInfo;
-    /// Key:mapped key and key path, Value:_YYModelPropertyMeta.
+
+    // json key 和 property Meta 的映射关系字典
     NSDictionary *_mapper;
-    /// Array<_YYModelPropertyMeta>, all property meta of this model.
+
+    // 所有属性的propertyMeta
     NSArray *_allPropertyMetas;
-    /// Array<_YYModelPropertyMeta>, property meta which is mapped to a key path.
+
+    // 映射jsonkeyPath 的PropertyMetas
     NSArray *_keyPathPropertyMetas;
-    /// Array<_YYModelPropertyMeta>, property meta which is mapped to multi keys.
-    NSArray *_multiKeysPropertyMetas;
-    /// The number of mapped key (and key path), same to _mapper.count.
-    NSUInteger _keyMappedCount;
-    /// Model class type.
-    YYEncodingNSType _nsType;
     
+    // 映射多个jsonKey的propertyMeta
+    NSArray *_multiKeysPropertyMetas;
+    /// 需要映射的属性的总个数
+    NSUInteger _keyMappedCount;
+    /// Model对应的Foundation class类型
+    YYEncodingNSType _nsType;
+    // 事否实现了自定义的映射关系表 这里之前已经解释过 就不再赘述
     BOOL _hasCustomWillTransformFromDictionary;
     BOOL _hasCustomTransformFromDictionary;
     BOOL _hasCustomTransformToDictionary;
@@ -461,11 +465,13 @@ static force_inline id YYValueForMultiKeys(__unsafe_unretained NSDictionary *dic
 
 @implementation _YYModelMeta
 - (instancetype)initWithClass:(Class)cls {
+    // 创建classInfo对象
     YYClassInfo *classInfo = [YYClassInfo classInfoWithClass:cls];
+    // 1. 判断是否合法
     if (!classInfo) return nil;
     self = [super init];
     
-    // Get black list
+    // 2. 获得黑名单
     NSSet *blacklist = nil;
     if ([cls respondsToSelector:@selector(modelPropertyBlacklist)]) {
         NSArray *properties = [(id<YYModel>)cls modelPropertyBlacklist];
@@ -474,7 +480,7 @@ static force_inline id YYValueForMultiKeys(__unsafe_unretained NSDictionary *dic
         }
     }
     
-    // Get white list
+    // 3. 获得白名单
     NSSet *whitelist = nil;
     if ([cls respondsToSelector:@selector(modelPropertyWhitelist)]) {
         NSArray *properties = [(id<YYModel>)cls modelPropertyWhitelist];
@@ -483,11 +489,17 @@ static force_inline id YYValueForMultiKeys(__unsafe_unretained NSDictionary *dic
         }
     }
     
-    // Get container property's generic class
+    // 4. 获取容器属性中的映射关系字典
     NSDictionary *genericMapper = nil;
-    if ([cls respondsToSelector:@selector(modelContainerPropertyGenericClass)]) {
+    if ([cls respondsToSelector:@selector(modelContainerPropertyGenericClass)]) {// 判断类中是否实现了对应的modelContainerPropertyGenericClass方法
+        /* 例如
+        @{@"shadows" : [YYShadow class],
+        @"borders" : YYBorder.class,
+        @"attachments" : @"YYAttachment" };
+        */
         genericMapper = [(id<YYModel>)cls modelContainerPropertyGenericClass];
         if (genericMapper) {
+            // 将字段名和对应的class存放在字典里
             NSMutableDictionary *tmp = [NSMutableDictionary new];
             [genericMapper enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
                 if (![key isKindOfClass:[NSString class]]) return;
@@ -506,51 +518,75 @@ static force_inline id YYValueForMultiKeys(__unsafe_unretained NSDictionary *dic
         }
     }
     
-    // Create all property metas.
+    // 5. 创建Class中 所有属性的PropertyMeta对象 加入到字典中
+    // 用来保存class 和其父类的所有属性 除了NSOject外
     NSMutableDictionary *allPropertyMetas = [NSMutableDictionary new];
     YYClassInfo *curClassInfo = classInfo;
     while (curClassInfo && curClassInfo.superCls != nil) { // recursive parse super class, but ignore root class (NSObject/NSProxy)
+        // 遍历当前ClassInfo 中的所有PropertyInfo， 将它们封装成PropertyMeta
         for (YYClassPropertyInfo *propertyInfo in curClassInfo.propertyInfos.allValues) {
+            // 检查是否合法和黑名单白名单
             if (!propertyInfo.name) continue;
             if (blacklist && [blacklist containsObject:propertyInfo.name]) continue;
             if (whitelist && ![whitelist containsObject:propertyInfo.name]) continue;
+            
+            // 通过propetyInfo来创建一个meta对象
             _YYModelPropertyMeta *meta = [_YYModelPropertyMeta metaWithClassInfo:classInfo
                                                                     propertyInfo:propertyInfo
                                                                          generic:genericMapper[propertyInfo.name]];
+            // meta nanme必须非空
             if (!meta || !meta->_name) continue;
+            // 必须实现get方法和set方法
             if (!meta->_getter || !meta->_setter) continue;
+            // 字典中没有这个字段 避免重复操作
             if (allPropertyMetas[meta->_name]) continue;
             allPropertyMetas[meta->_name] = meta;
         }
+        // 遍历父类的property
         curClassInfo = curClassInfo.superClassInfo;
     }
+    // 判断是否为空，不为空赋值给model声明中的_allPropertyMetas
     if (allPropertyMetas.count) _allPropertyMetas = allPropertyMetas.allValues.copy;
     
-    // create mapper
+    // 创建映射关系 jsonkey ：propertyMeta
     NSMutableDictionary *mapper = [NSMutableDictionary new];
     NSMutableArray *keyPathPropertyMetas = [NSMutableArray new];
     NSMutableArray *multiKeysPropertyMetas = [NSMutableArray new];
     
+    // 是否实现自定义的映射表
     if ([cls respondsToSelector:@selector(modelCustomPropertyMapper)]) {
+        // 获得自定义的映射表
         NSDictionary *customMapper = [(id <YYModel>)cls modelCustomPropertyMapper];
+        
+        // 遍历自定义的字典
         [customMapper enumerateKeysAndObjectsUsingBlock:^(NSString *propertyName, NSString *mappedToKey, BOOL *stop) {
+            // 创建propetyMeta
             _YYModelPropertyMeta *propertyMeta = allPropertyMetas[propertyName];
             if (!propertyMeta) return;
+            // 由于用户自定义映射，把原来映射的规则删除
             [allPropertyMetas removeObjectForKey:propertyName];
             
-            if ([mappedToKey isKindOfClass:[NSString class]]) {
+            if ([mappedToKey isKindOfClass:[NSString class]]) { // 判断key字段是否为非空NSString
                 if (mappedToKey.length == 0) return;
-                
+                // 直接保存property映射的key
                 propertyMeta->_mappedToKey = mappedToKey;
+                // 如果是keyPath的情况， 用数组来处理
                 NSArray *keyPath = [mappedToKey componentsSeparatedByString:@"."];
+                
+                // {@"name":@"user.name"} => name : @[@"user",@"name"]
                 if (keyPath.count > 1) {
+                    // 保存keyPath映射关系
                     propertyMeta->_mappedToKeyPath = keyPath;
+                    // 添加到keyPathPropertyMetas数组中
                     [keyPathPropertyMetas addObject:propertyMeta];
                 }
+                
+                // 多个属性的时候，用next指针来指向前一个jsonKey映射的meta
                 propertyMeta->_next = mapper[mappedToKey] ?: nil;
+                // 保存jsonKey映射到最新的meta对象
                 mapper[mappedToKey] = propertyMeta;
                 
-            } else if ([mappedToKey isKindOfClass:[NSArray class]]) {
+            } else if ([mappedToKey isKindOfClass:[NSArray class]]) { // 如果是数组 属于一个属性映射多个jsonKey
                 
                 NSMutableArray *mappedToKeyArray = [NSMutableArray new];
                 for (NSString *oneKey in ((NSArray *)mappedToKey)) {
@@ -580,16 +616,21 @@ static force_inline id YYValueForMultiKeys(__unsafe_unretained NSDictionary *dic
         }];
     }
     
+    // 处理没有自定义映射规则的属性
+    // 在上面的处理中 从allPropertyMetas中删除了有自定义映射规则的meta
+    // 剩下来的是没有自定义规则的属性，在这里就让这些属性的mappedKey等于属性名
     [allPropertyMetas enumerateKeysAndObjectsUsingBlock:^(NSString *name, _YYModelPropertyMeta *propertyMeta, BOOL *stop) {
+        // 直接让mappedKey等于属性名
         propertyMeta->_mappedToKey = name;
         propertyMeta->_next = mapper[name] ?: nil;
         mapper[name] = propertyMeta;
     }];
     
+    // 对映射的数据做修正处理
     if (mapper.count) _mapper = mapper;
     if (keyPathPropertyMetas) _keyPathPropertyMetas = keyPathPropertyMetas;
     if (multiKeysPropertyMetas) _multiKeysPropertyMetas = multiKeysPropertyMetas;
-    
+
     _classInfo = classInfo;
     _keyMappedCount = _allPropertyMetas.count;
     _nsType = YYClassGetNSType(cls);
@@ -601,9 +642,12 @@ static force_inline id YYValueForMultiKeys(__unsafe_unretained NSDictionary *dic
     return self;
 }
 
-/// Returns the cached model class meta
+/// 缓存优化class对应的ClassMeta
 + (instancetype)metaWithClass:(Class)cls {
+    // cls 为空
     if (!cls) return nil;
+    
+    // 单例的CFMutableDictionary字典， 用来缓存ClassMeta
     static CFMutableDictionaryRef cache;
     static dispatch_once_t onceToken;
     static dispatch_semaphore_t lock;
@@ -612,12 +656,17 @@ static force_inline id YYValueForMultiKeys(__unsafe_unretained NSDictionary *dic
         lock = dispatch_semaphore_create(1);
     });
     dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
+    
+    // 先从缓存中尝试获取
     _YYModelMeta *meta = CFDictionaryGetValue(cache, (__bridge const void *)(cls));
     dispatch_semaphore_signal(lock);
+    
+    // 如果没有缓存过 则需要重写建立
     if (!meta || meta->_classInfo.needUpdate) {
         meta = [[_YYModelMeta alloc] initWithClass:cls];
-        if (meta) {
+        if (meta) { // 将创建好的meta存入字典
             dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
+            // 对cls对应的meta进行缓存处理
             CFDictionarySetValue(cache, (__bridge const void *)(cls), (__bridge const void *)(meta));
             dispatch_semaphore_signal(lock);
         }
