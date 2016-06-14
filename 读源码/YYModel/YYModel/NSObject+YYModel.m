@@ -12,7 +12,7 @@
 #import "NSObject+YYModel.h"
 #import "YYClassInfo.h"
 #import <objc/message.h>
-
+#import <UIKit/UIKit.h>
 #define force_inline __inline__ __attribute__((always_inline))
 
 /// 不同NS类型的Type值

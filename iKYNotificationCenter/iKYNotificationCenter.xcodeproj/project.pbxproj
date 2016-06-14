@@ -1,0 +1,547 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0D3FEE991D0FE3CC004E702B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FEE981D0FE3CC004E702B /* main.m */; };
+		0D3FEE9C1D0FE3CC004E702B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FEE9B1D0FE3CC004E702B /* AppDelegate.m */; };
+		0D3FEE9F1D0FE3CC004E702B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FEE9E1D0FE3CC004E702B /* ViewController.m */; };
+		0D3FEEA21D0FE3CC004E702B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D3FEEA01D0FE3CC004E702B /* Main.storyboard */; };
+		0D3FEEA41D0FE3CC004E702B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D3FEEA31D0FE3CC004E702B /* Assets.xcassets */; };
+		0D3FEEA71D0FE3CC004E702B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D3FEEA51D0FE3CC004E702B /* LaunchScreen.storyboard */; };
+		0D3FEEB21D0FE3CC004E702B /* iKYNotificationCenterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FEEB11D0FE3CC004E702B /* iKYNotificationCenterTests.m */; };
+		0D3FEEBD1D0FE3CC004E702B /* iKYNotificationCenterUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FEEBC1D0FE3CC004E702B /* iKYNotificationCenterUITests.m */; };
+		0D3FEECD1D0FE3FC004E702B /* iKYNotificationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FEECC1D0FE3FC004E702B /* iKYNotificationCenter.m */; };
+		0D3FEED01D0FE638004E702B /* iKYNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FEECF1D0FE638004E702B /* iKYNotification.m */; };
+		0D3FEED31D0FE802004E702B /* SeconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3FEED21D0FE802004E702B /* SeconViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0D3FEEAE1D0FE3CC004E702B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0D3FEE8C1D0FE3CC004E702B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0D3FEE931D0FE3CC004E702B;
+			remoteInfo = iKYNotificationCenter;
+		};
+		0D3FEEB91D0FE3CC004E702B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0D3FEE8C1D0FE3CC004E702B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0D3FEE931D0FE3CC004E702B;
+			remoteInfo = iKYNotificationCenter;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0D3FEE941D0FE3CC004E702B /* iKYNotificationCenter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iKYNotificationCenter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D3FEE981D0FE3CC004E702B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		0D3FEE9A1D0FE3CC004E702B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		0D3FEE9B1D0FE3CC004E702B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		0D3FEE9D1D0FE3CC004E702B /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		0D3FEE9E1D0FE3CC004E702B /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		0D3FEEA11D0FE3CC004E702B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		0D3FEEA31D0FE3CC004E702B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0D3FEEA61D0FE3CC004E702B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		0D3FEEA81D0FE3CC004E702B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0D3FEEAD1D0FE3CC004E702B /* iKYNotificationCenterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iKYNotificationCenterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D3FEEB11D0FE3CC004E702B /* iKYNotificationCenterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iKYNotificationCenterTests.m; sourceTree = "<group>"; };
+		0D3FEEB31D0FE3CC004E702B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0D3FEEB81D0FE3CC004E702B /* iKYNotificationCenterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iKYNotificationCenterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D3FEEBC1D0FE3CC004E702B /* iKYNotificationCenterUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iKYNotificationCenterUITests.m; sourceTree = "<group>"; };
+		0D3FEEBE1D0FE3CC004E702B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0D3FEECB1D0FE3FC004E702B /* iKYNotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKYNotificationCenter.h; sourceTree = "<group>"; };
+		0D3FEECC1D0FE3FC004E702B /* iKYNotificationCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKYNotificationCenter.m; sourceTree = "<group>"; };
+		0D3FEECE1D0FE638004E702B /* iKYNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKYNotification.h; sourceTree = "<group>"; };
+		0D3FEECF1D0FE638004E702B /* iKYNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKYNotification.m; sourceTree = "<group>"; };
+		0D3FEED11D0FE802004E702B /* SeconViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeconViewController.h; sourceTree = "<group>"; };
+		0D3FEED21D0FE802004E702B /* SeconViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeconViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0D3FEE911D0FE3CC004E702B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D3FEEAA1D0FE3CC004E702B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D3FEEB51D0FE3CC004E702B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0D3FEE8B1D0FE3CC004E702B = {
+			isa = PBXGroup;
+			children = (
+				0D3FEE961D0FE3CC004E702B /* iKYNotificationCenter */,
+				0D3FEEB01D0FE3CC004E702B /* iKYNotificationCenterTests */,
+				0D3FEEBB1D0FE3CC004E702B /* iKYNotificationCenterUITests */,
+				0D3FEE951D0FE3CC004E702B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0D3FEE951D0FE3CC004E702B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0D3FEE941D0FE3CC004E702B /* iKYNotificationCenter.app */,
+				0D3FEEAD1D0FE3CC004E702B /* iKYNotificationCenterTests.xctest */,
+				0D3FEEB81D0FE3CC004E702B /* iKYNotificationCenterUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0D3FEE961D0FE3CC004E702B /* iKYNotificationCenter */ = {
+			isa = PBXGroup;
+			children = (
+				0D3FEECA1D0FE3F5004E702B /* iKYNotificationCenter */,
+				0D3FEE9A1D0FE3CC004E702B /* AppDelegate.h */,
+				0D3FEE9B1D0FE3CC004E702B /* AppDelegate.m */,
+				0D3FEE9D1D0FE3CC004E702B /* ViewController.h */,
+				0D3FEE9E1D0FE3CC004E702B /* ViewController.m */,
+				0D3FEED11D0FE802004E702B /* SeconViewController.h */,
+				0D3FEED21D0FE802004E702B /* SeconViewController.m */,
+				0D3FEEA01D0FE3CC004E702B /* Main.storyboard */,
+				0D3FEEA31D0FE3CC004E702B /* Assets.xcassets */,
+				0D3FEEA51D0FE3CC004E702B /* LaunchScreen.storyboard */,
+				0D3FEEA81D0FE3CC004E702B /* Info.plist */,
+				0D3FEE971D0FE3CC004E702B /* Supporting Files */,
+			);
+			path = iKYNotificationCenter;
+			sourceTree = "<group>";
+		};
+		0D3FEE971D0FE3CC004E702B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0D3FEE981D0FE3CC004E702B /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0D3FEEB01D0FE3CC004E702B /* iKYNotificationCenterTests */ = {
+			isa = PBXGroup;
+			children = (
+				0D3FEEB11D0FE3CC004E702B /* iKYNotificationCenterTests.m */,
+				0D3FEEB31D0FE3CC004E702B /* Info.plist */,
+			);
+			path = iKYNotificationCenterTests;
+			sourceTree = "<group>";
+		};
+		0D3FEEBB1D0FE3CC004E702B /* iKYNotificationCenterUITests */ = {
+			isa = PBXGroup;
+			children = (
+				0D3FEEBC1D0FE3CC004E702B /* iKYNotificationCenterUITests.m */,
+				0D3FEEBE1D0FE3CC004E702B /* Info.plist */,
+			);
+			path = iKYNotificationCenterUITests;
+			sourceTree = "<group>";
+		};
+		0D3FEECA1D0FE3F5004E702B /* iKYNotificationCenter */ = {
+			isa = PBXGroup;
+			children = (
+				0D3FEECB1D0FE3FC004E702B /* iKYNotificationCenter.h */,
+				0D3FEECC1D0FE3FC004E702B /* iKYNotificationCenter.m */,
+				0D3FEECE1D0FE638004E702B /* iKYNotification.h */,
+				0D3FEECF1D0FE638004E702B /* iKYNotification.m */,
+			);
+			path = iKYNotificationCenter;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0D3FEE931D0FE3CC004E702B /* iKYNotificationCenter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D3FEEC11D0FE3CC004E702B /* Build configuration list for PBXNativeTarget "iKYNotificationCenter" */;
+			buildPhases = (
+				0D3FEE901D0FE3CC004E702B /* Sources */,
+				0D3FEE911D0FE3CC004E702B /* Frameworks */,
+				0D3FEE921D0FE3CC004E702B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iKYNotificationCenter;
+			productName = iKYNotificationCenter;
+			productReference = 0D3FEE941D0FE3CC004E702B /* iKYNotificationCenter.app */;
+			productType = "com.apple.product-type.application";
+		};
+		0D3FEEAC1D0FE3CC004E702B /* iKYNotificationCenterTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D3FEEC41D0FE3CC004E702B /* Build configuration list for PBXNativeTarget "iKYNotificationCenterTests" */;
+			buildPhases = (
+				0D3FEEA91D0FE3CC004E702B /* Sources */,
+				0D3FEEAA1D0FE3CC004E702B /* Frameworks */,
+				0D3FEEAB1D0FE3CC004E702B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0D3FEEAF1D0FE3CC004E702B /* PBXTargetDependency */,
+			);
+			name = iKYNotificationCenterTests;
+			productName = iKYNotificationCenterTests;
+			productReference = 0D3FEEAD1D0FE3CC004E702B /* iKYNotificationCenterTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		0D3FEEB71D0FE3CC004E702B /* iKYNotificationCenterUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D3FEEC71D0FE3CC004E702B /* Build configuration list for PBXNativeTarget "iKYNotificationCenterUITests" */;
+			buildPhases = (
+				0D3FEEB41D0FE3CC004E702B /* Sources */,
+				0D3FEEB51D0FE3CC004E702B /* Frameworks */,
+				0D3FEEB61D0FE3CC004E702B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0D3FEEBA1D0FE3CC004E702B /* PBXTargetDependency */,
+			);
+			name = iKYNotificationCenterUITests;
+			productName = iKYNotificationCenterUITests;
+			productReference = 0D3FEEB81D0FE3CC004E702B /* iKYNotificationCenterUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0D3FEE8C1D0FE3CC004E702B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = iKingsly;
+				TargetAttributes = {
+					0D3FEE931D0FE3CC004E702B = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+					0D3FEEAC1D0FE3CC004E702B = {
+						CreatedOnToolsVersion = 7.2.1;
+						TestTargetID = 0D3FEE931D0FE3CC004E702B;
+					};
+					0D3FEEB71D0FE3CC004E702B = {
+						CreatedOnToolsVersion = 7.2.1;
+						TestTargetID = 0D3FEE931D0FE3CC004E702B;
+					};
+				};
+			};
+			buildConfigurationList = 0D3FEE8F1D0FE3CC004E702B /* Build configuration list for PBXProject "iKYNotificationCenter" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 0D3FEE8B1D0FE3CC004E702B;
+			productRefGroup = 0D3FEE951D0FE3CC004E702B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0D3FEE931D0FE3CC004E702B /* iKYNotificationCenter */,
+				0D3FEEAC1D0FE3CC004E702B /* iKYNotificationCenterTests */,
+				0D3FEEB71D0FE3CC004E702B /* iKYNotificationCenterUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0D3FEE921D0FE3CC004E702B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D3FEEA71D0FE3CC004E702B /* LaunchScreen.storyboard in Resources */,
+				0D3FEEA41D0FE3CC004E702B /* Assets.xcassets in Resources */,
+				0D3FEEA21D0FE3CC004E702B /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D3FEEAB1D0FE3CC004E702B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D3FEEB61D0FE3CC004E702B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0D3FEE901D0FE3CC004E702B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D3FEE9F1D0FE3CC004E702B /* ViewController.m in Sources */,
+				0D3FEED31D0FE802004E702B /* SeconViewController.m in Sources */,
+				0D3FEED01D0FE638004E702B /* iKYNotification.m in Sources */,
+				0D3FEE9C1D0FE3CC004E702B /* AppDelegate.m in Sources */,
+				0D3FEE991D0FE3CC004E702B /* main.m in Sources */,
+				0D3FEECD1D0FE3FC004E702B /* iKYNotificationCenter.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D3FEEA91D0FE3CC004E702B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D3FEEB21D0FE3CC004E702B /* iKYNotificationCenterTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D3FEEB41D0FE3CC004E702B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D3FEEBD1D0FE3CC004E702B /* iKYNotificationCenterUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0D3FEEAF1D0FE3CC004E702B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0D3FEE931D0FE3CC004E702B /* iKYNotificationCenter */;
+			targetProxy = 0D3FEEAE1D0FE3CC004E702B /* PBXContainerItemProxy */;
+		};
+		0D3FEEBA1D0FE3CC004E702B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0D3FEE931D0FE3CC004E702B /* iKYNotificationCenter */;
+			targetProxy = 0D3FEEB91D0FE3CC004E702B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		0D3FEEA01D0FE3CC004E702B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0D3FEEA11D0FE3CC004E702B /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		0D3FEEA51D0FE3CC004E702B /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0D3FEEA61D0FE3CC004E702B /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0D3FEEBF1D0FE3CC004E702B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0D3FEEC01D0FE3CC004E702B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0D3FEEC21D0FE3CC004E702B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = iKYNotificationCenter/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikingsly.iKYNotificationCenter;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		0D3FEEC31D0FE3CC004E702B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = iKYNotificationCenter/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikingsly.iKYNotificationCenter;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		0D3FEEC51D0FE3CC004E702B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = iKYNotificationCenterTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikingsly.iKYNotificationCenterTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iKYNotificationCenter.app/iKYNotificationCenter";
+			};
+			name = Debug;
+		};
+		0D3FEEC61D0FE3CC004E702B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = iKYNotificationCenterTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikingsly.iKYNotificationCenterTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iKYNotificationCenter.app/iKYNotificationCenter";
+			};
+			name = Release;
+		};
+		0D3FEEC81D0FE3CC004E702B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = iKYNotificationCenterUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikingsly.iKYNotificationCenterUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = iKYNotificationCenter;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		0D3FEEC91D0FE3CC004E702B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = iKYNotificationCenterUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ikingsly.iKYNotificationCenterUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = iKYNotificationCenter;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0D3FEE8F1D0FE3CC004E702B /* Build configuration list for PBXProject "iKYNotificationCenter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D3FEEBF1D0FE3CC004E702B /* Debug */,
+				0D3FEEC01D0FE3CC004E702B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0D3FEEC11D0FE3CC004E702B /* Build configuration list for PBXNativeTarget "iKYNotificationCenter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D3FEEC21D0FE3CC004E702B /* Debug */,
+				0D3FEEC31D0FE3CC004E702B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		0D3FEEC41D0FE3CC004E702B /* Build configuration list for PBXNativeTarget "iKYNotificationCenterTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D3FEEC51D0FE3CC004E702B /* Debug */,
+				0D3FEEC61D0FE3CC004E702B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		0D3FEEC71D0FE3CC004E702B /* Build configuration list for PBXNativeTarget "iKYNotificationCenterUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D3FEEC81D0FE3CC004E702B /* Debug */,
+				0D3FEEC91D0FE3CC004E702B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0D3FEE8C1D0FE3CC004E702B /* Project object */;
+}
