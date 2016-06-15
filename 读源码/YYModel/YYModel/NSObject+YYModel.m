@@ -1149,37 +1149,43 @@ static void ModelSetValueForProperty(__unsafe_unretained id model,
 }
 
 
+/**
+ *  此举是为了把对象类的描述，对象，和字典封装在一起
+ */
 typedef struct {
-    void *modelMeta;  ///< _YYModelMeta
-    void *model;      ///< id (self)
-    void *dictionary; ///< NSDictionary (json)
+    // 1. ClassMeta指针
+    void *modelMeta;
+    // 2. Class 对象的指针
+    void *model;
+    // 3. json 数据
+    void *dictionary;
 } ModelSetContext;
 
 /**
- Apply function for dictionary, to set the key-value pair to model.
- 
- @param _key     should not be nil, NSString.
- @param _value   should not be nil.
- @param _context _context.modelMeta and _context.model should not be nil.
+ 提供一个方法来设置对象的属性值 根据jsonkey和value
  */
 static void ModelSetWithDictionaryFunction(const void *_key, const void *_value, void *_context) {
+    // 这里获取到ModelSetContext 原来struct中定义的 void*指针 其实就是OC中的id指针
     ModelSetContext *context = _context;
+    // 创建Meta类
     __unsafe_unretained _YYModelMeta *meta = (__bridge _YYModelMeta *)(context->modelMeta);
+    // 创建PropertyMeta类
     __unsafe_unretained _YYModelPropertyMeta *propertyMeta = [meta->_mapper objectForKey:(__bridge id)(_key)];
+    // 获得对象 将C转化成OC
     __unsafe_unretained id model = (__bridge id)(context->model);
+    // 多个不同的属性映射一个jsonKey的时候 循环赋值
     while (propertyMeta) {
         if (propertyMeta->_setter) {
+            // 为Model 的property设置value: 这里用到之前写好的ModelSetValueForProperty方法根据propertyMeta用来判断类型做转化操作等对Model的Property进行赋值
             ModelSetValueForProperty(model, (__bridge __unsafe_unretained id)_value, propertyMeta);
         }
+        // 这里就是我们之前说到的链表结构的next指针
         propertyMeta = propertyMeta->_next;
     };
 }
 
 /**
- Apply function for model property meta, to set dictionary to model.
- 
- @param _propertyMeta should not be nil, _YYModelPropertyMeta.
- @param _context      _context.model and _context.dictionary should not be nil.
+ 传入一个dictionary，根据propertyMeta，获取到对应的value
  */
 static void ModelSetWithPropertyMetaArrayFunction(const void *_propertyMeta, void *_context) {
     ModelSetContext *context = _context;
@@ -1188,6 +1194,7 @@ static void ModelSetWithPropertyMetaArrayFunction(const void *_propertyMeta, voi
     if (!propertyMeta->_setter) return;
     id value = nil;
     
+    // 三种不同的key映射关系 判断是其中哪一种
     if (propertyMeta->_mappedToKeyArray) {
         value = YYValueForMultiKeys(dictionary, propertyMeta->_mappedToKeyArray);
     } else if (propertyMeta->_mappedToKeyPath) {
@@ -1196,123 +1203,176 @@ static void ModelSetWithPropertyMetaArrayFunction(const void *_propertyMeta, voi
         value = [dictionary objectForKey:propertyMeta->_mappedToKey];
     }
     
-    if (value) {
+    if (value) { // 获取到value 对model进行赋值
         __unsafe_unretained id model = (__bridge id)(context->model);
         ModelSetValueForProperty(model, value, propertyMeta);
     }
 }
 
 /**
- Returns a valid JSON object (NSArray/NSDictionary/NSString/NSNumber/NSNull), 
- or nil if an error occurs.
- 
- @param model Model, can be nil.
- @return JSON object, nil if an error occurs.
+ 将model转化成一个合法的json object对象，NSArray/NSDictionary/NSString/NSNumber/NSNull
  */
 static id ModelToJSONObjectRecursive(NSObject *model) {
+    // 1. 空处理
     if (!model || model == (id)kCFNull) return model;
+    // 2. NSString的话直接返回
     if ([model isKindOfClass:[NSString class]]) return model;
+    // 3. Number
     if ([model isKindOfClass:[NSNumber class]]) return model;
+    // 4. NSDicitionary
     if ([model isKindOfClass:[NSDictionary class]]) {
+        // 用NSJSONSerialization来判断NSDictionary的Model对象是否可以转化成Json Object
         if ([NSJSONSerialization isValidJSONObject:model]) return model;
+        // 如果不可以转化成json object 需要我们做一些处理
         NSMutableDictionary *newDic = [NSMutableDictionary new];
+        // 遍历key value
         [((NSDictionary *)model) enumerateKeysAndObjectsUsingBlock:^(NSString *key, id obj, BOOL *stop) {
+            // 对key做处理，如果是NSString就直接取，不然取对象的description返回的NSString做key
             NSString *stringKey = [key isKindOfClass:[NSString class]] ? key : key.description;
+            // 判断是否为空
             if (!stringKey) return;
+            // 递归value做json object处理
             id jsonObj = ModelToJSONObjectRecursive(obj);
+            // 如果转换不成功就设置为null
             if (!jsonObj) jsonObj = (id)kCFNull;
+            // 更新到newDic中
             newDic[stringKey] = jsonObj;
         }];
+        // 返回处理后的NSDictionary
         return newDic;
     }
+    
+    // 5. NSSet
     if ([model isKindOfClass:[NSSet class]]) {
+        // 先将set中所有的value转为数组，在用NSJSONSerialization判断是否为Json Objcet
         NSArray *array = ((NSSet *)model).allObjects;
         if ([NSJSONSerialization isValidJSONObject:array]) return array;
+        // NSArray需要做以下的处理
         NSMutableArray *newArray = [NSMutableArray new];
         for (id obj in array) {
+            //NSString 和 NSNumber 不需要处理
             if ([obj isKindOfClass:[NSString class]] || [obj isKindOfClass:[NSNumber class]]) {
                 [newArray addObject:obj];
-            } else {
+            } else { // 如果为其他的类型，递归进行处理
                 id jsonObj = ModelToJSONObjectRecursive(obj);
+                // 空处理
                 if (jsonObj && jsonObj != (id)kCFNull) [newArray addObject:jsonObj];
             }
         }
         return newArray;
     }
+    
+    // 6. NSArray
     if ([model isKindOfClass:[NSArray class]]) {
+        // 用NSJSONSerialization判断是否为Json Objcet
         if ([NSJSONSerialization isValidJSONObject:model]) return model;
         NSMutableArray *newArray = [NSMutableArray new];
+        // 对NSArray中的元素做处理
         for (id obj in (NSArray *)model) {
             if ([obj isKindOfClass:[NSString class]] || [obj isKindOfClass:[NSNumber class]]) {
                 [newArray addObject:obj];
-            } else {
+            } else { // 如果为其他的类型，递归进行处理
                 id jsonObj = ModelToJSONObjectRecursive(obj);
                 if (jsonObj && jsonObj != (id)kCFNull) [newArray addObject:jsonObj];
             }
         }
         return newArray;
     }
+    
+    // NSURL NSDate NSURL 都处理为NSString
     if ([model isKindOfClass:[NSURL class]]) return ((NSURL *)model).absoluteString;
     if ([model isKindOfClass:[NSAttributedString class]]) return ((NSAttributedString *)model).string;
     if ([model isKindOfClass:[NSDate class]]) return [YYISODateFormatter() stringFromDate:(id)model];
+    // NSData不支持转为JSON
     if ([model isKindOfClass:[NSData class]]) return nil;
     
-    
+    // 7. 自定义对象
+    // 用modelMeta来描述Model
     _YYModelMeta *modelMeta = [_YYModelMeta metaWithClass:[model class]];
+    // 对映射值和meta进行判断处理
     if (!modelMeta || modelMeta->_keyMappedCount == 0) return nil;
+    // 创建一个字典 用来转载自定义model的property和value
     NSMutableDictionary *result = [[NSMutableDictionary alloc] initWithCapacity:64];
-    __unsafe_unretained NSMutableDictionary *dic = result; // avoid retain and release in block
+    // 防止在block中被retain和release
+    __unsafe_unretained NSMutableDictionary *dic = result;
+    // 遍历_mapper字典中保存的key property 映射关系表
     [modelMeta->_mapper enumerateKeysAndObjectsUsingBlock:^(NSString *propertyMappedKey, _YYModelPropertyMeta *propertyMeta, BOOL *stop) {
+        // 没有实现getter的话就直接返回 我们知道YYModel这边主要是通过setter 和 getter方法来取值和赋值的
         if (!propertyMeta->_getter) return;
         
         id value = nil;
+        // 如果是基础数据类型 就用ModelCreateNumberFromProperty转化为NSNumber NSDictionary只能存储对象
         if (propertyMeta->_isCNumber) {
             value = ModelCreateNumberFromProperty(model, propertyMeta);
-        } else if (propertyMeta->_nsType) {
+            
+        } else if (propertyMeta->_nsType) { // 如果是NSFoundation类型 就需要再次递归解析
+            // 通过getter方法来取得对应的值进行解析
             id v = ((id (*)(id, SEL))(void *) objc_msgSend)((id)model, propertyMeta->_getter);
             value = ModelToJSONObjectRecursive(v);
-        } else {
+        } else { // 其他类型
             switch (propertyMeta->_type & YYEncodingTypeMask) {
-                case YYEncodingTypeObject: {
+                case YYEncodingTypeObject: { // 自定义类型
+                    // 获取对应的值
                     id v = ((id (*)(id, SEL))(void *) objc_msgSend)((id)model, propertyMeta->_getter);
+                    // 进行递归解析NSObject自定义类
                     value = ModelToJSONObjectRecursive(v);
+                    // 空处理
                     if (value == (id)kCFNull) value = nil;
                 } break;
-                case YYEncodingTypeClass: {
+                    
+                case YYEncodingTypeClass: { // Class 类型
                     Class v = ((Class (*)(id, SEL))(void *) objc_msgSend)((id)model, propertyMeta->_getter);
+                    // 把Class转化为NSString
                     value = v ? NSStringFromClass(v) : nil;
                 } break;
-                case YYEncodingTypeSEL: {
+                case YYEncodingTypeSEL: { // SEL
+                    // SEL转化为NSString
                     SEL v = ((SEL (*)(id, SEL))(void *) objc_msgSend)((id)model, propertyMeta->_getter);
                     value = v ? NSStringFromSelector(v) : nil;
                 } break;
                 default: break;
             }
         }
+        
+        // 对象转换失败，直接返回空
         if (!value) return;
         
+        // 将转化后的value存到字典中 mappedKey : value
         if (propertyMeta->_mappedToKeyPath) {
             NSMutableDictionary *superDic = dic;
             NSMutableDictionary *subDic = nil;
+            // 可能需要多层处理，如果是KeyPath需要嵌套NSDictionary
+            /*
+             @{
+                @"order" : @{
+                                @"orderID" : @"312312312313";
+                                @"orderNum" : @1;
+                                ...
+                            }
+             }
+             */
             for (NSUInteger i = 0, max = propertyMeta->_mappedToKeyPath.count; i < max; i++) {
+                // 取出每一个key
                 NSString *key = propertyMeta->_mappedToKeyPath[i];
-                if (i + 1 == max) { // end
+                if (i + 1 == max) { // 判断是否为最后一个
                     if (!superDic[key]) superDic[key] = value;
                     break;
                 }
                 
+                // 通过外层的NSDicitionary获取到内层的字典
                 subDic = superDic[key];
-                if (subDic) {
+                if (subDic) { // 如果存在
                     if ([subDic isKindOfClass:[NSDictionary class]]) {
                         subDic = subDic.mutableCopy;
                         superDic[key] = subDic;
                     } else {
                         break;
                     }
-                } else {
+                } else { // 不存在就新建
                     subDic = [NSMutableDictionary new];
                     superDic[key] = subDic;
                 }
+                // 内层字典作为新的外层字典
                 superDic = subDic;
                 subDic = nil;
             }
@@ -1324,17 +1384,20 @@ static id ModelToJSONObjectRecursive(NSObject *model) {
     }];
     
     if (modelMeta->_hasCustomTransformToDictionary) {
+        // 查看是否转换正确
         BOOL suc = [((id<YYModel>)model) modelCustomTransformToDictionary:dic];
         if (!suc) return nil;
     }
+    // 返回对应的Json Object
     return result;
 }
 
-/// Add indent to string (exclude first line)
+/// 添加缩进字符
 static NSMutableString *ModelDescriptionAddIndent(NSMutableString *desc, NSUInteger indent) {
     for (NSUInteger i = 0, max = desc.length; i < max; i++) {
         unichar c = [desc characterAtIndex:i];
         if (c == '\n') {
+            // 为下一行行首添加缩进
             for (NSUInteger j = 0; j < indent; j++) {
                 [desc insertString:@"    " atIndex:i + 1];
             }
@@ -1345,24 +1408,30 @@ static NSMutableString *ModelDescriptionAddIndent(NSMutableString *desc, NSUInte
     return desc;
 }
 
-/// Generaate a description string
+/// 生成一个描述Model的字符串
 static NSString *ModelDescription(NSObject *model) {
+    // 最大描述长度
     static const int kDescMaxLength = 100;
+    // 空处理
     if (!model) return @"<nil>";
     if (model == (id)kCFNull) return @"<null>";
+    
+    // 如果不是NSObject的子类
     if (![model isKindOfClass:[NSObject class]]) return [NSString stringWithFormat:@"%@",model];
     
-    
+    // 取得类描述ModelMeta
     _YYModelMeta *modelMeta = [_YYModelMeta metaWithClass:model.class];
-    switch (modelMeta->_nsType) {
+    switch (modelMeta->_nsType) { // 判断是否为NSFoundation
+            // String 类型直接返回
         case YYEncodingTypeNSString: case YYEncodingTypeNSMutableString: {
             return [NSString stringWithFormat:@"\"%@\"",model];
         }
         
         case YYEncodingTypeNSValue:
         case YYEncodingTypeNSData: case YYEncodingTypeNSMutableData: {
+            // 取得model的description
             NSString *tmp = model.description;
-            if (tmp.length > kDescMaxLength) {
+            if (tmp.length > kDescMaxLength) { // 判断长于限定长度 如果是就做省略处理
                 tmp = [tmp substringToIndex:kDescMaxLength];
                 tmp = [tmp stringByAppendingString:@"..."];
             }
@@ -1372,20 +1441,31 @@ static NSString *ModelDescription(NSObject *model) {
         case YYEncodingTypeNSNumber:
         case YYEncodingTypeNSDecimalNumber:
         case YYEncodingTypeNSDate:
-        case YYEncodingTypeNSURL: {
+        case YYEncodingTypeNSURL: { // 直接显示Model
             return [NSString stringWithFormat:@"%@",model];
         }
             
-        case YYEncodingTypeNSSet: case YYEncodingTypeNSMutableSet: {
+            // NSSet先转为NSArray 这里没有做break 为了与NSArray一起做处理
+        case YYEncodingTypeNSSet:
+        case YYEncodingTypeNSMutableSet: {
             model = ((NSSet *)model).allObjects;
         } // no break
             
-        case YYEncodingTypeNSArray: case YYEncodingTypeNSMutableArray: {
+            // NSArray 处理
+        case YYEncodingTypeNSArray:
+        case YYEncodingTypeNSMutableArray: {
             NSArray *array = (id)model;
             NSMutableString *desc = [NSMutableString new];
-            if (array.count == 0) {
+            if (array.count == 0) { // 判断是否为空
                 return [desc stringByAppendingString:@"[]"];
             } else {
+                /* 拼接成
+                 [
+                    "aaaa";
+                    "bbbb";
+                 ]
+                 
+                 */
                 [desc appendFormat:@"[\n"];
                 for (NSUInteger i = 0, max = array.count; i < max; i++) {
                     NSObject *obj = array[i];
@@ -1397,12 +1477,20 @@ static NSString *ModelDescription(NSObject *model) {
                 return desc;
             }
         }
+            
+            // 字典处理
         case YYEncodingTypeNSDictionary: case YYEncodingTypeNSMutableDictionary: {
             NSDictionary *dic = (id)model;
             NSMutableString *desc = [NSMutableString new];
-            if (dic.count == 0) {
+            if (dic.count == 0) { // 空处理
                 return [desc stringByAppendingString:@"{}"];
             } else {
+                /* 
+                 {
+                    key1 = value1;
+                    key2 = value2;
+                 }
+                 */
                 NSArray *keys = dic.allKeys;
                 
                 [desc appendFormat:@"{\n"];
@@ -1418,12 +1506,13 @@ static NSString *ModelDescription(NSObject *model) {
             return desc;
         }
         
-        default: {
+        default: { // 自定义类
             NSMutableString *desc = [NSMutableString new];
+            // <类名：内存地址>
             [desc appendFormat:@"<%@: %p>", model.class, model];
             if (modelMeta->_allPropertyMetas.count == 0) return desc;
             
-            // sort property names
+            // 取得Property的名字 进行排序
             NSArray *properties = [modelMeta->_allPropertyMetas
                                    sortedArrayUsingComparator:^NSComparisonResult(_YYModelPropertyMeta *p1, _YYModelPropertyMeta *p2) {
                                        return [p1->_name compare:p2->_name];
@@ -1433,35 +1522,40 @@ static NSString *ModelDescription(NSObject *model) {
             for (NSUInteger i = 0, max = properties.count; i < max; i++) {
                 _YYModelPropertyMeta *property = properties[i];
                 NSString *propertyDesc;
-                if (property->_isCNumber) {
+                if (property->_isCNumber) { // C基础数据类型，先转为NSNumber 再通过NSNumber转为String
                     NSNumber *num = ModelCreateNumberFromProperty(model, property);
                     propertyDesc = num.stringValue;
-                } else {
+                } else { // 判断类型
                     switch (property->_type & YYEncodingTypeMask) {
-                        case YYEncodingTypeObject: {
+                        case YYEncodingTypeObject: { // 自定义对象或者是NSFoundation
                             id v = ((id (*)(id, SEL))(void *) objc_msgSend)((id)model, property->_getter);
+                            // 递归处理
                             propertyDesc = ModelDescription(v);
                             if (!propertyDesc) propertyDesc = @"<nil>";
                         } break;
-                        case YYEncodingTypeClass: {
+                        case YYEncodingTypeClass: { // Class类型
                             id v = ((id (*)(id, SEL))(void *) objc_msgSend)((id)model, property->_getter);
                             propertyDesc = ((NSObject *)v).description;
                             if (!propertyDesc) propertyDesc = @"<nil>";
                         } break;
                         case YYEncodingTypeSEL: {
+                            // SEL
                             SEL sel = ((SEL (*)(id, SEL))(void *) objc_msgSend)((id)model, property->_getter);
                             if (sel) propertyDesc = NSStringFromSelector(sel);
                             else propertyDesc = @"<NULL>";
                         } break;
                         case YYEncodingTypeBlock: {
+                            // Block 类型
                             id block = ((id (*)(id, SEL))(void *) objc_msgSend)((id)model, property->_getter);
                             propertyDesc = block ? ((NSObject *)block).description : @"<nil>";
                         } break;
+                            // CArray CString Pointer
                         case YYEncodingTypeCArray: case YYEncodingTypeCString: case YYEncodingTypePointer: {
                             void *pointer = ((void* (*)(id, SEL))(void *) objc_msgSend)((id)model, property->_getter);
                             propertyDesc = [NSString stringWithFormat:@"%p",pointer];
                         } break;
                         case YYEncodingTypeStruct: case YYEncodingTypeUnion: {
+                            // 结构体 包装成NSValue
                             NSValue *value = [model valueForKey:property->_name];
                             propertyDesc = value ? value.description : @"{unknown}";
                         } break;
@@ -1469,6 +1563,7 @@ static NSString *ModelDescription(NSObject *model) {
                     }
                 }
                 
+                // 拼接为 key ＝ value的形式
                 propertyDesc = ModelDescriptionAddIndent(propertyDesc.mutableCopy, 1);
                 [desc appendFormat:@"    %@ = %@",property->_name, propertyDesc];
                 [desc appendString:(i + 1 == max) ? @"\n" : @";\n"];
