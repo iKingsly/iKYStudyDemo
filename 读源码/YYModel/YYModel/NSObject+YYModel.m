@@ -455,7 +455,7 @@ static force_inline id YYValueForMultiKeys(__unsafe_unretained NSDictionary *dic
     NSUInteger _keyMappedCount;
     /// Model对应的Foundation class类型
     YYEncodingNSType _nsType;
-    // 事否实现了自定义的映射关系表 这里之前已经解释过 就不再赘述
+    // 是否实现了自定义的映射关系表 这里之前已经解释过 就不再赘述
     BOOL _hasCustomWillTransformFromDictionary;
     BOOL _hasCustomTransformFromDictionary;
     BOOL _hasCustomTransformToDictionary;
@@ -1576,18 +1576,23 @@ static NSString *ModelDescription(NSObject *model) {
 
 
 @implementation NSObject (YYModel)
-
+// 提供json转字典
 + (NSDictionary *)_yy_dictionaryWithJSON:(id)json {
+    
+    // 空处理
     if (!json || json == (id)kCFNull) return nil;
     NSDictionary *dic = nil;
     NSData *jsonData = nil;
+    // 判断json的类型
     if ([json isKindOfClass:[NSDictionary class]]) {
         dic = json;
     } else if ([json isKindOfClass:[NSString class]]) {
+        // json 专为Data
         jsonData = [(NSString *)json dataUsingEncoding : NSUTF8StringEncoding];
     } else if ([json isKindOfClass:[NSData class]]) {
         jsonData = json;
     }
+    // 通过Data 解析为 NSDictionary
     if (jsonData) {
         dic = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:NULL];
         if (![dic isKindOfClass:[NSDictionary class]]) dic = nil;
@@ -1595,51 +1600,76 @@ static NSString *ModelDescription(NSObject *model) {
     return dic;
 }
 
+// json 转 Model
 + (instancetype)yy_modelWithJSON:(id)json {
+    // 1. 先把数据转为NSDictionary
     NSDictionary *dic = [self _yy_dictionaryWithJSON:json];
+    // 2. 调用json Dict 转 model
     return [self yy_modelWithDictionary:dic];
 }
 
+// dicitonay 转 model
 + (instancetype)yy_modelWithDictionary:(NSDictionary *)dictionary {
+    // 空处理
     if (!dictionary || dictionary == (id)kCFNull) return nil;
+    // 不是NSDictionary对象
     if (![dictionary isKindOfClass:[NSDictionary class]]) return nil;
     
+    // 取得类对象
     Class cls = [self class];
+    
+    // 创建类对象的描述信息
     _YYModelMeta *modelMeta = [_YYModelMeta metaWithClass:cls];
+    // 是否有；实现自己的映射字典
     if (modelMeta->_hasCustomClassFromDictionary) {
         cls = [cls modelCustomClassForDictionary:dictionary] ?: cls;
     }
     
+    // 创建对象
     NSObject *one = [cls new];
+    
+    // 在这里再一步验证是否能从model转回为Dictionary
     if ([one yy_modelSetWithDictionary:dictionary]) return one;
     return nil;
 }
 
+// 从传入的json数据来判断是否能转为Model
 - (BOOL)yy_modelSetWithJSON:(id)json {
+    // 先转为NSDictionary
     NSDictionary *dic = [NSObject _yy_dictionaryWithJSON:json];
+    // 调用字典的验证方法yy_modelSetWithDictionary
     return [self yy_modelSetWithDictionary:dic];
 }
 
+// 判断传入的字典是否可以转为Model
 - (BOOL)yy_modelSetWithDictionary:(NSDictionary *)dic {
+    // 空处理
     if (!dic || dic == (id)kCFNull) return NO;
+    // json不是对象
     if (![dic isKindOfClass:[NSDictionary class]]) return NO;
     
 
+    // 创建Model的描述类meta
     _YYModelMeta *modelMeta = [_YYModelMeta metaWithClass:object_getClass(self)];
+    // 如果model需要映射的值为0 则直接返回no
     if (modelMeta->_keyMappedCount == 0) return NO;
     
+    // 是否实现了自己的映射表
     if (modelMeta->_hasCustomWillTransformFromDictionary) {
         dic = [((id<YYModel>)self) modelCustomWillTransformFromDictionary:dic];
         if (![dic isKindOfClass:[NSDictionary class]]) return NO;
     }
     
+    // 创建对象类的描述，对象，和字典的结构体
     ModelSetContext context = {0};
     context.modelMeta = (__bridge void *)(modelMeta);
     context.model = (__bridge void *)(self);
     context.dictionary = (__bridge void *)(dic);
     
-    
+    // 字典值和对象对应的属性相互匹配
+    // 判断property和json的count的大小，以小的那个为标准
     if (modelMeta->_keyMappedCount >= CFDictionaryGetCount((CFDictionaryRef)dic)) {
+        // 对属性名和对应的json key 做赋值处理
         CFDictionaryApplyFunction((CFDictionaryRef)dic, ModelSetWithDictionaryFunction, &context);
         if (modelMeta->_keyPathPropertyMetas) {
             CFArrayApplyFunction((CFArrayRef)modelMeta->_keyPathPropertyMetas,
@@ -1653,13 +1683,14 @@ static NSString *ModelDescription(NSObject *model) {
                                  ModelSetWithPropertyMetaArrayFunction,
                                  &context);
         }
-    } else {
+    } else { // 以property的count做标准
         CFArrayApplyFunction((CFArrayRef)modelMeta->_allPropertyMetas,
                              CFRangeMake(0, modelMeta->_keyMappedCount),
                              ModelSetWithPropertyMetaArrayFunction,
                              &context);
     }
     
+    // 有实现自定义的映射关系表
     if (modelMeta->_hasCustomTransformFromDictionary) {
         return [((id<YYModel>)self) modelCustomTransformFromDictionary:dic];
     }
@@ -1667,40 +1698,49 @@ static NSString *ModelDescription(NSObject *model) {
 }
 
 - (id)yy_modelToJSONObject {
-    /*
-     Apple said:
-     The top level object is an NSArray or NSDictionary.
-     All objects are instances of NSString, NSNumber, NSArray, NSDictionary, or NSNull.
-     All dictionary keys are instances of NSString.
-     Numbers are not NaN or infinity.
-     */
+
+    // 转化成可以json化的对象
     id jsonObject = ModelToJSONObjectRecursive(self);
+    // 只有NSArray 和 NSDictionary才能转化成jsonObject
     if ([jsonObject isKindOfClass:[NSArray class]]) return jsonObject;
     if ([jsonObject isKindOfClass:[NSDictionary class]]) return jsonObject;
     return nil;
 }
 
+
+// 将model转为 json data
 - (NSData *)yy_modelToJSONData {
+    // 先转为可以序列化的Json Object
     id jsonObject = [self yy_modelToJSONObject];
     if (!jsonObject) return nil;
+    // 解析为NSData
     return [NSJSONSerialization dataWithJSONObject:jsonObject options:0 error:NULL];
 }
 
+// 将model转为对应的NSString类
 - (NSString *)yy_modelToJSONString {
     NSData *jsonData = [self yy_modelToJSONData];
     if (jsonData.length == 0) return nil;
     return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 }
 
+// 对对象进行拷贝 ： 浅拷贝
 - (id)yy_modelCopy{
+    // 空处理
     if (self == (id)kCFNull) return self;
+    
+    // 创建meta类
     _YYModelMeta *modelMeta = [_YYModelMeta metaWithClass:self.class];
     if (modelMeta->_nsType) return [self copy];
     
+    // 创建一个实例
     NSObject *one = [self.class new];
+    
+    // 遍历propertyMeta
     for (_YYModelPropertyMeta *propertyMeta in modelMeta->_allPropertyMetas) {
+        // 判断是否有getter方法和setter方法
         if (!propertyMeta->_getter || !propertyMeta->_setter) continue;
-        
+            // 如果是C数据类型
         if (propertyMeta->_isCNumber) {
             switch (propertyMeta->_type & YYEncodingTypeMask) {
                 case YYEncodingTypeBool: {
@@ -1742,6 +1782,7 @@ static NSString *ModelDescription(NSObject *model) {
                 default: break;
             }
         } else {
+             // 其他类型
             switch (propertyMeta->_type & YYEncodingTypeMask) {
                 case YYEncodingTypeObject:
                 case YYEncodingTypeClass:
@@ -1771,6 +1812,7 @@ static NSString *ModelDescription(NSObject *model) {
     return one;
 }
 
+// 对对象的属性进行归档
 - (void)yy_modelEncodeWithCoder:(NSCoder *)aCoder {
     if (!aCoder) return;
     if (self == (id)kCFNull) {
@@ -1778,23 +1820,30 @@ static NSString *ModelDescription(NSObject *model) {
         return;
     }
     
+    // 获取描述类
     _YYModelMeta *modelMeta = [_YYModelMeta metaWithClass:self.class];
     if (modelMeta->_nsType) {
+        // 如果是NSFoundation的类 直接归档
         [((id<NSCoding>)self)encodeWithCoder:aCoder];
         return;
     }
     
+    // 遍历每一个propertyMeta 进行归档
     for (_YYModelPropertyMeta *propertyMeta in modelMeta->_allPropertyMetas) {
+        // 判断是否有实现getter方法
         if (!propertyMeta->_getter) return;
         
+        // C类型 包装为NSNumber进行归档
         if (propertyMeta->_isCNumber) {
             NSNumber *value = ModelCreateNumberFromProperty(self, propertyMeta);
             if (value) [aCoder encodeObject:value forKey:propertyMeta->_name];
         } else {
+    
             switch (propertyMeta->_type & YYEncodingTypeMask) {
-                case YYEncodingTypeObject: {
+                case YYEncodingTypeObject: { // 如果是自定义对象
                     id value = ((id (*)(id, SEL))(void *)objc_msgSend)((id)self, propertyMeta->_getter);
                     if (value && (propertyMeta->_nsType || [value respondsToSelector:@selector(encodeWithCoder:)])) {
+                        // 用 encodeObject 进行归档 对NSValue做特殊处理 只归档NSNumber类型
                         if ([value isKindOfClass:[NSValue class]]) {
                             if ([value isKindOfClass:[NSNumber class]]) {
                                 [aCoder encodeObject:value forKey:propertyMeta->_name];
@@ -1804,7 +1853,7 @@ static NSString *ModelDescription(NSObject *model) {
                         }
                     }
                 } break;
-                case YYEncodingTypeSEL: {
+                case YYEncodingTypeSEL: { // 包装成NSString进行归档
                     SEL value = ((SEL (*)(id, SEL))(void *)objc_msgSend)((id)self, propertyMeta->_getter);
                     if (value) {
                         NSString *str = NSStringFromSelector(value);
@@ -1828,29 +1877,34 @@ static NSString *ModelDescription(NSObject *model) {
     }
 }
 
+// 对象解档
 - (id)yy_modelInitWithCoder:(NSCoder *)aDecoder {
+    // 空处理
     if (!aDecoder) return self;
     if (self == (id)kCFNull) return self;    
     _YYModelMeta *modelMeta = [_YYModelMeta metaWithClass:self.class];
     if (modelMeta->_nsType) return self;
     
     for (_YYModelPropertyMeta *propertyMeta in modelMeta->_allPropertyMetas) {
+        // 通过setter方法来赋值
         if (!propertyMeta->_setter) continue;
         
         if (propertyMeta->_isCNumber) {
+            // 取出NSNumber 转化为对应的类型
             NSNumber *value = [aDecoder decodeObjectForKey:propertyMeta->_name];
             if ([value isKindOfClass:[NSNumber class]]) {
                 ModelSetNumberToProperty(self, value, propertyMeta);
+                // ？？？这里一直不能理解需要对value做这个处理
                 [value class];
             }
         } else {
             YYEncodingType type = propertyMeta->_type & YYEncodingTypeMask;
             switch (type) {
-                case YYEncodingTypeObject: {
+                case YYEncodingTypeObject: { // 对象直接取出值做处理
                     id value = [aDecoder decodeObjectForKey:propertyMeta->_name];
                     ((void (*)(id, SEL, id))(void *) objc_msgSend)((id)self, propertyMeta->_setter, value);
                 } break;
-                case YYEncodingTypeSEL: {
+                case YYEncodingTypeSEL: { // 从NSString中取得SEL
                     NSString *str = [aDecoder decodeObjectForKey:propertyMeta->_name];
                     if ([str isKindOfClass:[NSString class]]) {
                         SEL sel = NSSelectorFromString(str);
@@ -1878,28 +1932,45 @@ static NSString *ModelDescription(NSObject *model) {
 - (NSUInteger)yy_modelHash {
     if (self == (id)kCFNull) return [self hash];
     _YYModelMeta *modelMeta = [_YYModelMeta metaWithClass:self.class];
+    // NSFoundation 的话 直接进行hash
     if (modelMeta->_nsType) return [self hash];
     
     NSUInteger value = 0;
     NSUInteger count = 0;
+
     for (_YYModelPropertyMeta *propertyMeta in modelMeta->_allPropertyMetas) {
+        // 属性必须支持KVC
         if (!propertyMeta->_isKVCCompatible) continue;
+        // 取得get方法SEL 进行位运算
         value ^= [[self valueForKey:NSStringFromSelector(propertyMeta->_getter)] hash];
         count++;
     }
+    
+    // 如果count为空 就输出自身内存地址
     if (count == 0) value = (long)((__bridge void *)self);
     return value;
 }
 
+// 实例间的比较
 - (BOOL)yy_modelIsEqual:(id)model {
+    // 判断地址事否相同
     if (self == model) return YES;
+    
+    // 类不相同直接return NO
     if (![model isMemberOfClass:self.class]) return NO;
+    
+    // 包装Model
     _YYModelMeta *modelMeta = [_YYModelMeta metaWithClass:self.class];
+    // 判断NSFoundation
     if (modelMeta->_nsType) return [self isEqual:model];
+    
+    // 判断hash
     if ([self hash] != [model hash]) return NO;
     
+    // 对model内的对象进行比较
     for (_YYModelPropertyMeta *propertyMeta in modelMeta->_allPropertyMetas) {
         if (!propertyMeta->_isKVCCompatible) continue;
+        // KVC取值
         id this = [self valueForKey:NSStringFromSelector(propertyMeta->_getter)];
         id that = [model valueForKey:NSStringFromSelector(propertyMeta->_getter)];
         if (this == that) continue;
