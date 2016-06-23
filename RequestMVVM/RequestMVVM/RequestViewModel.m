@@ -37,6 +37,7 @@
             }];
             return nil;
         }];
+        
         // 在返回数据信号时，把数据中的字典映射成模型信号，传递出去
         return [requstSiganal map:^id(NSDictionary *value) {
             NSMutableArray *array = value[@"books"];

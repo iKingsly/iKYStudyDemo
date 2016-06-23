@@ -272,22 +272,22 @@
 //    [letters sendNext:@"C"];
 //    [numbers sendNext:@"2"];
     // 冷信号转化为热信号
-    RACSignal *coldSignal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        NSLog(@"Cold Signal be subscibed");
-        [[RACScheduler mainThreadScheduler] afterDelay:1.5 schedule:^{
-            [subscriber sendNext:@"A"];
-        }];
-        
-        [[RACScheduler mainThreadScheduler] afterDelay:3 schedule:^{
-            [subscriber sendNext:@"B"];
-        }];
-        
-        [[RACScheduler mainThreadScheduler] afterDelay:5 schedule:^{
-            [subscriber sendCompleted];
-        }];
-        
-        return nil;
-    }];
+//    RACSignal *coldSignal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+//        NSLog(@"Cold Signal be subscibed");
+//        [[RACScheduler mainThreadScheduler] afterDelay:1.5 schedule:^{
+//            [subscriber sendNext:@"A"];
+//        }];
+//        
+//        [[RACScheduler mainThreadScheduler] afterDelay:3 schedule:^{
+//            [subscriber sendNext:@"B"];
+//        }];
+//        
+//        [[RACScheduler mainThreadScheduler] afterDelay:5 schedule:^{
+//            [subscriber sendCompleted];
+//        }];
+//        
+//        return nil;
+//    }];
     
     // 1
 //    RACSubject *subject = [RACSubject subject];
@@ -307,41 +307,134 @@
 //    }];
     
     // 2
-    RACSubject *subject = [RACSubject subject];
-    NSLog(@"subject create");
+//    RACSubject *subject = [RACSubject subject];
+//    NSLog(@"subject create");
+//    
+//    RACMulticastConnection *multicastConnection = [coldSignal multicast:subject];
+//    RACSignal *hotSignal = multicastConnection.autoconnect;
+//    
+//    [[RACScheduler mainThreadScheduler] afterDelay:2 schedule:^{
+//       [hotSignal subscribeNext:^(id x) {
+//           NSLog(@"subscribe 1 Receiver value : %@.",x);
+//       }];
+//    }];
+//   
+//    [[RACScheduler mainThreadScheduler] afterDelay:4 schedule:^{
+//       [subject subscribeNext:^(id x) {
+//           NSLog(@"subscribe 2 Receiver value : %@",x);
+//       }];
+//    }];
+//    
+//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"Alert" delegate:nil cancelButtonTitle:@"YES" otherButtonTitles:@"NO", nil];
+//    [[alertView rac_buttonClickedSignal] subscribeNext:^(NSNumber *indexNumber) {
+//        if ([indexNumber intValue] == 1) {
+//            NSLog(@"You touch no button");
+//        }else{
+//            NSLog(@"You touch Yes button");
+//        }
+//        
+//    }];
+////    [alertView show];
+//    NSArray *array = @[@(1)];
+//    [[array rac_willDeallocSignal] subscribeCompleted:^{
+//        NSLog(@"oops, i will be gone");
+//    }];
+//    array = nil;
+//    
+//    [self test];
     
-    RACMulticastConnection *multicastConnection = [coldSignal multicast:subject];
-    RACSignal *hotSignal = multicastConnection.autoconnect;
+//    RACSubject *letters = [RACSubject subject];
+//    RACSubject *numbers = [RACSubject subject];
+//    RACSignal *signalOfSignals = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+//        [subscriber sendNext:letters];
+//        [subscriber sendNext:numbers];
+//        [subscriber sendCompleted];
+//        return nil;
+//    }];
+//    [[signalOfSignals flatten] subscribeNext:^(id x) {
+//        NSLog(@"%@",x);
+//    }];
+//    [letters sendNext:@"A"];
+//    [numbers sendNext:@1];
+//    [letters sendNext:@"B"];
     
-    [[RACScheduler mainThreadScheduler] afterDelay:2 schedule:^{
-       [hotSignal subscribeNext:^(id x) {
-           NSLog(@"subscribe 1 Receiver value : %@.",x);
-       }];
-    }];
-   
-    [[RACScheduler mainThreadScheduler] afterDelay:4 schedule:^{
-       [subject subscribeNext:^(id x) {
-           NSLog(@"subscribe 2 Receiver value : %@",x);
-       }];
+    // 避免重复发送消息
+//    RACSubject *letters = [RACSubject subject];
+//    RACSignal *signal = [letters replay];
+//    
+//    NSLog(@"subscribe S1");
+//    
+//    [signal subscribeNext:^(id x) {
+//        NSLog(@"S1: %@",x);
+//    }];
+//    
+//    NSLog(@"A Send");
+//    [letters sendNext:@"A"];
+//    NSLog(@"B Send");
+//    [letters sendNext:@"B"];
+//    
+//    NSLog(@"subscribe S2");
+//    
+//    [signal subscribeNext:^(id x) {
+//        NSLog(@"S2: %@",x);
+//    }];
+//    
+//    [letters sendNext:@"C"];
+//    NSLog(@"subscribe S3");
+//    [signal subscribeNext:^(id x) {
+//        NSLog(@"S3: %@",x);
+//    }];
+    
+//    __block int num = 0;
+//    RACSignal *signal = [[RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+//        num++;
+//        NSLog(@"Increment num to : %d", num);
+//        [subscriber sendNext:@(num)];
+//        return nil;
+//    }] replay];
+//    
+//    NSLog(@"Start subscriptions");
+//    
+//    // subscriber 1
+//    [signal subscribeNext:^(id x) {
+//        NSLog(@"S1 : %@", x);
+//    }];
+//    
+//    [signal subscribeNext:^(id x) {
+//        NSLog(@"S2 : %@",x);
+//    }];
+//    
+//    [signal subscribeNext:^(id x) {
+//        NSLog(@"S3 : %@", x);
+//    }];
+    
+    RACSubject *letters = [RACSubject subject];
+    RACSignal *sginal = [letters replayLast];
+    NSLog(@"Subscribe S1");
+    [sginal subscribeNext:^(id x) {
+        NSLog(@"S1 : %@",x);
     }];
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"Alert" delegate:nil cancelButtonTitle:@"YES" otherButtonTitles:@"NO", nil];
-    [[alertView rac_buttonClickedSignal] subscribeNext:^(NSNumber *indexNumber) {
-        if ([indexNumber intValue] == 1) {
-            NSLog(@"You touch no button");
-        }else{
-            NSLog(@"You touch Yes button");
-        }
-        
-    }];
-//    [alertView show];
-    NSArray *array = @[@(1)];
-    [[array rac_willDeallocSignal] subscribeCompleted:^{
-        NSLog(@"oops, i will be gone");
-    }];
-    array = nil;
+    NSLog(@"A send");
+    [letters sendNext:@"A"];
+    NSLog(@"B send");
+    [letters sendNext:@"B"];
     
-    [self test];
+    // subscribe 2
+    NSLog(@"subscribe S2");
+    [sginal subscribeNext:^(id x) {
+        NSLog(@"S2 : %@",x);
+    }];
+    
+    NSLog(@"Send C");
+    [letters sendNext:@"C"];
+    NSLog(@"Subsribe S3");
+     [sginal subscribeNext:^(id x) {
+        NSLog(@"S3 : %@",x);
+     }];
+    
+    NSLog(@"Send D");
+    [letters sendNext:@"D"];
 }
 
 - (void)test{
