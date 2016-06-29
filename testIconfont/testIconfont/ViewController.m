@@ -23,9 +23,9 @@
     label.textColor = [UIColor redColor];
     [self.view addSubview:label];
     
-    UIImage *image = [UIImage imageWithIcon:@"\U0000E901" inFont:@"icomoon" size:100 color:[UIColor orangeColor]];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-    [self.view addSubview:imageView];
+//    UIImage *image = [UIImage imageWithIcon:@"\U0000E901" inFont:@"icomoon" size:100 color:[UIColor orangeColor]];
+//    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+//    [self.view addSubview:imageView];
 }
 
 - (void)didReceiveMemoryWarning {
