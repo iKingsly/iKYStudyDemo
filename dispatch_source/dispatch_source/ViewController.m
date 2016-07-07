@@ -7,9 +7,12 @@
 //
 
 #import "ViewController.h"
+#import "XXGCDTimer.h"
 
 @interface ViewController ()
-
+{
+    XXGCDTimer *timer;
+}
 @end
 
 @implementation ViewController
@@ -29,33 +32,64 @@
 //    });
     
     
-    // 指定DISPATCH_SOURCE_TYPE_DATA_ADD，做成Dispatch Source(分派源)。设定Main Dispatch Queue 为追加处理的Dispatch Queue
-    dispatch_source_t _processingQueueSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_DATA_ADD, 0, 0,
-                                                    dispatch_get_main_queue());
-    __block NSUInteger totalComplete = 0;
-    dispatch_source_set_event_handler(_processingQueueSource, ^{
-        //当处理事件被最终执行时，计算后的数据可以通过dispatch_source_get_data来获取。这个数据的值在每次响应事件执行后会被重置，所以totalComplete的值是最终累积的值。
-        NSUInteger value = dispatch_source_get_data(_processingQueueSource);
-        totalComplete += value;
-        NSLog(@"进度：%@", @((CGFloat)totalComplete/100));
-        NSLog(@"🔵线程号：%@", [NSThread currentThread]);
-    });
-    //分派源创建时默认处于暂停状态，在分派源分派处理程序之前必须先恢复。
-    dispatch_resume(_processingQueueSource);
+//    // 指定DISPATCH_SOURCE_TYPE_DATA_ADD，做成Dispatch Source(分派源)。设定Main Dispatch Queue 为追加处理的Dispatch Queue
+//    dispatch_source_t _processingQueueSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_DATA_ADD, 0, 0,
+//                                                    dispatch_get_main_queue());
+//    __block NSUInteger totalComplete = 0;
+//    dispatch_source_set_event_handler(_processingQueueSource, ^{
+//        //当处理事件被最终执行时，计算后的数据可以通过dispatch_source_get_data来获取。这个数据的值在每次响应事件执行后会被重置，所以totalComplete的值是最终累积的值。
+//        NSUInteger value = dispatch_source_get_data(_processingQueueSource);
+//        totalComplete += value;
+//        NSLog(@"进度：%@", @((CGFloat)totalComplete/100));
+//        NSLog(@"🔵线程号：%@", [NSThread currentThread]);
+//    });
+//    //分派源创建时默认处于暂停状态，在分派源分派处理程序之前必须先恢复。
+//    dispatch_resume(_processingQueueSource);
+//    
+//    //2.
+//    //恢复源后，就可以通过dispatch_source_merge_data向Dispatch Source(分派源)发送事件:
+//    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+//    for (NSUInteger index = 0; index < 100; index ++) {
+//        dispatch_async(queue, ^{
+//            dispatch_source_merge_data(_processingQueueSource, 1);
+//            NSLog(@"♻️线程号：%@", [NSThread currentThread]);
+//            usleep(20000);//0.02秒
+//        });
+//    }
+//    timer = [XXGCDTimer new];
+//    [timer startGCDTimer];
+
+//    dispatch_queue_t q = dispatch_queue_create("abc", NULL);
+//    dispatch_sync(q, ^{
+//        NSLog(@"当前进程 %@", [NSThread currentThread]);
+//    });
+//    
+//    dispatch_async(q, ^{
+//        NSLog(@"dispatch_async 当前进程 %@", [NSThread currentThread]);
+//    });
     
-    //2.
-    //恢复源后，就可以通过dispatch_source_merge_data向Dispatch Source(分派源)发送事件:
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    for (NSUInteger index = 0; index < 100; index ++) {
-        dispatch_async(queue, ^{
-            dispatch_source_merge_data(_processingQueueSource, 1);
-            NSLog(@"♻️线程号：%@", [NSThread currentThread]);
-            usleep(20000);//0.02秒
-        });
-    }
+    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        NSLog(@"current %@", [NSThread currentThread]);
+    });
+    
+}
+
+- (int)abc {
+    return 1;
+}
+
+- (IBAction)resume:(id)sender {
+    [timer resumeTimer];
+}
+
+- (IBAction)pauseTimer:(id)sender {
+    [timer pauseTimer];
 }
 
 
+- (IBAction)stopTimer:(id)sender {
+    [timer stopTimer];
+}
 
 int largeNumber = 1000000;
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

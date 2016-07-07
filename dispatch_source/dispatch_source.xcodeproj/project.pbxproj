@@ -13,6 +13,7 @@
 		E4ACF0DD1D001BB800C1A21D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4ACF0DB1D001BB800C1A21D /* Main.storyboard */; };
 		E4ACF0DF1D001BB800C1A21D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4ACF0DE1D001BB800C1A21D /* Assets.xcassets */; };
 		E4ACF0E21D001BB800C1A21D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4ACF0E01D001BB800C1A21D /* LaunchScreen.storyboard */; };
+		E4C2B8881D2E453B0006B0E1 /* XXGCDTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C2B8871D2E453B0006B0E1 /* XXGCDTimer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,8 @@
 		E4ACF0DE1D001BB800C1A21D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E4ACF0E11D001BB800C1A21D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E4ACF0E31D001BB800C1A21D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E4C2B8861D2E453B0006B0E1 /* XXGCDTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXGCDTimer.h; sourceTree = "<group>"; };
+		E4C2B8871D2E453B0006B0E1 /* XXGCDTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXGCDTimer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,11 +65,13 @@
 				E4ACF0D61D001BB800C1A21D /* AppDelegate.m */,
 				E4ACF0D81D001BB800C1A21D /* ViewController.h */,
 				E4ACF0D91D001BB800C1A21D /* ViewController.m */,
+				E4C2B8861D2E453B0006B0E1 /* XXGCDTimer.h */,
+				E4C2B8871D2E453B0006B0E1 /* XXGCDTimer.m */,
+				E4ACF0D21D001BB800C1A21D /* Supporting Files */,
 				E4ACF0DB1D001BB800C1A21D /* Main.storyboard */,
 				E4ACF0DE1D001BB800C1A21D /* Assets.xcassets */,
 				E4ACF0E01D001BB800C1A21D /* LaunchScreen.storyboard */,
 				E4ACF0E31D001BB800C1A21D /* Info.plist */,
-				E4ACF0D21D001BB800C1A21D /* Supporting Files */,
 			);
 			path = dispatch_source;
 			sourceTree = "<group>";
@@ -151,6 +156,7 @@
 			files = (
 				E4ACF0DA1D001BB800C1A21D /* ViewController.m in Sources */,
 				E4ACF0D71D001BB800C1A21D /* AppDelegate.m in Sources */,
+				E4C2B8881D2E453B0006B0E1 /* XXGCDTimer.m in Sources */,
 				E4ACF0D41D001BB800C1A21D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -300,6 +306,7 @@
 				E4ACF0E81D001BB800C1A21D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
