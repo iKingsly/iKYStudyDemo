@@ -8,11 +8,15 @@
 
 #import "ViewController.h"
 #import "XXGCDTimer.h"
+typedef void (^Success)(void);
 
 @interface ViewController ()
 {
     XXGCDTimer *timer;
 }
+@property (nonatomic, strong) dispatch_queue_t queue;
+@property (nonatomic, assign) int abc;
+@property (nonatomic, copy) Success block;
 @end
 
 @implementation ViewController
@@ -68,12 +72,108 @@
 //        NSLog(@"dispatch_async 当前进程 %@", [NSThread currentThread]);
 //    });
     
-    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        NSLog(@"current %@", [NSThread currentThread]);
-    });
+//    dispatch_queue_t queue = dispatch_queue_create("abc", DISPATCH_QUEUE_CONCURRENT);
+////    self.queue = queue;
+//    
+//    dispatch_group_t group = dispatch_group_create();
+//    dispatch_group_enter(group);
+//    NSLog(@"1");
+//    dispatch_group_leave(group);
+//    
+//    dispatch_group_enter(group);
+//    NSLog(@"2");
+//    dispatch_group_leave(group);
+//    
+//    dispatch_group_enter(group);
+//    sleep(3);
+//    NSLog(@"3");
+//    dispatch_group_leave(group);
+//    
+//    dispatch_group_enter(group);
+//    sleep(2);
+//    NSLog(@"4");
+//    dispatch_group_leave(group);
+//
+//    dispatch_group_notify(group, queue, ^{
+//        NSLog(@"done");
+//    });
+//    NSLog(@"主线程");
+
+
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        NSLog(@"1 %@",[NSThread currentThread]);
+//    });
+    // 开启一个异步队列来等待
+    //    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    //        dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
+    //        dispatch_async(queue, ^{
+    //            NSLog(@"done");
+    //        });
+    //    });
+//
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        NSLog(@"2 %@",[NSThread currentThread]);
+//    });
+//    
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        NSLog(@"3 %@",[NSThread currentThread]);
+//    });
     
+
+    // 2
+//    dispatch_queue_t queue = dispatch_get_main_queue();
+//    
+//    // 3
+//    static dispatch_source_t source = nil;
+//    
+//    // 4
+//    __typeof(self) __weak weakSelf = self;
+//    
+//    // 5
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        // 6
+//        source = dispatch_source_create(DISPATCH_SOURCE_TYPE_SIGNAL, SIGSTOP, 0, queue);
+//        
+//        // 7
+//        if (source)
+//        {
+//            // 8
+//            dispatch_source_set_event_handler(source, ^{
+//                // 9
+//                NSLog(@"Hi, I am: %@", weakSelf);
+//            });
+//            dispatch_resume(source); // 10
+//        }
+//    });
+    
+    [self barrierDemo];
 }
 
+- (void) barrierDemo{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dispatch_queue_t queue = dispatch_queue_create("iKingsly", DISPATCH_QUEUE_CONCURRENT);
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(1);
+    dispatch_async(queue, ^{
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+        for (int i = 0; i < 1000; i++) {
+            dict[@(i)] = @(i);
+        }
+        dispatch_semaphore_signal(semaphore);
+    });
+    
+    dispatch_async(queue, ^{
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+        for (int i = 0; i < 1000; i++) {
+            NSLog(@"%@", dict[@(i)]);
+        }
+        dispatch_semaphore_signal(semaphore);
+    });
+}
+
+void myFinalizerFunction(){
+    NSLog(@"销毁了");
+}
 - (int)abc {
     return 1;
 }
