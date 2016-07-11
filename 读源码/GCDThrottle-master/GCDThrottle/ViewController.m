@@ -17,17 +17,17 @@
         NSLog(@"search: %@", sender.text);
     });
     
-    dispatch_throttle_on_queue(0.3, THROTTLE_GLOBAL_QUEUE, ^{
-        NSLog(@"search: %@", sender.text);
-    });
-    
-    [GCDThrottle throttle:0.3 block:^{
-        NSLog(@"search: %@", sender.text);
-    }];
-    
-    [GCDThrottle throttle:0.3 queue:THROTTLE_GLOBAL_QUEUE block:^{
-        NSLog(@"search: %@", sender.text);
-    }];
+//    dispatch_throttle_on_queue(0.3, THROTTLE_GLOBAL_QUEUE, ^{
+//        NSLog(@"search: %@", sender.text);
+//    });
+//    
+//    [GCDThrottle throttle:0.3 block:^{
+//        NSLog(@"search: %@", sender.text);
+//    }];
+//    
+//    [GCDThrottle throttle:0.3 queue:THROTTLE_GLOBAL_QUEUE block:^{
+//        NSLog(@"search: %@", sender.text);
+//    }];
 }
 
 @end
