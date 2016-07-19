@@ -12,7 +12,7 @@
 #import "YYDispatchQueuePool.h"
 #import <UIKit/UIKit.h>
 #import <libkern/OSAtomic.h>
-
+#import <objc/runtime.h>
 #define MAX_QUEUE_COUNT 32
 /// 返回队列的优先级 iOS8 之前使用的方法
 static inline dispatch_queue_priority_t NSQualityOfServiceToDispatchPriority(NSQualityOfService qos) {
@@ -64,6 +64,7 @@ static YYDispatchContext *YYDispatchContextCreate(const char *name,
         free(context);
         return NULL;
     }
+    
     
     /// 判断当前系统的版本 通过不同的api来创建queue
     if ([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
@@ -132,6 +133,7 @@ static dispatch_queue_t YYDispatchContextGetQueue(YYDispatchContext *context) {
     uint32_t counter = (uint32_t)OSAtomicIncrement32(&context->counter);
     /// 取出当前队列的下标， 用 counter mod 缓存总队列数
     void *queue = context->queues[counter % context->queueCount];
+
     /// 返回对应的 queue
     return (__bridge dispatch_queue_t)(queue);
 }
