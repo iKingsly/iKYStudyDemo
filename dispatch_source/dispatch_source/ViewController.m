@@ -121,33 +121,65 @@ typedef void (^Success)(void);
     
 
 //     2
-    dispatch_queue_t queue = dispatch_get_main_queue();
-    
-    // 3
-    static dispatch_source_t source = nil;
-    
-    // 4
-    __typeof(self) __weak weakSelf = self;
-    
-    // 5
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        // 6
-        source = dispatch_source_create(DISPATCH_SOURCE_TYPE_SIGNAL, SIGSTOP, 0, queue);
-        
-        // 7
-        if (source)
-        {
-            // 8
-            dispatch_source_set_event_handler(source, ^{
-                // 9
-                NSLog(@"Hi, I am: %@", weakSelf);
-            });
-            dispatch_resume(source); // 10
-        }
-    });
+//    dispatch_queue_t queue = dispatch_get_main_queue();
+//    
+//    // 3
+//    static dispatch_source_t source = nil;
+//    
+//    // 4
+//    __typeof(self) __weak weakSelf = self;
+//    
+//    // 5
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        // 6
+//        source = dispatch_source_create(DISPATCH_SOURCE_TYPE_SIGNAL, SIGSTOP, 0, queue);
+//        
+//        // 7
+//        if (source)
+//        {
+//            // 8
+//            dispatch_source_set_event_handler(source, ^{
+//                // 9
+//                NSLog(@"Hi, I am: %@", weakSelf);
+//            });
+//            dispatch_resume(source); // 10
+//        }
+//    });
     
 //    [self barrierDemo];
+//    dispatch_semaphore_t sema = dispatch_semaphore_create(1);
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+//        NSLog(@"获得sema 1 %@",[NSThread currentThread]);
+//        sleep(3);
+//        dispatch_semaphore_signal(sema);
+//    });
+//    
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//        dispatch_semaphore_wait(sema, DISPATCH_TIME_NOW);
+//        NSLog(@"获得sema 2 %@",[NSThread currentThread]);
+//        dispatch_semaphore_signal(sema);
+//    });
+//    
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+//        NSLog(@"获得sema 3 %@",[NSThread currentThread]);
+//        sleep(2);
+//
+////        dispatch_semaphore_signal(sema);
+//    });
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+//        NSLog(@"获得sema 4 %@",[NSThread currentThread]);
+//        dispatch_semaphore_signal(sema);
+//    });
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_group_enter(group);
+    NSLog(@"%ld",LONG_MAX);
+    sleep(3);
+    dispatch_group_leave(group);
+    NSLog(@"done");
 }
 
 - (void) barrierDemo{
