@@ -1,0 +1,12 @@
+PODS:
+  - Excalibur (0.1.1)
+
+DEPENDENCIES:
+  - Excalibur (~> 0.1.1)
+
+SPEC CHECKSUMS:
+  Excalibur: 624bbaac0b83c3f5d470a10c7274f9d6cc095c87
+
+PODFILE CHECKSUM: e05ce20c4fb1302f3af7a584fb5861ab8eb80fce
+
+COCOAPODS: 1.0.0
