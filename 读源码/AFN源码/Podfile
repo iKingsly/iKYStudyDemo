@@ -9,4 +9,8 @@ target 'AFN源码' do
 
   # Pods for AFN源码
 pod 'AFNetworking'
+pod 'Masonry'
+pod 'YYModel'
+pod 'MJExtension'
+pod 'SDWebImage'
 end
