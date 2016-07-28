@@ -13,4 +13,5 @@ pod 'Masonry'
 pod 'YYModel'
 pod 'MJExtension'
 pod 'SDWebImage'
+pod 'YYCache'
 end

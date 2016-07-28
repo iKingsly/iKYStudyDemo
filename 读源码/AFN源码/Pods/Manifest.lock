@@ -19,6 +19,7 @@ PODS:
   - SDWebImage (3.8.1):
     - SDWebImage/Core (= 3.8.1)
   - SDWebImage/Core (3.8.1)
+  - YYCache (1.0.3)
   - YYModel (1.0.2)
 
 DEPENDENCIES:
@@ -26,6 +27,7 @@ DEPENDENCIES:
   - Masonry
   - MJExtension
   - SDWebImage
+  - YYCache
   - YYModel
 
 SPEC CHECKSUMS:
@@ -33,8 +35,9 @@ SPEC CHECKSUMS:
   Masonry: b529bb169217897b6354d4b56b1fada6d475b13d
   MJExtension: d86aacb740c87519d20e3cca55b6fa4be6cc7548
   SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
+  YYCache: 282f35b5b0990833d0b7a06d864a87141a021da2
   YYModel: 7a467eff45ae3641c33efb136c262d33b6f48c1a
 
-PODFILE CHECKSUM: 2a1977714307c02d908405ad62f1da12c92a3dff
+PODFILE CHECKSUM: b253a1a3243ad5c7beb8768ac57b5f26c209d193
 
 COCOAPODS: 1.0.0
