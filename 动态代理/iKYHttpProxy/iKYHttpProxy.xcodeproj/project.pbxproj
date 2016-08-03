@@ -1,0 +1,291 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0DE02D841D51F7C80031AEDA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE02D831D51F7C80031AEDA /* main.m */; };
+		0DE02D8E1D51F7F50031AEDA /* HttpProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE02D8D1D51F7F50031AEDA /* HttpProxy.m */; };
+		0DE02D951D51FB8D0031AEDA /* CommentHttpHandlerImp.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE02D941D51FB8D0031AEDA /* CommentHttpHandlerImp.m */; };
+		0DE02D981D51FBDA0031AEDA /* UserHttpHandlerImp.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE02D971D51FBDA0031AEDA /* UserHttpHandlerImp.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0DE02D7E1D51F7C80031AEDA /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0DE02D801D51F7C80031AEDA /* iKYHttpProxy */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = iKYHttpProxy; sourceTree = BUILT_PRODUCTS_DIR; };
+		0DE02D831D51F7C80031AEDA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		0DE02D8C1D51F7F50031AEDA /* HttpProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpProxy.h; sourceTree = "<group>"; };
+		0DE02D8D1D51F7F50031AEDA /* HttpProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpProxy.m; sourceTree = "<group>"; };
+		0DE02D901D51FA8A0031AEDA /* CommentHttpHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentHttpHandler.h; sourceTree = "<group>"; };
+		0DE02D911D51FAB60031AEDA /* UserHttpHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserHttpHandler.h; sourceTree = "<group>"; };
+		0DE02D931D51FB8D0031AEDA /* CommentHttpHandlerImp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentHttpHandlerImp.h; path = iKYHttpProxy/HttpProtocolImp/CommentHttpHandlerImp.h; sourceTree = SOURCE_ROOT; };
+		0DE02D941D51FB8D0031AEDA /* CommentHttpHandlerImp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentHttpHandlerImp.m; path = iKYHttpProxy/HttpProtocolImp/CommentHttpHandlerImp.m; sourceTree = SOURCE_ROOT; };
+		0DE02D961D51FBDA0031AEDA /* UserHttpHandlerImp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserHttpHandlerImp.h; path = iKYHttpProxy/HttpProtocolImp/UserHttpHandlerImp.h; sourceTree = SOURCE_ROOT; };
+		0DE02D971D51FBDA0031AEDA /* UserHttpHandlerImp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserHttpHandlerImp.m; path = iKYHttpProxy/HttpProtocolImp/UserHttpHandlerImp.m; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0DE02D7D1D51F7C80031AEDA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0DE02D771D51F7C80031AEDA = {
+			isa = PBXGroup;
+			children = (
+				0DE02D821D51F7C80031AEDA /* iKYHttpProxy */,
+				0DE02D811D51F7C80031AEDA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0DE02D811D51F7C80031AEDA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0DE02D801D51F7C80031AEDA /* iKYHttpProxy */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0DE02D821D51F7C80031AEDA /* iKYHttpProxy */ = {
+			isa = PBXGroup;
+			children = (
+				0DE02D831D51F7C80031AEDA /* main.m */,
+				0DE02D921D51FAE80031AEDA /* HttpProtocolImp */,
+				0DE02D8B1D51F7E60031AEDA /* HttpProxy */,
+				0DE02D8F1D51FA710031AEDA /* HttpProtocol */,
+			);
+			path = iKYHttpProxy;
+			sourceTree = "<group>";
+		};
+		0DE02D8B1D51F7E60031AEDA /* HttpProxy */ = {
+			isa = PBXGroup;
+			children = (
+				0DE02D8C1D51F7F50031AEDA /* HttpProxy.h */,
+				0DE02D8D1D51F7F50031AEDA /* HttpProxy.m */,
+			);
+			path = HttpProxy;
+			sourceTree = "<group>";
+		};
+		0DE02D8F1D51FA710031AEDA /* HttpProtocol */ = {
+			isa = PBXGroup;
+			children = (
+				0DE02D901D51FA8A0031AEDA /* CommentHttpHandler.h */,
+				0DE02D911D51FAB60031AEDA /* UserHttpHandler.h */,
+			);
+			path = HttpProtocol;
+			sourceTree = "<group>";
+		};
+		0DE02D921D51FAE80031AEDA /* HttpProtocolImp */ = {
+			isa = PBXGroup;
+			children = (
+				0DE02D931D51FB8D0031AEDA /* CommentHttpHandlerImp.h */,
+				0DE02D941D51FB8D0031AEDA /* CommentHttpHandlerImp.m */,
+				0DE02D961D51FBDA0031AEDA /* UserHttpHandlerImp.h */,
+				0DE02D971D51FBDA0031AEDA /* UserHttpHandlerImp.m */,
+			);
+			name = HttpProtocolImp;
+			path = HttpProtocol/HttpProtocolImp;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0DE02D7F1D51F7C80031AEDA /* iKYHttpProxy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0DE02D871D51F7C80031AEDA /* Build configuration list for PBXNativeTarget "iKYHttpProxy" */;
+			buildPhases = (
+				0DE02D7C1D51F7C80031AEDA /* Sources */,
+				0DE02D7D1D51F7C80031AEDA /* Frameworks */,
+				0DE02D7E1D51F7C80031AEDA /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iKYHttpProxy;
+			productName = iKYHttpProxy;
+			productReference = 0DE02D801D51F7C80031AEDA /* iKYHttpProxy */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0DE02D781D51F7C80031AEDA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = iKingsly;
+				TargetAttributes = {
+					0DE02D7F1D51F7C80031AEDA = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+				};
+			};
+			buildConfigurationList = 0DE02D7B1D51F7C80031AEDA /* Build configuration list for PBXProject "iKYHttpProxy" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 0DE02D771D51F7C80031AEDA;
+			productRefGroup = 0DE02D811D51F7C80031AEDA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0DE02D7F1D51F7C80031AEDA /* iKYHttpProxy */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0DE02D7C1D51F7C80031AEDA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0DE02D8E1D51F7F50031AEDA /* HttpProxy.m in Sources */,
+				0DE02D981D51FBDA0031AEDA /* UserHttpHandlerImp.m in Sources */,
+				0DE02D841D51F7C80031AEDA /* main.m in Sources */,
+				0DE02D951D51FB8D0031AEDA /* CommentHttpHandlerImp.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		0DE02D851D51F7C80031AEDA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		0DE02D861D51F7C80031AEDA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		0DE02D881D51F7C80031AEDA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		0DE02D891D51F7C80031AEDA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0DE02D7B1D51F7C80031AEDA /* Build configuration list for PBXProject "iKYHttpProxy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0DE02D851D51F7C80031AEDA /* Debug */,
+				0DE02D861D51F7C80031AEDA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0DE02D871D51F7C80031AEDA /* Build configuration list for PBXNativeTarget "iKYHttpProxy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0DE02D881D51F7C80031AEDA /* Debug */,
+				0DE02D891D51F7C80031AEDA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0DE02D781D51F7C80031AEDA /* Project object */;
+}
