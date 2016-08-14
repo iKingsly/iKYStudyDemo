@@ -818,9 +818,9 @@ objc_object::retain()
 }
 
 
-// Base retain implementation, ignoring overrides.
-// This does not check isa.fast_rr; if there is an RR override then 
-// it was already called and it chose to call [super retain].
+
+// 最底层的retain实现，会忽略重载
+// 不会检查isa指针中的fast_rr；如果实现了重载，那么会选择调用父类 [super retain]方法
 inline id 
 objc_object::rootRetain()
 {

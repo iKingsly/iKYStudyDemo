@@ -447,25 +447,26 @@ object_cxxConstructFromClass(id obj, Class cls)
 
     supercls = cls->superclass;
 
-    // Call superclasses' ctors first, if any.
+    // 递归调用父类的构造器
     if (supercls  &&  supercls->hasCxxCtor()) {
         bool ok = object_cxxConstructFromClass(obj, supercls);
-        if (!ok) return nil;  // some superclass's ctor failed - give up
+        if (!ok) return nil;  // 构建失败则退出
     }
 
-    // Find this class's ctor, if any.
+    // 调用class的构造器
     ctor = (id(*)(id))lookupMethodInClassAndLoadCache(cls, SEL_cxx_construct);
+    // 在方法中找不到对应的构造方法 则直接返回
     if (ctor == (id(*)(id))_objc_msgForward_impcache) return obj;  // no ctor - ok
     
-    // Call this class's ctor.
+    // 找到了构造方法 进行调用
     if (PrintCxxCtors) {
         _objc_inform("CXX: calling C++ constructors for class %s", 
                      cls->nameForLogging());
     }
+    // 构造完成 返回obj
     if ((*ctor)(obj)) return obj;  // ctor called and succeeded - ok
 
-    // This class's ctor was called and failed. 
-    // Call superclasses's dtors to clean up.
+    // 当父类调用构造器失败时候 调用父类的析构方法进行清除
     if (supercls) object_cxxDestructFromClass(obj, supercls);
     return nil;
 }
@@ -517,11 +518,9 @@ static void _class_resolveClassMethod(Class cls, SEL sel, id inst)
 
 
 /***********************************************************************
-* _class_resolveInstanceMethod
-* Call +resolveInstanceMethod, looking for a method to be added to class cls.
-* cls may be a metaclass or a non-meta class.
-* Does not check if the method already exists.
+ 调用resolveInstanceMethod 查找是否有为这个类动态添加一个新的方法
 **********************************************************************/
+
 static void _class_resolveInstanceMethod(Class cls, SEL sel, id inst)
 {
     if (! lookUpImpOrNil(cls->ISA(), SEL_resolveInstanceMethod, cls, 
@@ -564,13 +563,14 @@ static void _class_resolveInstanceMethod(Class cls, SEL sel, id inst)
 * Returns nothing; any result would be potentially out-of-date already.
 * Does not check if the method already exists.
 **********************************************************************/
+// 处理动态方法解析
 void _class_resolveMethod(Class cls, SEL sel, id inst)
 {
-    if (! cls->isMetaClass()) {
+    if (! cls->isMetaClass()) { // 是对象方法
         // try [cls resolveInstanceMethod:sel]
         _class_resolveInstanceMethod(cls, sel, inst);
     } 
-    else {
+    else { // 是类方法
         // try [nonMetaClass resolveClassMethod:sel]
         // and [cls resolveInstanceMethod:sel]
         _class_resolveClassMethod(cls, sel, inst);
@@ -644,16 +644,16 @@ BOOL class_respondsToSelector(Class cls, SEL sel)
 }
 
 
-// inst is an instance of cls or a subclass thereof, or nil if none is known.
-// Non-nil inst is faster in some cases. See lookUpImpOrForward() for details.
+// inst 是一个 cls 的实例，或者是子类，也可以是nil
+// 如果 inst 不为空在某些情况下会更快
 bool class_respondsToSelector_inst(Class cls, SEL sel, id inst)
 {
     IMP imp;
 
     if (!sel  ||  !cls) return NO;
  
-    // Avoids +initialize because it historically did so.
-    // We're not returning a callable IMP anyway.
+    // 避免进行初始化
+    // 查找是否有对应的imp指针 有说明有实现对应的方法
     imp = lookUpImpOrNil(cls, sel, inst, 
                          NO/*initialize*/, YES/*cache*/, YES/*resolver*/);
     return bool(imp);
@@ -688,6 +688,7 @@ IMP class_getMethodImplementation(Class cls, SEL sel)
 
     // Translate forwarding function to C-callable external version
     if (!imp) {
+        // 查找不到IMP指针 进入到方法决议
         return _objc_msgForward;
     }
 
@@ -887,13 +888,7 @@ _class_createInstancesFromZone(Class cls, size_t extraBytes, void *zone,
 
     size_t size = cls->instanceSize(extraBytes);
 
-#if SUPPORT_GC
-    if (UseGC) {
-        num_allocated = 
-            auto_zone_batch_allocate(gc_zone, size, AUTO_OBJECT_SCANNED, 0, 1, 
-                                     (void**)results, num_requested);
-    } else 
-#endif
+
     {
         unsigned i;
         num_allocated = 

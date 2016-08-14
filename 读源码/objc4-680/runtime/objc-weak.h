@@ -70,7 +70,7 @@ struct weak_entry_t {
     DisguisedPtr<objc_object> referent;
     union {
         struct {
-            /// 保存这个对象的所有weak指针 
+            /// 保存所有指向这个对象的weak指针
             weak_referrer_t *referrers;
             uintptr_t        out_of_line : 1;
             uintptr_t        num_refs : PTR_MINUS_1;

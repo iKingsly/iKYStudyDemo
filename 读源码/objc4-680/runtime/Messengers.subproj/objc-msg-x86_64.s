@@ -513,12 +513,15 @@ LExit$0:
 
 	// _class_lookupMethodAndLoadCache3(receiver, selector, class)
 
+	// $0 存放了要查找的 class
 	movq	$0, %a1
+	// $1 存放了要查找的 selector
 	movq	$1, %a2
 	movq	%r11, %a3
+	// 调用 __class_lookupMethodAndLoadCache3 查找IMP指针
 	call	__class_lookupMethodAndLoadCache3
 
-	// IMP is now in %rax
+	// IMP 指针现在存到 %r11
 	movq	%rax, %r11
 
 	RestoreRegisters
@@ -678,17 +681,20 @@ _objc_debug_taggedpointer_classes:
 
 	NilTest	NORMAL
 
+	// 快速取得isa指针
 	GetIsaFast NORMAL		// r11 = self->isa
+	// 快速查找缓存
 	CacheLookup NORMAL		// calls IMP on success
 
 	NilTestSupport	NORMAL
 
 	GetIsaSupport	NORMAL
 
-// cache miss: go search the method lists
+// 缓存中查找不到 则到方法列表中查找
 LCacheMiss:
 	// isa still in r11
 	MethodTableLookup %a1, %a2	// r11 = IMP
+	// 比较是否为 forwarding
 	cmp	%r11, %r11		// set eq (nonstret) for forwarding
 	jmp	*%r11			// goto *imp
 

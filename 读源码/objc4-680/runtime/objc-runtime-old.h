@@ -277,14 +277,20 @@ struct old_method_list {
 };
 
 struct old_protocol {
+    // protocol 依附的类
     Class isa;
+    // protocol 名字
     const char *protocol_name;
+    // protocol链表
     struct old_protocol_list *protocol_list;
+    // protocol 中的实例方法
     struct objc_method_description_list *instance_methods;
+    // protocol 中的类方法
     struct objc_method_description_list *class_methods;
 };
 
 struct old_protocol_list {
+    // 链表中的next指针
     struct old_protocol_list *next;
     long count;
     struct old_protocol *list[1];

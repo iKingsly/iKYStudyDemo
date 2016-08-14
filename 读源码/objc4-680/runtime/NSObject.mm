@@ -239,6 +239,10 @@ objc_retain_autorelease(id obj)
 void
 objc_storeStrong(id *location, id obj)
 {
+    // 强指针引用的时候 ，首先是一个prev指针指向旧对象，判断两者是否相同，如果相同则不继续
+    // 对新的obj做一次retain操作
+    // 将当前的指针指向objc
+    // 对旧的对象做一次release操作
     id prev = *location;
     if (obj == prev) {
         return;
@@ -416,9 +420,14 @@ objc_storeWeakOrNil(id *location, id newObj)
  * @param location Address of __weak ptr. 
  * @param newObj Object ptr. 
  */
+/**
+ 初始化一个新的weak指针指向某一个对象
+ 这个方法不是线程安全的，特别是在病发修改weak变量的时候（并发清理weak变量却是线程安全的）
+ */
 id
 objc_initWeak(id *location, id newObj)
 {
+    // 判断newObj是否为nil
     if (!newObj) {
         *location = nil;
         return nil;
@@ -441,16 +450,11 @@ objc_initWeakOrNil(id *location, id newObj)
 }
 
 
-/** 
- * Destroys the relationship between a weak pointer
- * and the object it is referencing in the internal weak
- * table. If the weak pointer is not referencing anything, 
- * there is no need to edit the weak table. 
+
+/**
+ *  销毁一个弱指针，它是在内部弱表引用对象之间的关系。如果弱指针没有引用任何东西，没有必要修改的弱引用表。
  *
- * This function IS NOT thread-safe with respect to concurrent 
- * modifications to the weak variable. (Concurrent weak clear is safe.)
- * 
- * @param location The weak pointer address. 
+ *  @param location 弱指针
  */
 void
 objc_destroyWeak(id *location)
@@ -1300,16 +1304,23 @@ objc_object::sidetable_retain()
 #if SUPPORT_NONPOINTER_ISA
     assert(!isa.indexed);
 #endif
+    // 从全局表中取出当前对象的SideTables
     SideTable& table = SideTables()[this];
 
+    // 进行尝试加锁操作
     if (table.trylock()) {
+        // 取出当前对象的引用计数器
         size_t& refcntStorage = table.refcnts[this];
         if (! (refcntStorage & SIDE_TABLE_RC_PINNED)) {
+            // 对引用计数器进行增加
             refcntStorage += SIDE_TABLE_RC_ONE;
         }
+        // 解锁
         table.unlock();
+        // 返回当前对象
         return (id)this;
     }
+    // 尝试加锁失败就跳到sidetable_retain_slow中之行
     return sidetable_retain_slow(table);
 }
 
@@ -1356,6 +1367,7 @@ objc_object::sidetable_retainCount()
     RefcountMap::iterator it = table.refcnts.find(this);
     if (it != table.refcnts.end()) {
         // this is valid for SIDE_TABLE_RC_PINNED too
+        // 做加1然后返回
         refcnt_result += it->second >> SIDE_TABLE_RC_SHIFT;
     }
     table.unlock();
@@ -1456,29 +1468,36 @@ objc_object::sidetable_release(bool performDealloc)
 #if SUPPORT_NONPOINTER_ISA
     assert(!isa.indexed);
 #endif
+    // 获得对象对应的SideTable
     SideTable& table = SideTables()[this];
 
     bool do_dealloc = false;
 
+    // 尝试性取得锁
     if (table.trylock()) {
         RefcountMap::iterator it = table.refcnts.find(this);
         if (it == table.refcnts.end()) {
-            do_dealloc = true;
+            do_dealloc = true; // 需要进行dealloc操作
             table.refcnts[this] = SIDE_TABLE_DEALLOCATING;
-        } else if (it->second < SIDE_TABLE_DEALLOCATING) {
-            // SIDE_TABLE_WEAKLY_REFERENCED may be set. Don't change it.
+        } else if (it->second < SIDE_TABLE_DEALLOCATING) { // 存储的引用计数值是否为 0
+
+            // 开始析构调用dealloc
             do_dealloc = true;
+            // 标记为 正在析构
             it->second |= SIDE_TABLE_DEALLOCATING;
         } else if (! (it->second & SIDE_TABLE_RC_PINNED)) {
+            // 计数器－1 这样做是为了避免负数的出现
             it->second -= SIDE_TABLE_RC_ONE;
         }
         table.unlock();
         if (do_dealloc  &&  performDealloc) {
+            // 发送 dealloc 消息
             ((void(*)(objc_object *, SEL))objc_msgSend)(this, SEL_dealloc);
         }
         return do_dealloc;
     }
 
+    // 取不到锁，就继续进行
     return sidetable_release_slow(table, performDealloc);
 }
 
@@ -1488,9 +1507,8 @@ objc_object::sidetable_clearDeallocating()
 {
     SideTable& table = SideTables()[this];
 
-    // clear any weak table items
-    // clear extra retain count and deallocating bit
-    // (fixme warn or abort if extra retain count == 0 ?)
+    // 清除弱引用表
+    // 清除饮用表
     table.lock();
     RefcountMap::iterator it = table.refcnts.find(this);
     if (it != table.refcnts.end()) {
@@ -1515,6 +1533,7 @@ id
 objc_retain(id obj)
 {
     if (!obj) return obj;
+    // 如果obj 对象是taggedPointer() 就直接返回
     if (obj->isTaggedPointer()) return obj;
     return obj->retain();
 }
@@ -1525,6 +1544,7 @@ void
 objc_release(id obj)
 {
     if (!obj) return;
+    // 如果obj 对象是taggedPointer() 就直接返回
     if (obj->isTaggedPointer()) return;
     return obj->release();
 }
@@ -1535,6 +1555,7 @@ id
 objc_autorelease(id obj)
 {
     if (!obj) return obj;
+    // 如果obj 对象是taggedPointer() 就直接返回
     if (obj->isTaggedPointer()) return obj;
     return obj->autorelease();
 }
@@ -1933,15 +1954,17 @@ void arr_init(void)
     return [self class] == cls;
 }
 
-+ (BOOL)isKindOfClass:(Class)cls {
-    for (Class tcls = object_getClass((id)self); tcls; tcls = tcls->superclass) {
+
+
+- (BOOL)isKindOfClass:(Class)cls {
+    for (Class tcls = [self class]; tcls; tcls = tcls->superclass) {
         if (tcls == cls) return YES;
     }
     return NO;
 }
 
-- (BOOL)isKindOfClass:(Class)cls {
-    for (Class tcls = [self class]; tcls; tcls = tcls->superclass) {
++ (BOOL)isKindOfClass:(Class)cls {
+    for (Class tcls = object_getClass((id)self); tcls; tcls = tcls->superclass) {
         if (tcls == cls) return YES;
     }
     return NO;
@@ -1977,7 +2000,9 @@ void arr_init(void)
 }
 
 + (BOOL)conformsToProtocol:(Protocol *)protocol {
+    // 判断protocol合法性
     if (!protocol) return NO;
+    // 在父类中不断调调用 class_conformsToProtocol 判断
     for (Class tcls = self; tcls; tcls = tcls->superclass) {
         if (class_conformsToProtocol(tcls, protocol)) return YES;
     }
@@ -1986,6 +2011,7 @@ void arr_init(void)
 
 - (BOOL)conformsToProtocol:(Protocol *)protocol {
     if (!protocol) return NO;
+    // 取得isa 指针中的class对象 进行判断
     for (Class tcls = [self class]; tcls; tcls = tcls->superclass) {
         if (class_conformsToProtocol(tcls, protocol)) return YES;
     }

@@ -455,19 +455,22 @@ weak_is_registered_no_lock(weak_table_t *weak_table, id referent_id)
 void 
 weak_clear_no_lock(weak_table_t *weak_table, id referent_id) 
 {
+    // 取得对象
     objc_object *referent = (objc_object *)referent_id;
 
+    // 拿到对应的weak_entry_t
     weak_entry_t *entry = weak_entry_for_referent(weak_table, referent);
+    // 判断是否为空
     if (entry == nil) {
-        /// XXX shouldn't happen, but does with mismatched CF/objc
-        //printf("XXX no entry for clear deallocating %p\n", referent);
         return;
     }
 
-    // zero out references
+    // 拿到弱引用数组
     weak_referrer_t *referrers;
+    // 弱引用指针个数
     size_t count;
-    
+
+    // 获取对应的值
     if (entry->out_of_line) {
         referrers = entry->referrers;
         count = TABLE_SIZE(entry);
@@ -476,7 +479,8 @@ weak_clear_no_lock(weak_table_t *weak_table, id referent_id)
         referrers = entry->inline_referrers;
         count = WEAK_INLINE_COUNT;
     }
-    
+
+    // 一个一个指针置为nil
     for (size_t i = 0; i < count; ++i) {
         objc_object **referrer = referrers[i];
         if (referrer) {
@@ -493,7 +497,8 @@ weak_clear_no_lock(weak_table_t *weak_table, id referent_id)
             }
         }
     }
-    
+
+    // 从总的表中移除
     weak_entry_remove(weak_table, entry);
 }
 
@@ -518,6 +523,11 @@ weak_clear_no_lock(weak_table_t *weak_table, id referent_id)
   This can cause objc_weak_error complaints and crashes.
   So we now don't touch the storage until deallocation completes.
 */
+/**
+ *  当在表达式中使用一个弱指针的值时这个函数被调用。
+    objc_loadWeakRetained （），它最终是由objc_loadWeak()调用。
+    目标是断言有实际上此特定对象的弱指针（多个）条目被存储在弱表，并保留该对象，以便它不弱指针的使用过程中释放。
+ */
 id 
 weak_read_no_lock(weak_table_t *weak_table, id *referrer_id) 
 {

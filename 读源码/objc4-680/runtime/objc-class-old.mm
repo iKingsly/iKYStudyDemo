@@ -256,6 +256,7 @@ static old_method_list *nextMethodList(Class cls,
 static inline old_method *_findMethodInList(old_method_list * mlist, SEL sel) {
     int i;
     if (!mlist) return nil;
+    // 从methodList 中 遍历是否有 method 的name与sel相同
     for (i = 0; i < mlist->method_count; i++) {
         old_method *m = &mlist->method_list[i];
         if (m->method_name == sel) {
@@ -267,40 +268,38 @@ static inline old_method *_findMethodInList(old_method_list * mlist, SEL sel) {
 
 static inline old_method * _findMethodInClass(Class cls, SEL sel) __attribute__((always_inline));
 static inline old_method * _findMethodInClass(Class cls, SEL sel) {
-    // Flattened version of nextMethodList(). The optimizer doesn't 
-    // do a good job with hoisting the conditionals out of the loop.
-    // Conceptually, this looks like:
-    // while ((mlist = nextMethodList(cls, &iterator))) {
-    //     old_method *m = _findMethodInList(mlist, sel);
-    //     if (m) return m;
-    // }
 
+    // 如果类方法列表为空 则返回nil
     if (!cls->methodLists) {
-        // No method lists.
         return nil;
     }
     else if (cls->info & CLS_NO_METHOD_ARRAY) {
-        // One method list.
+        // 只有一个方法列表 直接在列表中查找
         old_method_list **mlistp;
         mlistp = (old_method_list **)&cls->methodLists;
         *mlistp = fixupSelectorsInMethodList(cls, *mlistp);
+        // 在列表中查找相应与sel相通的method
         return _findMethodInList(*mlistp, sel);
     }
     else {
-        // Multiple method lists.
+        // 多个方法列表
         old_method_list **mlistp;
         for (mlistp = cls->methodLists; 
              *mlistp != nil  &&  *mlistp != END_OF_METHODS_LIST; 
              mlistp++) 
         {
+            // 不断遍历 查找是否有对应的method
             old_method *m;
             *mlistp = fixupSelectorsInMethodList(cls, *mlistp);
             m = _findMethodInList(*mlistp, sel);
+            // 找到了就返回
             if (m) return m;
         }
+        // 找不到 返回nil
         return nil;
     }
 }
+
 
 static inline old_method * _getMethod(Class cls, SEL sel) {
     for (; cls; cls = cls->superclass) {
@@ -388,103 +387,105 @@ IMP lookUpImpOrForward(Class cls, SEL sel, id inst,
 
     methodListLock.assertUnlocked();
 
-    // Optimistic cache lookup
+    // 无锁查找 效率高
+    // 现在缓存中进行查找
     if (cache) {
         methodPC = _cache_getImp(cls, sel);
         if (methodPC) return methodPC;    
     }
 
-    // Check for freed class
+    // 查找是否为被释放的对象
     if (cls == _class_getFreedObjectClass())
         return (IMP) _freedHandler;
 
-    // Check for +initialize
+    // 查看是否类已经初始化
     if (initialize  &&  !cls->isInitialized()) {
         _class_initialize (_class_getNonMetaClass(cls, inst));
-        // If sel == initialize, _class_initialize will send +initialize and 
-        // then the messenger will send +initialize again after this 
-        // procedure finishes. Of course, if this is not being called 
-        // from the messenger then it won't happen. 2778172
+        // 判断依据是 sel == initialize 就会发送 initialize 消息
     }
 
-    // The lock is held to make method-lookup + cache-fill atomic 
-    // with respect to method addition. Otherwise, a category could 
-    // be added but ignored indefinitely because the cache was re-filled 
-    // with the old value after the cache flush on behalf of the category.
+    // 加锁是为了让方法查找和方法缓存的时候具有原子性。
+    // 否则 一个分类可以加入被无限期的忽略，
+    // 因为cache会被重复填充旧值刷新category的方法
+
  retry:
+    // 加锁
     methodListLock.lock();
 
-    // Ignore GC selectors
+    // 忽略垃圾回收机制中的方法
     if (ignoreSelector(sel)) {
         methodPC = _cache_addIgnoredEntry(cls, sel);
         goto done;
     }
 
-    // Try this class's cache.
-
+    // 尝试查找缓存
     methodPC = _cache_getImp(cls, sel);
     if (methodPC) goto done;
 
-    // Try this class's method lists.
-
+    // 尝试在这个类的method lists 方法列表中进行查找
     meth = _class_getMethodNoSuper_nolock(cls, sel);
-    if (meth) {
+    if (meth) { // 查找到了
+        // 填充到缓存中
         log_and_fill_cache(cls, cls, meth, sel);
         methodPC = method_getImplementation(meth);
         goto done;
     }
 
-    // Try superclass caches and method lists.
-
+    // 在父类缓存和父类的方法列表中查找
+    // 不断从父类的父类中查找
     curClass = cls;
     while ((curClass = curClass->superclass)) {
-        // Superclass cache.
+        // 查找父类的方法缓存
         meth = _cache_getMethod(curClass, sel, _objc_msgForward_impcache);
         if (meth) {
             if (meth != (Method)1) {
-                // Found the method in a superclass. Cache it in this class.
+
+                // 在父类中查找到了方法，将方法缓存在当前类中
                 log_and_fill_cache(cls, curClass, meth, sel);
+                // 获取到IMP指针
                 methodPC = method_getImplementation(meth);
                 goto done;
             }
             else {
-                // Found a forward:: entry in a superclass.
-                // Stop searching, but don't cache yet; call method 
-                // resolver for this class first.
+                // 或者找到了forward入口 在缓存中找不到，停止在缓存中查找 进入到方法决议
                 break;
             }
         }
 
-        // Superclass method list.
+        // 在父类的方法列表中查找
         meth = _class_getMethodNoSuper_nolock(curClass, sel);
-        if (meth) {
+        if (meth) { // 找到了 缓存
             log_and_fill_cache(cls, curClass, meth, sel);
+            // 获取到IMP指针
             methodPC = method_getImplementation(meth);
             goto done;
         }
     }
 
-    // No implementation found. Try method resolver once.
 
-    if (resolver  &&  !triedResolver) {
+    // 没有找到方法的IMP 进入到方法动态解析
+    if (resolver  &&  ! triedResolver) {
         methodListLock.unlock();
+        // 尝试查找是否有动态解析 动态添加方法
         _class_resolveMethod(cls, sel, inst);
         triedResolver = YES;
+        // 重新查找
         goto retry;
     }
 
-    // No implementation found, and method resolver didn't help. 
-    // Use forwarding.
-
+    // 将缓存中这个方法的IMP 设置为 _objc_msgForward_impcache
+    // 告诉类 当调用这个方法的时候要直接走消息转发
     _cache_addForwardEntry(cls, sel);
     methodPC = _objc_msgForward_impcache;
 
  done:
+    // 解锁
     methodListLock.unlock();
 
     // paranoia: look for ignored selectors with non-ignored implementations
     assert(!(ignoreSelector(sel)  &&  methodPC != (IMP)&_objc_ignored_method));
 
+    // 返回IMP
     return methodPC;
 }
 
@@ -497,7 +498,11 @@ IMP lookUpImpOrNil(Class cls, SEL sel, id inst,
                    bool initialize, bool cache, bool resolver)
 {
     IMP imp = lookUpImpOrForward(cls, sel, inst, initialize, cache, resolver);
+    // 这一步是在方法缓存中找到 _objc_msgForward_impcache
+    // 当第一次发现找不到这个方法 就会给SEL缓存设置IMP指针为 _objc_msgForward_impcache
+    // 查找不到IMP 会返回 _objc_msgForward_impcache
     if (imp == _objc_msgForward_impcache) return nil;
+    // 返回IMP
     else return imp;
 }
 
@@ -518,6 +523,7 @@ IMP lookupMethodInClassAndLoadCache(Class cls, SEL sel)
     // categories don't change them.
 
     // Search cache first.
+    // 先搜索缓存
     imp = _cache_getImp(cls, sel);
     if (imp) return imp;
 
@@ -955,22 +961,29 @@ Method class_getInstanceMethod(Class cls, SEL sel)
 
 BOOL class_conformsToProtocol(Class cls, Protocol *proto_gen)
 {
+//    #define oldprotocol(proto) ((struct old_protocol *)proto)
+    // 这里只是做了一个简单的强转
     old_protocol *proto = oldprotocol(proto_gen);
-    
+
+    // 判断合法性
     if (!cls) return NO;
     if (!proto) return NO;
 
     if (cls->ISA()->version >= 3) {
         old_protocol_list *list;
+        // 取出class 中的 protocol 因为是个链表 所以判断结束的条件是 list == nil
         for (list = cls->protocols; list != nil; list = list->next) {
             int i;
             for (i = 0; i < list->count; i++) {
+                // 如果相等 则直接返回YES
                 if (list->list[i] == proto) return YES;
+                // 如果这个protocol 继承了 目标protocol 也直接返回YES
                 if (protocol_conformsToProtocol((Protocol *)list->list[i], proto_gen)) return YES;
             }
             if (cls->ISA()->version <= 4) break;
         }
     }
+    // 如果找不到就返回 NO
     return NO;
 }
 
@@ -2368,12 +2381,16 @@ void objc_disposeClassPair(Class cls)
 id 
 objc_constructInstance(Class cls, void *bytes) 
 {
+    // 检验cls和bytes是否为空
     if (!cls  ||  !bytes) return nil;
 
+    // 指向分配好的内存
     id obj = (id)bytes;
 
+    // 初始化Isa指针
     obj->initIsa(cls);
 
+    // 是否有C＋＋的构建
     if (cls->hasCxxCtor()) {
         return object_cxxConstructFromClass(obj, cls);
     } else {
@@ -2394,13 +2411,13 @@ _class_createInstanceFromZone(Class cls, size_t extraBytes, void *zone)
     void *bytes;
     size_t size;
 
-    // Can't create something for nothing
+    // cls为空的话直接返回nil
     if (!cls) return nil;
 
-    // Allocate and initialize
+    // 分配内存和进行初始化，计算出需要的内存空间大小
     size = cls->alignedInstanceSize() + extraBytes;
 
-    // CF requires all objects be at least 16 bytes.
+    // size至少为16
     if (size < 16) size = 16;
 
 #if SUPPORT_GC
@@ -2409,12 +2426,14 @@ _class_createInstanceFromZone(Class cls, size_t extraBytes, void *zone)
                                           AUTO_OBJECT_SCANNED, 0, 1);
     } else 
 #endif
+    // 申请对象所需要的内存空间
     if (zone) {
         bytes = malloc_zone_calloc((malloc_zone_t *)zone, 1, size);
     } else {
         bytes = calloc(1, size);
     }
 
+    // 进行构建实例
     return objc_constructInstance(cls, bytes);
 }
 
@@ -2465,14 +2484,17 @@ void *objc_destructInstance(id obj)
     if (obj) {
         Class isa = obj->getIsa();
 
+        // 1. 如果有C++的析构 进行析构
         if (isa->hasCxxDtor()) {
             object_cxxDestruct(obj);
         }
 
+        // 2. 是否有关联对象，有的话进行移除
         if (isa->instancesHaveAssociatedObjects()) {
             _object_remove_assocations(obj);
         }
 
+        // 3. 进行析构操作
         if (!UseGC) objc_clear_deallocating(obj);
     }
 
@@ -2482,8 +2504,10 @@ void *objc_destructInstance(id obj)
 static id 
 _object_dispose(id anObject) 
 {
+    // 判断是否为nil
     if (anObject==nil) return nil;
 
+    // 进行析构
     objc_destructInstance(anObject);
     
 #if SUPPORT_GC
@@ -2492,9 +2516,10 @@ _object_dispose(id anObject)
     } else 
 #endif
     {
-        // only clobber isa for non-gc
+        // 清空isa
         anObject->initIsa(_objc_getFreedObjectClass ()); 
     }
+    // 释放内存
     free(anObject);
     return nil;
 }

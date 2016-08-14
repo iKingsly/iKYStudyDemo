@@ -569,19 +569,19 @@ LGetMethodExit:
 
 	STATIC_ENTRY __cache_getImp
 
-// load the class and selector
+// 加载class 和 SEL
 	movl    selector(%esp), %ecx
 	movl	self(%esp), %edx
 
-// do lookup
+// 开始查找
 	CacheLookup WORD_RETURN, CACHE_GET, LGetImpMiss
 
-// cache hit, method triplet in %eax
+// 缓存命中则 返回IMP
 	movl    method_imp(%eax), %eax  // return method imp
 	ret
 
 LGetImpMiss:
-// cache miss, return nil
+// 没有命中 则返回nil
 	xorl    %eax, %eax      // zero %eax
 	ret
 
@@ -599,27 +599,30 @@ LGetImpExit:
 	MESSENGER_START
 	CALL_MCOUNTER
 
-// load receiver and selector
+// 加载 receiver 和 selector
 	movl    selector(%esp), %ecx
 	movl	self(%esp), %eax
 
 // check whether selector is ignored
+//  查找selector 是否需要忽略
 	cmpl    $ kIgnore, %ecx
 	je      LMsgSendDone		// return self from %eax
 
-// check whether receiver is nil 
+// 查看 receiver 是否为 nil
 	testl	%eax, %eax
 	je	LMsgSendNilSelf
 
-// receiver (in %eax) is non-nil: search the cache
+// receiver 不为空 在缓存中搜索
 LMsgSendReceiverOk:
+    // 取得isa指针
 	movl	isa(%eax), %edx		// class = self->isa
+    // 查找缓存
 	CacheLookup WORD_RETURN, MSG_SEND, LMsgSendCacheMiss
 	xor	%edx, %edx		// set nonstret for msgForward_internal
 	MESSENGER_END_FAST
 	jmp	*%eax
 
-// cache miss: go search the method lists
+// 缓存中查找不到 则在方法列表中查找
 LMsgSendCacheMiss:
 	MethodTableLookup WORD_RETURN, MSG_SEND
 	xor	%edx, %edx		// set nonstret for msgForward_internal

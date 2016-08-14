@@ -196,10 +196,8 @@ static BOOL _thisThreadIsInitializingClass(Class cls)
 
 
 /***********************************************************************
-* _setThisThreadIsInitializingClass
-* Record that this thread is currently initializing the given class. 
-* This thread will be allowed to send messages to the class, but 
-*   other threads will have to wait.
+ 记录当前这个线程正在初始化给定的class。这个线程允许对这个class 发送消息
+ 但其他线程必须等待这个线程完成之后才能对它发送消息
 **********************************************************************/
 static void _setThisThreadIsInitializingClass(Class cls)
 {
@@ -267,10 +265,8 @@ typedef struct PendingInitialize {
 static NXMapTable *pendingInitializeMap;
 
 /***********************************************************************
-* _finishInitializing
-* cls has completed its +initialize method, and so has its superclass.
-* Mark cls as initialized as well, then mark any of cls's subclasses 
-* that have already finished their own +initialize methods.
+ cls和其父类 完成了初始化操作
+ 标记cls和其父类完成了初始化操作
 **********************************************************************/
 static void _finishInitializing(Class cls, Class supercls)
 {
@@ -289,26 +285,32 @@ static void _finishInitializing(Class cls, Class supercls)
         cls->setShouldFinalizeOnMainThread();
     }
 
-    // mark this class as fully +initialized
+    // 标记完成了 初始化操作
     cls->setInitialized();
+    // 通知其他等待的线程
     classInitLock.notifyAll();
+    // 标记线程没有在初始化class操作
     _setThisThreadIsNotInitializingClass(cls);
-    
-    // mark any subclasses that were merely waiting for this class
+
+    // 标记在等待这个class的子类
     if (!pendingInitializeMap) return;
     pending = (PendingInitialize *)NXMapGet(pendingInitializeMap, cls);
+    // 没有在等待的话 就退出
     if (!pending) return;
 
+    // 从 等待初始化的列表中移除class 中移除
     NXMapRemove(pendingInitializeMap, cls);
-    
-    // Destroy the pending table if it's now empty, to save memory.
+
+    // 删除后如果MapTable的count为0 则释放MapTable
     if (NXCountMapTable(pendingInitializeMap) == 0) {
         NXFreeMapTable(pendingInitializeMap);
         pendingInitializeMap = nil;
     }
 
+    // 有在等待的 在链表中进行循环通知
     while (pending) {
         PendingInitialize *next = pending->next;
+        // 通知子类完成了初始化
         if (pending->subclass) _finishInitializing(pending->subclass, cls);
         free(pending);
         pending = next;
@@ -332,12 +334,14 @@ static void _finishInitializingAfter(Class cls, Class supercls)
                      cls->nameForLogging(), supercls->nameForLogging());
     }
 
+    // 没有的话进行初始化
     if (!pendingInitializeMap) {
         pendingInitializeMap = 
             NXCreateMapTable(NXPtrValueMapPrototype, 10);
         // fixme pre-size this table for CF/NSObject +initialize
     }
 
+    // 创建一个节点，在父类完成初始化后再被通知
     pending = (PendingInitialize *)malloc(sizeof(*pending));
     pending->subclass = cls;
     pending->next = (PendingInitialize *)
@@ -357,14 +361,13 @@ void _class_initialize(Class cls)
     Class supercls;
     BOOL reallyInitialize = NO;
 
-    // Make sure super is done initializing BEFORE beginning to initialize cls.
-    // See note about deadlock above.
+    // 确保父类在子类之前调用 initialize
     supercls = cls->superclass;
     if (supercls  &&  !supercls->isInitialized()) {
         _class_initialize(supercls);
     }
-    
-    // Try to atomically set CLS_INITIALIZING.
+
+    // 原子设定 cls->setInitializing()
     {
         monitor_locker_t lock(classInitLock);
         if (!cls->isInitialized() && !cls->isInitializing()) {
@@ -377,28 +380,28 @@ void _class_initialize(Class cls)
         // We successfully set the CLS_INITIALIZING bit. Initialize the class.
         
         // Record that we're initializing this class so we can message it.
+        // 记录当前发送消息的线程
         _setThisThreadIsInitializingClass(cls);
-        
-        // Send the +initialize message.
-        // Note that +initialize is sent to the superclass (again) if 
-        // this class doesn't implement +initialize. 2157218
+
+        // 开始发送 initialize消息
+        // 如果这个类没有重写 initialize 方法，会调用其父类的initialize方法
         if (PrintInitializing) {
             _objc_inform("INITIALIZE: calling +[%s initialize]",
                          cls->nameForLogging());
         }
 
+        // 发送initialize消息
         ((void(*)(Class, SEL))objc_msgSend)(cls, SEL_initialize);
 
+        // 结束发送消息
         if (PrintInitializing) {
             _objc_inform("INITIALIZE: finished +[%s initialize]",
                          cls->nameForLogging());
         }        
-        
-        // Done initializing. 
-        // If the superclass is also done initializing, then update 
-        //   the info bits and notify waiting threads.
-        // If not, update them later. (This can happen if this +initialize 
-        //   was itself triggered from inside a superclass +initialize.)
+
+        // 完成初始化
+        // 如果父类也完成了初始化操作，更新info 信息 通知等待的线程可以继续进行
+        // 如果没有 就加进父类的MapTable中 在父类完成初始化后被通知
         monitor_locker_t lock(classInitLock);
         if (!supercls  ||  supercls->isInitialized()) {
             _finishInitializing(cls, supercls);
@@ -407,14 +410,12 @@ void _class_initialize(Class cls)
         }
         return;
     }
-    
+    // 如果正在初始化
     else if (cls->isInitializing()) {
-        // We couldn't set INITIALIZING because INITIALIZING was already set.
-        // If this thread set it earlier, continue normally.
-        // If some other thread set it, block until initialize is done.
-        // It's ok if INITIALIZING changes to INITIALIZED while we're here, 
-        //   because we safely check for INITIALIZED inside the lock 
-        //   before blocking.
+        // 因为class正在初始化中，我们不能进行设置
+        // 如果是当前线程设置的，就继续执行
+        // 如果是其它现场设置的，就进行阻塞，知道其它线程初始化class完成
+        // 这里操作是安全的，因为我们在等待中又进行了判断是否为INItialized
         if (_thisThreadIsInitializingClass(cls)) {
             return;
         } else {
@@ -427,13 +428,7 @@ void _class_initialize(Class cls)
     }
     
     else if (cls->isInitialized()) {
-        // Set CLS_INITIALIZING failed because someone else already 
-        //   initialized the class. Continue normally.
-        // NOTE this check must come AFTER the ISINITIALIZING case.
-        // Otherwise: Another thread is initializing this class. ISINITIALIZED 
-        //   is false. Skip this clause. Then the other thread finishes 
-        //   initialization and sets INITIALIZING=no and INITIALIZED=yes. 
-        //   Skip the ISINITIALIZING clause. Die horribly.
+        // 设置失败，因为有其它线程对其做了初始化，所以只需要直接返回就行
         return;
     }
     
