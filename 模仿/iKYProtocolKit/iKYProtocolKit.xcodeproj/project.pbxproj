@@ -1,0 +1,323 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E41EED111D6577DF005315AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E41EED101D6577DF005315AC /* main.m */; };
+		E41EED141D6577DF005315AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E41EED131D6577DF005315AC /* AppDelegate.m */; };
+		E41EED171D6577DF005315AC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E41EED161D6577DF005315AC /* ViewController.m */; };
+		E41EED1A1D6577DF005315AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E41EED181D6577DF005315AC /* Main.storyboard */; };
+		E41EED1C1D6577DF005315AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E41EED1B1D6577DF005315AC /* Assets.xcassets */; };
+		E41EED1F1D6577DF005315AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E41EED1D1D6577DF005315AC /* LaunchScreen.storyboard */; };
+		E41EED2F1D658528005315AC /* PKProtocolExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = E41EED2E1D658528005315AC /* PKProtocolExtension.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		E41EED0C1D6577DF005315AC /* iKYProtocolKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iKYProtocolKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E41EED101D6577DF005315AC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E41EED121D6577DF005315AC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E41EED131D6577DF005315AC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E41EED151D6577DF005315AC /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		E41EED161D6577DF005315AC /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		E41EED191D6577DF005315AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E41EED1B1D6577DF005315AC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E41EED1E1D6577DF005315AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E41EED201D6577DF005315AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E41EED2A1D658512005315AC /* iKYProtocolKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKYProtocolKit.h; sourceTree = "<group>"; };
+		E41EED2D1D658528005315AC /* PKProtocolExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKProtocolExtension.h; sourceTree = "<group>"; };
+		E41EED2E1D658528005315AC /* PKProtocolExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKProtocolExtension.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E41EED091D6577DF005315AC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E41EED031D6577DF005315AC = {
+			isa = PBXGroup;
+			children = (
+				E41EED0E1D6577DF005315AC /* iKYProtocolKit */,
+				E41EED0D1D6577DF005315AC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E41EED0D1D6577DF005315AC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E41EED0C1D6577DF005315AC /* iKYProtocolKit.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E41EED0E1D6577DF005315AC /* iKYProtocolKit */ = {
+			isa = PBXGroup;
+			children = (
+				E41EED291D6584FA005315AC /* iKYProtocolKit */,
+				E41EED121D6577DF005315AC /* AppDelegate.h */,
+				E41EED131D6577DF005315AC /* AppDelegate.m */,
+				E41EED151D6577DF005315AC /* ViewController.h */,
+				E41EED161D6577DF005315AC /* ViewController.m */,
+				E41EED181D6577DF005315AC /* Main.storyboard */,
+				E41EED1B1D6577DF005315AC /* Assets.xcassets */,
+				E41EED1D1D6577DF005315AC /* LaunchScreen.storyboard */,
+				E41EED201D6577DF005315AC /* Info.plist */,
+				E41EED0F1D6577DF005315AC /* Supporting Files */,
+			);
+			path = iKYProtocolKit;
+			sourceTree = "<group>";
+		};
+		E41EED0F1D6577DF005315AC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E41EED101D6577DF005315AC /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E41EED291D6584FA005315AC /* iKYProtocolKit */ = {
+			isa = PBXGroup;
+			children = (
+				E41EED2A1D658512005315AC /* iKYProtocolKit.h */,
+				E41EED2D1D658528005315AC /* PKProtocolExtension.h */,
+				E41EED2E1D658528005315AC /* PKProtocolExtension.m */,
+			);
+			name = iKYProtocolKit;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E41EED0B1D6577DF005315AC /* iKYProtocolKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E41EED231D6577DF005315AC /* Build configuration list for PBXNativeTarget "iKYProtocolKit" */;
+			buildPhases = (
+				E41EED081D6577DF005315AC /* Sources */,
+				E41EED091D6577DF005315AC /* Frameworks */,
+				E41EED0A1D6577DF005315AC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iKYProtocolKit;
+			productName = iKYProtocolKit;
+			productReference = E41EED0C1D6577DF005315AC /* iKYProtocolKit.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E41EED041D6577DF005315AC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = iKingsly;
+				TargetAttributes = {
+					E41EED0B1D6577DF005315AC = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+				};
+			};
+			buildConfigurationList = E41EED071D6577DF005315AC /* Build configuration list for PBXProject "iKYProtocolKit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E41EED031D6577DF005315AC;
+			productRefGroup = E41EED0D1D6577DF005315AC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E41EED0B1D6577DF005315AC /* iKYProtocolKit */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E41EED0A1D6577DF005315AC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E41EED1F1D6577DF005315AC /* LaunchScreen.storyboard in Resources */,
+				E41EED1C1D6577DF005315AC /* Assets.xcassets in Resources */,
+				E41EED1A1D6577DF005315AC /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E41EED081D6577DF005315AC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E41EED2F1D658528005315AC /* PKProtocolExtension.m in Sources */,
+				E41EED171D6577DF005315AC /* ViewController.m in Sources */,
+				E41EED141D6577DF005315AC /* AppDelegate.m in Sources */,
+				E41EED111D6577DF005315AC /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E41EED181D6577DF005315AC /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E41EED191D6577DF005315AC /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		E41EED1D1D6577DF005315AC /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E41EED1E1D6577DF005315AC /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E41EED211D6577DF005315AC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E41EED221D6577DF005315AC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E41EED241D6577DF005315AC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = iKYProtocolKit/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kingsly.iKYProtocolKit;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E41EED251D6577DF005315AC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = iKYProtocolKit/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kingsly.iKYProtocolKit;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E41EED071D6577DF005315AC /* Build configuration list for PBXProject "iKYProtocolKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E41EED211D6577DF005315AC /* Debug */,
+				E41EED221D6577DF005315AC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E41EED231D6577DF005315AC /* Build configuration list for PBXNativeTarget "iKYProtocolKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E41EED241D6577DF005315AC /* Debug */,
+				E41EED251D6577DF005315AC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E41EED041D6577DF005315AC /* Project object */;
+}
