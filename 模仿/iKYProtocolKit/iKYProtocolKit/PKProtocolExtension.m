@@ -151,6 +151,7 @@ __attribute__((constructor)) static void _pk_extension_inject_entry(void) {
                 if (!class_conformsToProtocol(class, extendedProtocol.protocol)) {
                     continue;
                 }
+                NSLog(@"%@",class);
                 // 如果类有遵守对应的协议，就进行注入
                 _pk_extension_inject_class(class, extendedProtocol);
             }
