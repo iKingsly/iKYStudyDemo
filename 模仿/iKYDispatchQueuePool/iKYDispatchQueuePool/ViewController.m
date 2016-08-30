@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "iKYDispatchQueuePool.h"
 
 @interface ViewController ()
 
@@ -16,7 +17,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+
+    dispatch_queue_t queue = iKYDispatchQueueGetForQOS(NSQualityOfServiceUtility);
+
+    iKYDispatchQueuePool *pool = [[iKYDispatchQueuePool alloc] initWithName:@"file.read" queueCount:5 qos:NSQualityOfServiceBackground];
+
+    dispatch_queue_t queue2 = [pool queue];
+    
 }
 
 - (void)didReceiveMemoryWarning {

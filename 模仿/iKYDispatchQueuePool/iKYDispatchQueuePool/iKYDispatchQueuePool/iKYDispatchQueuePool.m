@@ -242,6 +242,106 @@ static iKYDispatchContext *iKYDispatchContextGetForQOS(NSQualityOfService qos) {
         }
     }
 }
-@implementation iKYDispatchQueuePool
+@implementation iKYDispatchQueuePool {
+    @public
+    /// 一个缓存容器
+    iKYDispatchContext *_context;
+}
 
+- (void)dealloc {
+    if (_context) {
+        /// release context
+        iKYDispatchContextRelease(_context);
+        _context = NULL;
+    }
+}
+
+
+- (instancetype)initWithContext:(iKYDispatchContext *) context {
+    self = [super init];
+    if (!context) {
+        return nil;
+    }
+    self->_context = context;
+    _name = context->name ? [NSString stringWithUTF8String:context->name] : nil;
+    return self;
+}
+
+/// get a queue from Pool
+- (dispatch_queue_t)queue {
+    return iKYDispatchContextGetQueue(_context);
+}
+
+- (instancetype)initWithName:(NSString *)name queueCount:(NSUInteger)queueCount qos:(NSQualityOfService)qos {
+    if (queueCount == 0 || queueCount > MAX_QUEUE_COUNT) {
+        return nil;
+    }
+
+    self = [super init];
+    _context = iKYDispatchContextCreate(name.UTF8String, (uint32_t)queueCount, qos);
+    if (!_context) {
+        return nil;
+    }
+    _name = name;
+    return self;
+}
+
++ (instancetype)defaultPoolForQOS:(NSQualityOfService)qos {
+    switch (qos) {
+        case NSQualityOfServiceUserInteractive: {
+            static iKYDispatchQueuePool *pool;
+            static dispatch_once_t onceToken;
+            dispatch_once(&onceToken, ^{
+                pool = [[iKYDispatchQueuePool alloc] initWithContext:iKYDispatchContextGetForQOS(qos)];
+
+            });
+                return pool;
+            break;
+        }
+        case NSQualityOfServiceUserInitiated: {
+            static iKYDispatchQueuePool *pool;
+            static dispatch_once_t onceToken;
+            dispatch_once(&onceToken, ^{
+                pool = [[iKYDispatchQueuePool alloc] initWithContext:iKYDispatchContextGetForQOS(qos)];
+
+            });
+            return pool;
+            break;
+        }
+        case NSQualityOfServiceUtility: {
+            static iKYDispatchQueuePool *pool;
+            static dispatch_once_t onceToken;
+            dispatch_once(&onceToken, ^{
+                pool = [[iKYDispatchQueuePool alloc] initWithContext:iKYDispatchContextGetForQOS(qos)];
+
+            });
+            return pool;
+            break;
+        }
+        case NSQualityOfServiceBackground: {
+            static iKYDispatchQueuePool *pool;
+            static dispatch_once_t onceToken;
+            dispatch_once(&onceToken, ^{
+                pool = [[iKYDispatchQueuePool alloc] initWithContext:iKYDispatchContextGetForQOS(qos)];
+
+            });
+            return pool;
+            break;
+        }
+        case NSQualityOfServiceDefault:
+        default:{
+            static iKYDispatchQueuePool *pool;
+            static dispatch_once_t onceToken;
+            dispatch_once(&onceToken, ^{
+                pool = [[iKYDispatchQueuePool alloc] initWithContext:iKYDispatchContextGetForQOS(qos)];
+
+            });
+            return pool;
+            break;
+        }
+    }
+}
 @end
+dispatch_queue_t iKYDispatchQueueGetForQOS(NSQualityOfService qos) {
+    return iKYDispatchContextGetQueue(iKYDispatchContextGetForQOS(qos));
+}
