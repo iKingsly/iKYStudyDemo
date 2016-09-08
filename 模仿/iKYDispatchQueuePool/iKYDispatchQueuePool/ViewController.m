@@ -23,7 +23,15 @@
     iKYDispatchQueuePool *pool = [[iKYDispatchQueuePool alloc] initWithName:@"file.read" queueCount:5 qos:NSQualityOfServiceBackground];
 
     dispatch_queue_t queue2 = [pool queue];
-    
+
+}
+
+- (void)goToState:(ZMSyncState *)state
+{
+    [self.currentState didLeaveState];
+    self.currentState = state;
+    SYNCENGINE_SYNC_STRATEGY_GO_TO_STATE(state.identifier);
+    [self.currentState didEnterState];
 }
 
 - (void)didReceiveMemoryWarning {
