@@ -68,6 +68,7 @@ typedef NS_ENUM(NSUInteger, AFHTTPRequestQueryStringSerializationStyle) {
 /**
  The string encoding used to serialize parameters. `NSUTF8StringEncoding` by default.
  */
+/// string 的编码格式 默认为 UTF8
 @property (nonatomic, assign) NSStringEncoding stringEncoding;
 
 /**
@@ -75,6 +76,7 @@ typedef NS_ENUM(NSUInteger, AFHTTPRequestQueryStringSerializationStyle) {
  
  @see NSMutableURLRequest -setAllowsCellularAccess:
  */
+/// 是否允许使用蜂窝网络 默认为允许
 @property (nonatomic, assign) BOOL allowsCellularAccess;
 
 /**
@@ -82,6 +84,7 @@ typedef NS_ENUM(NSUInteger, AFHTTPRequestQueryStringSerializationStyle) {
  
  @see NSMutableURLRequest -setCachePolicy:
  */
+/// 使用缓存的策略 默认为 NSURLRequestUseProtocolCachePolicy
 @property (nonatomic, assign) NSURLRequestCachePolicy cachePolicy;
 
 /**
@@ -89,6 +92,7 @@ typedef NS_ENUM(NSUInteger, AFHTTPRequestQueryStringSerializationStyle) {
  
  @see NSMutableURLRequest -setHTTPShouldHandleCookies:
  */
+/// 是否要为HTTP 请求做cookie缓存 默认为YES
 @property (nonatomic, assign) BOOL HTTPShouldHandleCookies;
 
 /**
@@ -96,6 +100,7 @@ typedef NS_ENUM(NSUInteger, AFHTTPRequestQueryStringSerializationStyle) {
  
  @see NSMutableURLRequest -setHTTPShouldUsePipelining:
  */
+/// 是否允许使用管线化 默认为 NO
 @property (nonatomic, assign) BOOL HTTPShouldUsePipelining;
 
 /**
@@ -103,6 +108,7 @@ typedef NS_ENUM(NSUInteger, AFHTTPRequestQueryStringSerializationStyle) {
  
  @see NSMutableURLRequest -setNetworkServiceType:
  */
+/// 这里设置了默认的网络服务类型 为 NSURLNetworkServiceTypeDefault
 @property (nonatomic, assign) NSURLRequestNetworkServiceType networkServiceType;
 
 /**
@@ -110,6 +116,7 @@ typedef NS_ENUM(NSUInteger, AFHTTPRequestQueryStringSerializationStyle) {
  
  @see NSMutableURLRequest -setTimeoutInterval:
  */
+/// 设置超时时间 默认为60s
 @property (nonatomic, assign) NSTimeInterval timeoutInterval;
 
 ///---------------------------------------
@@ -119,6 +126,7 @@ typedef NS_ENUM(NSUInteger, AFHTTPRequestQueryStringSerializationStyle) {
 /**
  Default HTTP header field values to be applied to serialized requests.
  */
+/// HTTP 请求头
 @property (readonly, nonatomic, strong) NSDictionary *HTTPRequestHeaders;
 
 /**
@@ -132,6 +140,7 @@ typedef NS_ENUM(NSUInteger, AFHTTPRequestQueryStringSerializationStyle) {
  @param field The HTTP header to set a default value for
  @param value The value set as default for the specified header, or `nil`
  */
+/// 用来设置HTTP 请求头
 - (void)setValue:(NSString *)value
 forHTTPHeaderField:(NSString *)field;
 
@@ -141,18 +150,21 @@ forHTTPHeaderField:(NSString *)field;
  @param username The HTTP basic auth username
  @param password The HTTP basic auth password
  */
+/// 设置验证的账户密码
 - (void)setAuthorizationHeaderFieldWithUsername:(NSString *)username
                                        password:(NSString *)password;
 
 /**
  @deprecated This method has been deprecated. Use -setValue:forHTTPHeaderField: instead.
  */
+/// 设置访问的Token
 - (void)setAuthorizationHeaderFieldWithToken:(NSString *)token DEPRECATED_ATTRIBUTE;
 
 
 /**
- Clears any existing value for the "Authorization" HTTP header.
+ Clears any existing value for the "Authorization" HTTP header
  */
+/// 删除认证的请求头
 - (void)clearAuthorizationHeader;
 
 ///-------------------------------------------------------
@@ -162,6 +174,7 @@ forHTTPHeaderField:(NSString *)field;
 /**
  HTTP methods for which serialized requests will encode parameters as a query string. `GET`, `HEAD`, and `DELETE` by default.
  */
+/// HTTP 方法 默认为 GET HEAD DELETE 会将请求拼接在头部
 @property (nonatomic, strong) NSSet *HTTPMethodsEncodingParametersInURI;
 
 /**
@@ -171,6 +184,7 @@ forHTTPHeaderField:(NSString *)field;
 
  @see AFHTTPRequestQueryStringSerializationStyle
  */
+/// 这个是预留的 用来做默认的拼接请求头的选项
 - (void)setQueryStringSerializationWithStyle:(AFHTTPRequestQueryStringSerializationStyle)style;
 
 /**
@@ -178,6 +192,7 @@ forHTTPHeaderField:(NSString *)field;
 
  @param block A block that defines a process of encoding parameters into a query string. This block returns the query string and takes three arguments: the request, the parameters to encode, and the error that occurred when attempting to encode parameters for the given request.
  */
+/// 设置一个自定义拼接请求头的方法
 - (void)setQueryStringSerializationWithBlock:(NSString * (^)(NSURLRequest *request, NSDictionary *parameters, NSError * __autoreleasing *error))block;
 
 ///-------------------------------
@@ -187,6 +202,7 @@ forHTTPHeaderField:(NSString *)field;
 /**
  @deprecated This method has been deprecated. Use -requestWithMethod:URLString:parameters:error: instead.
  */
+/// 通过设置method 返回对应的 request
 - (NSMutableURLRequest *)requestWithMethod:(NSString *)method
                                  URLString:(NSString *)URLString
                                 parameters:(id)parameters DEPRECATED_ATTRIBUTE;
@@ -203,6 +219,7 @@ forHTTPHeaderField:(NSString *)field;
 
  @return An `NSMutableURLRequest` object.
  */
+/// 通过设置method 返回对应的 request 并且返回错误
 - (NSMutableURLRequest *)requestWithMethod:(NSString *)method
                                  URLString:(NSString *)URLString
                                 parameters:(id)parameters

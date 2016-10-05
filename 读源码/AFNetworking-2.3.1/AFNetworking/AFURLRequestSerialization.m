@@ -114,6 +114,7 @@ static NSString * AFPercentEscapedQueryStringValueFromStringWithEncoding(NSStrin
 extern NSArray * AFQueryStringPairsFromDictionary(NSDictionary *dictionary);
 extern NSArray * AFQueryStringPairsFromKeyAndValue(NSString *key, id value);
 
+/// 将参数转化为 %@=%@&%@=%@ 的格式拼接在请求头
 static NSString * AFQueryStringFromParametersWithEncoding(NSDictionary *parameters, NSStringEncoding stringEncoding) {
     NSMutableArray *mutablePairs = [NSMutableArray array];
     for (AFQueryStringPair *pair in AFQueryStringPairsFromDictionary(parameters)) {
@@ -133,8 +134,10 @@ NSArray * AFQueryStringPairsFromKeyAndValue(NSString *key, id value) {
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"description" ascending:YES selector:@selector(compare:)];
 
     if ([value isKindOfClass:[NSDictionary class]]) {
+        /// 如果是字典 就对字典中的每一个值进行递归处理
         NSDictionary *dictionary = value;
         // Sort dictionary keys to ensure consistent ordering in query string, which is important when deserializing potentially ambiguous sequences, such as an array of dictionaries
+        /// 先对字典的key进行排序
         for (id nestedKey in [dictionary.allKeys sortedArrayUsingDescriptors:@[ sortDescriptor ]]) {
             id nestedValue = [dictionary objectForKey:nestedKey];
             if (nestedValue) {
@@ -152,6 +155,7 @@ NSArray * AFQueryStringPairsFromKeyAndValue(NSString *key, id value) {
             [mutableQueryStringComponents addObjectsFromArray:AFQueryStringPairsFromKeyAndValue(key, obj)];
         }
     } else {
+        // 用 AFQueryStringPair 来装载key 和 value
         [mutableQueryStringComponents addObject:[[AFQueryStringPair alloc] initWithField:key value:value]];
     }
     
@@ -187,6 +191,7 @@ NSArray * AFQueryStringPairsFromKeyAndValue(NSString *key, id value) {
         return nil;
     }
 
+    /// 设置默认参数 比如编码格式 UTF8 可以使用蜂窝 超时时间为 timeoutInterval 
     self.stringEncoding = NSUTF8StringEncoding;
     self.allowsCellularAccess = YES;
     self.cachePolicy = NSURLRequestUseProtocolCachePolicy;
@@ -232,6 +237,7 @@ NSArray * AFQueryStringPairsFromKeyAndValue(NSString *key, id value) {
     }
 
     // HTTP Method Definitions; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html
+    /// 可以接受将参数拼接在请求头的方法为 GET HEAD DELETE
     self.HTTPMethodsEncodingParametersInURI = [NSSet setWithObjects:@"GET", @"HEAD", @"DELETE", nil];
 
     return self;
@@ -244,6 +250,7 @@ NSArray * AFQueryStringPairsFromKeyAndValue(NSString *key, id value) {
 }
 
 - (void)setValue:(NSString *)value forHTTPHeaderField:(NSString *)field {
+    /// 将设置的请求头都存在self.mutableHTTPRequestHeaders 中
 	[self.mutableHTTPRequestHeaders setValue:value forKey:field];
 }
 
@@ -433,17 +440,19 @@ NSArray * AFQueryStringPairsFromKeyAndValue(NSString *key, id value) {
 
     if (parameters) {
         NSString *query = nil;
-        if (self.queryStringSerialization) {
+        if (self.queryStringSerialization) { // 如果有自己设置的解析方法
             query = self.queryStringSerialization(request, parameters, error);
         } else {
-            switch (self.queryStringSerializationStyle) {
+            switch (self.queryStringSerializationStyle) { // 没有的话 默认使用拼接为 %@=%@&的格式
                 case AFHTTPRequestQueryStringDefaultStyle:
                     query = AFQueryStringFromParametersWithEncoding(parameters, self.stringEncoding);
                     break;
             }
         }
 
+        // 判断是否请求方法在 拼接的方法列表里
         if ([self.HTTPMethodsEncodingParametersInURI containsObject:[[request HTTPMethod] uppercaseString]]) {
+            /// 这里判断是否之前已经有 query了
             mutableRequest.URL = [NSURL URLWithString:[[mutableRequest.URL absoluteString] stringByAppendingFormat:mutableRequest.URL.query ? @"&%@" : @"?%@", query]];
         } else {
             if (![mutableRequest valueForHTTPHeaderField:@"Content-Type"]) {

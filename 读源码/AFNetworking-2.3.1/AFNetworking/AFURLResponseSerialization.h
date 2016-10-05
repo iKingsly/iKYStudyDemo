@@ -73,10 +73,14 @@
 
  See http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
  */
+/// 可以接收的 请求返回的Status请求
 @property (nonatomic, copy) NSIndexSet *acceptableStatusCodes;
 
 /**
  The acceptable MIME types for responses. When non-`nil`, responses with a `Content-Type` with MIME types that do not intersect with the set will result in an error during validation.
+ */
+/**
+ *  可以接收的 Content-Type 类型
  */
 @property (nonatomic, copy) NSSet *acceptableContentTypes;
 
@@ -91,6 +95,7 @@
 
  @return `YES` if the response is valid, otherwise `NO`.
  */
+/// 检验response和 data 是否 合法的 status code 和 content type 如果是则返回YES
 - (BOOL)validateResponse:(NSHTTPURLResponse *)response
                     data:(NSData *)data
                    error:(NSError *__autoreleasing *)error;
@@ -109,16 +114,20 @@
  - `text/json`
  - `text/javascript`
  */
+/// AFJSONResponseSerializer 是 AFHTTPResponseSerializer 的子类， 验证和 对 JSON response进行编码
+/// 默认的接收格式有 application/json、text/json、text/javascript
 @interface AFJSONResponseSerializer : AFHTTPResponseSerializer
 
 /**
  Options for reading the response JSON data and creating the Foundation objects. For possible values, see the `NSJSONSerialization` documentation section "NSJSONReadingOptions". `0` by default.
  */
+/// 解析JSON的格式选项
 @property (nonatomic, assign) NSJSONReadingOptions readingOptions;
 
 /**
  Whether to remove keys with `NSNull` values from response JSON. Defaults to `NO`.
  */
+/// 是否要对 值尾 NSNull 的key进行删除，默认尾NO
 @property (nonatomic, assign) BOOL removesKeysWithNullValues;
 
 /**
@@ -126,6 +135,7 @@
 
  @param readingOptions The specified JSON reading options.
  */
+/// 根据解析格式返回一默认的 
 + (instancetype)serializerWithReadingOptions:(NSJSONReadingOptions)readingOptions;
 
 @end

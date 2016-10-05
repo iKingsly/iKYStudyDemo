@@ -111,8 +111,10 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
     NSError *validationError = nil;
 
     if (response && [response isKindOfClass:[NSHTTPURLResponse class]]) {
+        // 如果设置可以接收的ContentType 没有包括Response 的 Type 则返回错误
         if (self.acceptableContentTypes && ![self.acceptableContentTypes containsObject:[response MIMEType]]) {
             if ([data length] > 0) {
+                // 设置错误的格式
                 NSDictionary *userInfo = @{
                                            NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedStringFromTable(@"Request failed: unacceptable content-type: %@", @"AFNetworking", nil), [response MIMEType]],
                                            NSURLErrorFailingURLErrorKey:[response URL],
@@ -125,7 +127,9 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
             responseIsValid = NO;
         }
 
+        // 如果设置可以接收的返回码 Status Code 没有包括 Response 的 Code 则返回错误
         if (self.acceptableStatusCodes && ![self.acceptableStatusCodes containsIndex:(NSUInteger)response.statusCode]) {
+            /// 设置错误与哪样为 request failed
             NSDictionary *userInfo = @{
                                        NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedStringFromTable(@"Request failed: %@ (%ld)", @"AFNetworking", nil), [NSHTTPURLResponse localizedStringForStatusCode:response.statusCode], (long)response.statusCode],
                                        NSURLErrorFailingURLErrorKey:[response URL],
@@ -138,6 +142,7 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
         }
     }
 
+    // 将错误信息设置给error
     if (error && !responseIsValid) {
         *error = validationError;
     }
@@ -223,6 +228,7 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
                            data:(NSData *)data
                           error:(NSError *__autoreleasing *)error
 {
+     // 验证合法性
     if (![self validateResponse:(NSHTTPURLResponse *)response data:data error:error]) {
         if (!error || AFErrorOrUnderlyingErrorHasCodeInDomain(*error, NSURLErrorCannotDecodeContentData, AFURLResponseSerializationErrorDomain)) {
             return nil;
@@ -241,20 +247,24 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
 
     id responseObject = nil;
     NSError *serializationError = nil;
+    // 开启了一个自动释放池 来解析JSON
     @autoreleasepool {
         NSString *responseString = [[NSString alloc] initWithData:data encoding:stringEncoding];
         if (responseString && ![responseString isEqualToString:@" "]) {
             // Workaround for a bug in NSJSONSerialization when Unicode character escape codes are used instead of the actual character
             // See http://stackoverflow.com/a/12843465/157142
+            // 用UTF8 进行编码
             data = [responseString dataUsingEncoding:NSUTF8StringEncoding];
 
             if (data) {
+                // data leng > 0 就开始解析
                 if ([data length] > 0) {
                     responseObject = [NSJSONSerialization JSONObjectWithData:data options:self.readingOptions error:&serializationError];
                 } else {
                     return nil;
                 }
             } else {
+                // 不能进行解析
                 NSDictionary *userInfo = @{
                                            NSLocalizedDescriptionKey: NSLocalizedStringFromTable(@"Data failed decoding as a UTF-8 string", nil, @"AFNetworking"),
                                            NSLocalizedFailureReasonErrorKey: [NSString stringWithFormat:NSLocalizedStringFromTable(@"Could not decode string: %@", nil, @"AFNetworking"), responseString]
