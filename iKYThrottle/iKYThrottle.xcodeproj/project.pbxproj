@@ -7,16 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E440524E1DF001D1008411C5 /* iKYThrottle.m in Sources */ = {isa = PBXBuildFile; fileRef = E440524D1DF001D1008411C5 /* iKYThrottle.m */; };
 		E4A986D91D619AD4003398AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A986D81D619AD4003398AC /* main.m */; };
 		E4A986DC1D619AD4003398AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A986DB1D619AD4003398AC /* AppDelegate.m */; };
 		E4A986DF1D619AD4003398AC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A986DE1D619AD4003398AC /* ViewController.m */; };
 		E4A986E21D619AD4003398AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4A986E01D619AD4003398AC /* Main.storyboard */; };
 		E4A986E41D619AD4003398AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4A986E31D619AD4003398AC /* Assets.xcassets */; };
 		E4A986E71D619AD4003398AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4A986E51D619AD4003398AC /* LaunchScreen.storyboard */; };
-		E4A986F11D619AF4003398AC /* iKYThrottle.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A986F01D619AF4003398AC /* iKYThrottle.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E440524C1DF001D1008411C5 /* iKYThrottle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKYThrottle.h; sourceTree = "<group>"; };
+		E440524D1DF001D1008411C5 /* iKYThrottle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKYThrottle.m; sourceTree = "<group>"; };
 		E4A986D41D619AD4003398AC /* iKYThrottle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iKYThrottle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4A986D81D619AD4003398AC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E4A986DA1D619AD4003398AC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -27,8 +29,6 @@
 		E4A986E31D619AD4003398AC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E4A986E61D619AD4003398AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E4A986E81D619AD4003398AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E4A986EF1D619AF4003398AC /* iKYThrottle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKYThrottle.h; sourceTree = "<group>"; };
-		E4A986F01D619AF4003398AC /* iKYThrottle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKYThrottle.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,8 +86,8 @@
 		E4A986EE1D619AE8003398AC /* iKYThrottle */ = {
 			isa = PBXGroup;
 			children = (
-				E4A986EF1D619AF4003398AC /* iKYThrottle.h */,
-				E4A986F01D619AF4003398AC /* iKYThrottle.m */,
+				E440524C1DF001D1008411C5 /* iKYThrottle.h */,
+				E440524D1DF001D1008411C5 /* iKYThrottle.m */,
 			);
 			path = iKYThrottle;
 			sourceTree = "<group>";
@@ -164,8 +164,8 @@
 			files = (
 				E4A986DF1D619AD4003398AC /* ViewController.m in Sources */,
 				E4A986DC1D619AD4003398AC /* AppDelegate.m in Sources */,
+				E440524E1DF001D1008411C5 /* iKYThrottle.m in Sources */,
 				E4A986D91D619AD4003398AC /* main.m in Sources */,
-				E4A986F11D619AF4003398AC /* iKYThrottle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,6 +314,7 @@
 				E4A986ED1D619AD4003398AC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
