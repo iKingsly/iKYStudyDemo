@@ -16,7 +16,9 @@
 
 // Block internals.
 typedef NS_OPTIONS(int, AspectBlockFlags) {
+    // 是否需要Copy和Dispose的Helpers
 	AspectBlockFlagsHasCopyDisposeHelpers = (1 << 25),
+    // 是否需要方法签名
 	AspectBlockFlagsHasSignature          = (1 << 30)
 };
 typedef struct _AspectBlock {
@@ -38,6 +40,14 @@ typedef struct _AspectBlock {
 } *AspectBlockRef;
 
 @interface AspectInfo : NSObject <AspectInfo>
+
+/**
+ 初始化一个AspectInfo对象
+
+ @param instance 对象
+ @param invocation 对象的原始方法
+ @return 返回原始方法的参数数组
+ */
 - (id)initWithInstance:(__unsafe_unretained id)instance invocation:(NSInvocation *)invocation;
 @property (nonatomic, unsafe_unretained, readonly) id instance;
 @property (nonatomic, strong, readonly) NSArray *arguments;
@@ -69,6 +79,7 @@ typedef struct _AspectBlock {
 - (id)initWithTrackedClass:(Class)trackedClass;
 @property (nonatomic, strong) Class trackedClass;
 @property (nonatomic, readonly) NSString *trackedClassName;
+// 记录要被hook替换的方法名
 @property (nonatomic, strong) NSMutableSet *selectorNames;
 @property (nonatomic, strong) NSMutableDictionary *selectorNamesToSubclassTrackers;
 - (void)addSubclassTracker:(AspectTracker *)subclassTracker hookingSelectorName:(NSString *)selectorName;
@@ -120,7 +131,9 @@ static id aspect_add(id self, SEL selector, AspectOptions options, id block, NSE
     NSCParameterAssert(block);
 
     __block AspectIdentifier *identifier = nil;
+    // 自旋锁
     aspect_performLocked(^{
+        //
         if (aspect_isSelectorAllowedAndTrack(self, selector, options, error)) {
             AspectsContainer *aspectContainer = aspect_getContainerForObject(self, selector);
             identifier = [AspectIdentifier identifierWithSelector:selector object:self options:options block:block error:error];
@@ -179,6 +192,7 @@ static NSMethodSignature *aspect_blockMethodSignature(id block, NSError **error)
     }
 	void *desc = layout->descriptor;
 	desc += 2 * sizeof(unsigned long int);
+    // 得到signature 签名
 	if (layout->flags & AspectBlockFlagsHasCopyDisposeHelpers) {
 		desc += 2 * sizeof(void *);
     }
@@ -187,6 +201,7 @@ static NSMethodSignature *aspect_blockMethodSignature(id block, NSError **error)
         AspectError(AspectErrorMissingBlockSignature, description);
         return nil;
     }
+    // 保证有方法名 且存在
 	const char *signature = (*(const char **)desc);
 	return [NSMethodSignature signatureWithObjCTypes:signature];
 }
@@ -202,6 +217,7 @@ static BOOL aspect_isCompatibleBlockSignature(NSMethodSignature *blockSignature,
         signaturesMatch = NO;
     }else {
         if (blockSignature.numberOfArguments > 1) {
+            // 判断第二个参数是否为cmd
             const char *blockType = [blockSignature getArgumentTypeAtIndex:1];
             if (blockType[0] != '@') {
                 signaturesMatch = NO;
@@ -568,11 +584,12 @@ static NSMutableDictionary *aspect_getSwizzledClassesDict() {
 static BOOL aspect_isSelectorAllowedAndTrack(NSObject *self, SEL selector, AspectOptions options, NSError **error) {
     static NSSet *disallowedSelectorList;
     static dispatch_once_t pred;
-    dispatch_once(&pred, ^{
+    dispatch_once(&pred, ^{ // 黑名单
         disallowedSelectorList = [NSSet setWithObjects:@"retain", @"release", @"autorelease", @"forwardInvocation:", nil];
     });
 
     // Check against the blacklist.
+    // 查看是否是黑名单中的内容
     NSString *selectorName = NSStringFromSelector(selector);
     if ([disallowedSelectorList containsObject:selectorName]) {
         NSString *errorDescription = [NSString stringWithFormat:@"Selector %@ is blacklisted.", selectorName];
@@ -581,6 +598,7 @@ static BOOL aspect_isSelectorAllowedAndTrack(NSObject *self, SEL selector, Aspec
     }
 
     // Additional checks.
+    // 再次检查如果要切片dealloc，切片时间只能在dealloc之前，如果不是AspectPositionBefore，也要报错
     AspectOptions position = options&AspectPositionFilter;
     if ([selectorName isEqualToString:@"dealloc"] && position != AspectPositionBefore) {
         NSString *errorDesc = @"AspectPositionBefore is the only valid position when hooking dealloc.";
@@ -588,6 +606,7 @@ static BOOL aspect_isSelectorAllowedAndTrack(NSObject *self, SEL selector, Aspec
         return NO;
     }
 
+    // 查找方法是否存在
     if (![self respondsToSelector:selector] && ![self.class instancesRespondToSelector:selector]) {
         NSString *errorDesc = [NSString stringWithFormat:@"Unable to find selector -[%@ %@].", NSStringFromClass(self.class), selectorName];
         AspectError(AspectErrorDoesNotRespondToSelector, errorDesc);
@@ -671,7 +690,7 @@ static void aspect_deregisterTrackedSelector(id self, SEL selector) {
 @end
 
 @implementation AspectTracker
-
+// 绑定要被追踪的类
 - (id)initWithTrackedClass:(Class)trackedClass {
     if (self = [super init]) {
         _trackedClass = trackedClass;
@@ -685,7 +704,8 @@ static void aspect_deregisterTrackedSelector(id self, SEL selector) {
     return self.selectorNamesToSubclassTrackers[selectorName] != nil;
 }
 
-- (void)addSubclassTracker:(AspectTracker *)subclassTracker hookingSelectorName:(NSString *)selectorName {
+- (void)addSubclassTracker:(AspectTracker *)subclassTracker
+       hookingSelectorName:(NSString *)selectorName {
     NSMutableSet *trackerSet = self.selectorNamesToSubclassTrackers[selectorName];
     if (!trackerSet) {
         trackerSet = [NSMutableSet new];
@@ -727,10 +747,13 @@ static void aspect_deregisterTrackedSelector(id self, SEL selector) {
 
 // Thanks to the ReactiveCocoa team for providing a generic solution for this.
 - (id)aspect_argumentAtIndex:(NSUInteger)index {
+    // 获取到methodSignature方法签名指定index的type encoding的字符串
 	const char *argType = [self.methodSignature getArgumentTypeAtIndex:index];
 	// Skip const type qualifier.
+    // 判断encoding的字符串是不是CONST常量 跳过Const
 	if (argType[0] == _C_CONST) argType++;
 
+    // 用来在NSInvocation中根据index得到对应的Argument，最后return的时候把val包装成对象，返回出去。
 #define WRAP_AND_RETURN(type) do { type val = 0; [self getArgument:&val atIndex:(NSInteger)index]; return @(val); } while (0)
 	if (strcmp(argType, @encode(id)) == 0 || strcmp(argType, @encode(Class)) == 0) {
 		__autoreleasing id returnObj;
@@ -794,6 +817,8 @@ static void aspect_deregisterTrackedSelector(id self, SEL selector) {
 
 - (NSArray *)aspects_arguments {
 	NSMutableArray *argumentsArray = [NSMutableArray array];
+    // for循环把methodSignature方法签名里面的参数，都加入到数组中
+    // 从2 开始是因为过滤掉 self和_cmd 两个参数
 	for (NSUInteger idx = 2; idx < self.methodSignature.numberOfArguments; idx++) {
 		[argumentsArray addObject:[self aspect_argumentAtIndex:idx] ?: NSNull.null];
 	}
@@ -810,6 +835,7 @@ static void aspect_deregisterTrackedSelector(id self, SEL selector) {
 + (instancetype)identifierWithSelector:(SEL)selector object:(id)object options:(AspectOptions)options block:(id)block error:(NSError **)error {
     NSCParameterAssert(block);
     NSCParameterAssert(selector);
+    // 判断签名一致性
     NSMethodSignature *blockSignature = aspect_blockMethodSignature(block, error); // TODO: check signature compatibility, etc.
     if (!aspect_isCompatibleBlockSignature(blockSignature, object, selector, error)) {
         return nil;
@@ -936,6 +962,7 @@ static void aspect_deregisterTrackedSelector(id self, SEL selector) {
 
 - (NSArray *)arguments {
     // Lazily evaluate arguments, boxing is expensive.
+    // 懒加载 节省性能
     if (!_arguments) {
         _arguments = self.originalInvocation.aspects_arguments;
     }
