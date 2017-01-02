@@ -153,6 +153,7 @@ static id aspect_add(id self, SEL selector, AspectOptions options, id block, NSE
         // 1. 检查 selector 的合法性
         // 在一个类的继承链中 一个方法只能被 hook一次
         // retain release autorelease forwardInvocation: 不能被hook
+        // 如果类里面没有这个方法 也不能被hook
         if (aspect_isSelectorAllowedAndTrack(self, selector, options, error)) {
             // 创建切片信息
             AspectsContainer *aspectContainer = aspect_getContainerForObject(self, selector);
